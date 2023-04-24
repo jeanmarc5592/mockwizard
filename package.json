@@ -1,7 +1,12 @@
 {
   "name": "mockwizard",
   "version": "0.1.1",
-  "description": "Create all kinds of mock data with ease and focus on what really matters in your software",
+  "homepage": "https://github.com/jeanmarc5592/mockwizard/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeanmarc5592/mockwizard"
+  },
+  "description": "Create all kinds of mock data with ease",
   "main": "index.js",
   "husky": {
     "hooks": {
