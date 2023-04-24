@@ -1,6 +1,8 @@
 # mockwizard 🪄
 mockwizard comes with different modules, that let you create mock data of many different kinds in seconds.
 
+## !!! DO NOT USE (yet) 🙂 !!!
+
 ## Highlights
 
 ### Saving time and effort ⏰
