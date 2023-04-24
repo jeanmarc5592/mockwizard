@@ -7,7 +7,12 @@
     "url": "https://github.com/jeanmarc5592/mockwizard"
   },
   "description": "Create all kinds of mock data with ease",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "types.d.ts",
+  "files": [
+    "dist",
+    "types.d.ts"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm run prettier"
@@ -15,6 +20,7 @@
   },
   "scripts": {
     "build": "tsc && ts-node src/index.ts",
+    "postbuild": "echo 'export * from \"./dist\";' > types.d.ts",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:cov": "jest --coverage",
