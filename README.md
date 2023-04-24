@@ -1,8 +1,6 @@
 # mockwizard 🪄
 mockwizard comes with different modules, that let you create mock data of many different kinds in seconds.
 
-## !!! DO NOT USE (yet) 🙂 !!!
-
 ## Highlights
 
 ### Saving time and effort ⏰
@@ -24,7 +22,7 @@ With yarn:
 
 ## Usage
 ```js
-import { MockWizard} from "mockwizard";
+import { MockWizard } from "mockwizard";
 
 const mw = new MockWizard();
 
