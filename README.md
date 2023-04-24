@@ -12,8 +12,6 @@ High-quality testing requires a variety of test data that accurately reflects re
 ### Rapid prototyping 📈
 When building a new application or feature, it can be helpful to generate sample data quickly to get a sense of how the final product will look and behave. This package can facilitate this rapid prototyping process, allowing you to experiment with different scenarios and edge cases without needing to manually create a large amount of data.
 
----
-
 ## Installation
 
 With npm:
@@ -21,8 +19,6 @@ With npm:
 
 With yarn:
 `yarn add mockwizard`
-
----
 
 ## Usage
 ```js
@@ -34,8 +30,6 @@ const mw = new MockWizard();
 const firstName = mw.person.firstName({ gender: "male" }); // "John"
 const fullName = mw.person.fullName({ includeSaluation: true, gender: "female" }); // "Mrs. Sarah Thompson"
 ```
-
----
 
 ## Basic config
 
@@ -58,8 +52,6 @@ Here's a list of currently supported locales:
 |----------|----------|----------|
 | English | USA | `en-US`|
 | German | Germany | `de-DE`
-
----
 
 ## Person
 
@@ -136,8 +128,6 @@ mw.person.salutation({ gender: "male" }); // "Capt."
 // Generate a random female salutation
 mw.person.salutation({ gender: "female" }); // "Ms."
 ```
-
----
 
 ## License
 
