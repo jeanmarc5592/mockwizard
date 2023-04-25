@@ -1,0 +1,72 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linting
+      run: npm run lint
+
+    - name: Run tests
+      run: npm run test:cov
+
+    - name: Check code coverage
+      run: |
+        threshold=100
+        coverage=$(cat coverage/lcov.info | node_modules/.bin/coveralls | awk '{ print $3 }' | sed 's/%//')
+        if (( $(echo "$coverage < $threshold" | bc -l) )); then
+          echo "Code coverage is below the threshold of $threshold% ($coverage%). Failing the build."
+          exit 1
+        fi
+
+  publish:
+    needs: test-and-lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Update patch version
+      id: version
+      uses: mathieudutour/github-tag-action@v5.3.3
+      with:
+        push-tag: true
+        message: "Bump version to {{version}}"
+
+    - name: Build package
+      run: npm run build
+
+    - name: Publish package to NPM
+      uses: js-actions/npm-publish@v1.1.1
+      with:
+        npm-token: ${{secrets.NPM_AUTH_TOKEN}}
+        tag: latest
