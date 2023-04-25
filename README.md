@@ -129,6 +129,16 @@ mw.person.salutation({ gender: "male" }); // "Capt."
 mw.person.salutation({ gender: "female" }); // "Ms."
 ```
 
+## UUID
+```js
+import { MockWizard } from "mockwizard";
+
+const mw = new MockWizard();
+
+// Generate a random uuid
+mw.uuid.generate() // "db4bd5d9-4cc1-44ef-bdaf-809ebac8003c"
+```
+
 ## License
 
 [MIT](https://github.com/jeanmarc5592/mockwizard/blob/main/LICENSE)
