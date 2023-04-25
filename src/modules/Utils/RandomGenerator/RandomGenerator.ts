@@ -1,6 +1,6 @@
 import { RandomValue, List } from "./types";
 
-export abstract class BaseModule {
+export class RandomGenerator {
   /**
    * Generates a random value from a given list.
    *
@@ -9,9 +9,13 @@ export abstract class BaseModule {
    * @returns {RandomValue} A randomly selected string from the given list.
    * @throws {Error} If the `list` parameter is missing or empty.
    */
-  protected generateRandomValue(list: List): RandomValue {
+  static generateValue(list: List): RandomValue {
     if (!list) {
       throw new Error("Parameter 'list' is missing.");
+    }
+
+    if (!Array.isArray(list)) {
+      throw new Error("Parameter 'list' must be an Array.");
     }
 
     const randomIndex = Math.floor(Math.random() * list.length);
@@ -24,7 +28,7 @@ export abstract class BaseModule {
    * @protected
    * @returns {number} A randomly generated binary integer.
    */
-  protected generateRandomBinary(): number {
+  static generateBinary(): number {
     return Math.floor(Math.random() * 2);
   }
 }

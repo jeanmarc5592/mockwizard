@@ -1,6 +1,6 @@
 {
   "name": "mockwizard",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "homepage": "https://github.com/jeanmarc5592/mockwizard/blob/main/README.md",
   "repository": {
     "type": "git",
@@ -30,9 +30,7 @@
   "author": "Jean-Marc Möckel",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^29.5.1",
     "@types/uuid": "^9.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "eslint": "^8.38.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -47,6 +45,8 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@types/jest": "^29.5.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
     "uuid": "^9.0.0"
   }
 }

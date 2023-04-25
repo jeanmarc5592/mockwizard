@@ -1,7 +1,7 @@
-import { BaseModule } from "../Base";
+import { RandomGenerator } from "../Utils";
 import { PersonOptions } from "./types";
 
-export abstract class AbstractPerson extends BaseModule {
+export abstract class AbstractPerson {
   /**
    * Generates a random first name based on the given options.
    *
@@ -18,10 +18,10 @@ export abstract class AbstractPerson extends BaseModule {
     } else if (options.gender === this.GENDER_MALE) {
       list = this.maleFirstNames;
     } else {
-      list = this.generateRandomBinary() === 0 ? this.maleFirstNames : this.femaleFirstNames;
+      list = RandomGenerator.generateBinary() === 0 ? this.maleFirstNames : this.femaleFirstNames;
     }
 
-    return this.generateRandomValue(list) as string;
+    return RandomGenerator.generateValue(list) as string;
   }
 
   /**
@@ -31,7 +31,7 @@ export abstract class AbstractPerson extends BaseModule {
    * @returns {string} The randomly generated last name.
    */
   public lastName(): string {
-    return this.generateRandomValue(this.lastNames) as string;
+    return RandomGenerator.generateValue(this.lastNames) as string;
   }
 
   /**
@@ -68,7 +68,7 @@ export abstract class AbstractPerson extends BaseModule {
    * @returns {string} The randomly generated suffix.
    */
   public suffix(): string {
-    return this.generateRandomValue(this.suffixes) as string;
+    return RandomGenerator.generateValue(this.suffixes) as string;
   }
 
   /**
@@ -88,78 +88,87 @@ export abstract class AbstractPerson extends BaseModule {
       list = this.commonSalutations;
     }
 
-    return this.generateRandomValue(list) as string;
+    return RandomGenerator.generateValue(list) as string;
   }
 
   /**
    * An array of male first names.
    * @protected
    * @abstract
+   * @readonly
    * @type {string[]}
    */
-  protected abstract maleFirstNames: string[];
+  protected abstract readonly maleFirstNames: string[];
 
   /**
    * An array of female first names.
    * @protected
    * @abstract
+   * @readonly
    * @type {string[]}
    */
-  protected abstract femaleFirstNames: string[];
+  protected abstract readonly femaleFirstNames: string[];
 
   /**
    * An array of last names.
    * @protected
    * @abstract
+   * @readonly
    * @type {string[]}
    */
-  protected abstract lastNames: string[];
+  protected abstract readonly lastNames: string[];
 
   /**
    * An array of suffixes.
    * @protected
    * @abstract
+   * @readonly
    * @type {string[]}
    */
-  protected abstract suffixes: string[];
+  protected abstract readonly suffixes: string[];
 
   /**
    * An array of male salutations.
    * @protected
    * @abstract
+   * @readonly
    * @type {string[]}
    */
-  protected abstract maleSalutations: string[];
+  protected abstract readonly maleSalutations: string[];
 
   /**
    * An array of female salutations.
    * @protected
    * @abstract
+   * @readonly
    * @type {string[]}
    */
-  protected abstract femaleSalutations: string[];
+  protected abstract readonly femaleSalutations: string[];
 
   /**
    * An array of common salutations.
    * @protected
    * @abstract
+   * @readonly
    * @type {string[]}
    */
-  protected abstract commonSalutations: string[];
+  protected abstract readonly commonSalutations: string[];
 
   /**
    * A constant string representing the male gender.
    * @protected
+   * @readonly
    * @type {string}
    * @constant
    */
-  protected GENDER_MALE: string = "male";
+  protected readonly GENDER_MALE: string = "male";
 
   /**
    * A constant string representing the female gender.
    * @protected
+   * @readonly
    * @type {string}
    * @constant
    */
-  protected GENDER_FEMALE: string = "female";
+  protected readonly GENDER_FEMALE: string = "female";
 }
