@@ -75,6 +75,7 @@ export abstract class AbstractPerson {
    * Generates a random salutation.
    *
    * @public
+   * @param {Pick<PersonOptions, "gender">} [options={}] - The options object with the gender property.
    * @returns {string} The randomly generated salutation.
    */
   public salutation(options: Pick<PersonOptions, "gender"> = {}): string {
