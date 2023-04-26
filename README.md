@@ -31,23 +31,23 @@ import { MockWizard } from "mockwizard";
 const mw = new MockWizard();
 
 // Generating mock data for 40 persons
-const generatePersons = (personsCount: number): string[] {
+const generatePersons = (personsCount: number): string[] | undefined => {
   if (!personsCount || typeof personsCount !== "number" || personsCount <= 0) {
     return;
   }
-  
+
   const persons: string[] = [];
-  
+
   let i = 0;
-  
+
   while (i < personsCount) {
     const fullName = mw.person.fullName({ includeSaluation: true, gender: "female" });
     persons.push(fullName);
     i += 1;
   }
-  
+
   return persons;
-}
+};
 
 const mockPersons = generatePersons(40);
 ```
