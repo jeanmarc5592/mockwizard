@@ -15,10 +15,14 @@ When building a new application or feature, it can be helpful to generate sample
 ## Installation
 
 With npm:
-`npm install mockwizard`
+```js
+npm install mockwizard
+```
 
 With yarn:
-`yarn add mockwizard`
+```js
+yarn add mockwizard
+```
 
 ## Usage
 ```js
@@ -119,11 +123,11 @@ import { MockWizard } from "mockwizard";
 
 const mw = new MockWizard();
 
-// Generate a random salutation (gender will be picked randomly)
+// Generate a random salutation (no gender specific)
 mw.person.salutation(); // "Prof."
 
 // Generate a random male salutation
-mw.person.salutation({ gender: "male" }); // "Capt."
+mw.person.salutation({ gender: "male" }); // "Mr."
 
 // Generate a random female salutation
 mw.person.salutation({ gender: "female" }); // "Ms."
