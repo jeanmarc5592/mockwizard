@@ -25,7 +25,7 @@ export class Text {
    * @public
    * @param {TextOptions} [options={}] - An optional object containing additional options.
    * @param {number} [options.amount] - The number of random words to generate. If not specified, it defaults to 3.
-   * @param {boolean} [options.asString=false] - If true, the generated words will be returned as a single string.
+   * @param {boolean} [options.asString] - If true, the generated words will be returned as a single string.
    * @returns {(string|string[])} An array of random words, or a single string if 'asString' option is true.
    */
   public words(options: TextOptions = {}): string | string[] {
