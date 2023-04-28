@@ -10,9 +10,21 @@ interface MockWizardInterface {
 }
 
 export class MockWizard implements MockWizardInterface {
-  public person: AbstractPerson;
+  /**
+   * The property that holds the Person module
+   *
+   * @public
+   * @type {AbstractPerson}
+   */
+  public readonly person: AbstractPerson;
 
-  public uuid: UUID;
+  /**
+   * The property that holds the UUID module
+   *
+   * @public
+   * @type {AbstractPerson}
+   */
+  public readonly uuid: UUID;
 
   constructor(locale: Locale = "en-US") {
     this.person = PersonFactory.create(locale);
