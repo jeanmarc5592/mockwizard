@@ -23,7 +23,7 @@ export class Text {
    * Generates an array of random words.
    *
    * @public
-   * @param {TextOptions} [options={}] - An optional object containing additional options.
+   * @param {Omit<TextOptions, "sentences">} [options={}] - An optional object containing additional options.
    * @param {number} [options.amount] - The number of random words to generate. If not specified, it defaults to 3.
    * @param {boolean} [options.asString] - If true, the generated words will be returned as a single string.
    * @returns {(string|string[])} An array of random words, or a single string if 'asString' option is true.
@@ -43,7 +43,7 @@ export class Text {
    * Generates a random sentence based on the specified options.
    *
    * @public
-   * @param {TextOptions} [options={}] - The options to customize the generated sentence.
+   * @param {Omit<TextOptions, "sentences">} [options={}] - The options to customize the generated sentence.
    * @param {number} [options.words] - The number of words to include in the sentence. If not specified, it defaults to 5.
    * @param {boolean} [options.asString] - If true, the generated sentence will be returned as a single string.
    * @returns {string|string[]} - The generated sentence as an array of strings, or a single string if 'asString' option is true.
@@ -71,6 +71,16 @@ export class Text {
     return sentence;
   }
 
+  /**
+   * Generates a specified number of random sentences based on the specified options.
+   *
+   * @public
+   * @param {Omit<TextOptions, "words">} [options={}] - The options to customize the generated sentences.
+   * @param {number} [options.sentences] - The number of sentences to include in the output. If not specied, it defaults to 3.
+   * @param {boolean} [options.asString] - Whether to return the sentences as a string or an array of strings.
+   * @returns {string|string[]} - The generated sentences, either as a string or an array of strings.
+   * @throws {Error} - If the option 'sentences' is not a number or is less than or equal to 0.
+   */
   public sentences(options: Omit<TextOptions, "words"> = {}): string | string[] {
     const sentencesCount = options.sentences ?? 3;
 
