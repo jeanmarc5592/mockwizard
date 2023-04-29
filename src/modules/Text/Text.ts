@@ -1,6 +1,6 @@
 import { TextData } from "./data";
 import { RandomGenerator } from "../../utils";
-import { TextOptions } from "./types";
+import { WordsOptions, SentenceOptions, SentencesOptions, ParagraphOptions } from "./types";
 
 export class Text {
   private readonly data: string[];
@@ -23,12 +23,12 @@ export class Text {
    * Generates an array of random words.
    *
    * @public
-   * @param {Omit<TextOptions, "sentences" | "paragraphs">} [options={}] - An optional object containing additional options.
+   * @param {WordsOptions} [options={}] - An optional object containing additional options.
    * @param {number} [options.amount] - The number of random words to generate. If not specified, it defaults to 3.
    * @param {boolean} [options.asString] - If true, the generated words will be returned as a single string.
    * @returns {(string|string[])} An array of random words, or a single string if 'asString' option is true.
    */
-  public words(options: Omit<TextOptions, "sentences" | "paragraphs"> = {}): string | string[] {
+  public words(options: WordsOptions = {}): string | string[] {
     const wordsCount = options.words ?? 3;
     const words = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
 
@@ -43,12 +43,12 @@ export class Text {
    * Generates a random sentence based on the specified options.
    *
    * @public
-   * @param {Omit<TextOptions, "sentences" | "paragraphs">} [options={}] - The options to customize the generated sentence.
+   * @param {SentenceOptions} [options={}] - The options to customize the generated sentence.
    * @param {number} [options.words] - The number of words to include in the sentence. If not specified, it defaults between 3 and 15.
    * @param {boolean} [options.asString] - If true, the generated sentence will be returned as a single string.
    * @returns {string|string[]} - The generated sentence as an array of strings, or a single string if 'asString' option is true.
    */
-  public sentence(options: Omit<TextOptions, "sentences" | "paragraphs"> = {}): string | string[] {
+  public sentence(options: SentenceOptions = {}): string | string[] {
     const wordsCount = options.words ?? RandomGenerator.generateNumberBetween(3, 15);
 
     let sentence = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
@@ -75,14 +75,14 @@ export class Text {
    * Generates a specified number of random sentences based on the specified options.
    *
    * @public
-   * @param {Omit<TextOptions, "paragraphs">} [options={}] - The options to customize the generated sentences.
+   * @param {SentencesOptions} [options={}] - The options to customize the generated sentences.
    * @param {number} [options.sentences] - The number of sentences to include in the output. If not specied, it defaults to 3.
    * @param {number} [options.words] - The number of words to include in each sentence. If not specified, it defaults between 3 and 15.
    * @param {boolean} [options.asString] - Whether to return the sentences as a string or an array of strings.
    * @returns {string|string[]} - The generated sentences, either as a string or an array of strings.
    * @throws {Error} - If the option 'sentences' is not a number or is less than or equal to 0.
    */
-  public sentences(options: Omit<TextOptions, "paragraphs"> = {}): string | string[] {
+  public sentences(options: SentencesOptions = {}): string | string[] {
     const sentencesCount = options.sentences ?? 3;
 
     if (typeof sentencesCount !== "number") {
@@ -113,7 +113,7 @@ export class Text {
    * Generates a specified number of random paragraphs based on the specified options.
    *
    * @public
-   * @param {TextOptions} [options={}] - The options to customize the generated paragraphs.
+   * @param {ParagraphOptions} [options={}] - The options to customize the generated paragraphs.
    * @param {number} [options.paragraphs] - The number of paragraphs to include in the output. If not specied, it defaults to 3.
    * @param {number} [options.sentences] - The number of sentences to include in the output. If not specied, it defaults to 3.
    * @param {number} [options.words] - The number of words to include in each sentence. If not specified, it defaults between 3 and 15.
@@ -121,7 +121,7 @@ export class Text {
    * @returns {string|string[]} - The generated paragraphs, either as a string or an array of strings.
    * @throws {Error} - If the option 'paragraphs' is not a number or is less than or equal to 0.
    */
-  public paragraphs(options: TextOptions = {}): string | string[] {
+  public paragraphs(options: ParagraphOptions = {}): string | string[] {
     const paragraphsCount = options.paragraphs ?? 3;
 
     if (typeof paragraphsCount !== "number") {
