@@ -108,7 +108,55 @@ describe("RandomGenerator", () => {
     it("should return either 0 or 1 randomly", () => {
       const randomBinary = RandomGenerator.generateBinary(); 
 
+      expect(Number.isInteger(randomBinary)).toBe(true);
       expect([0, 1]).toContain(randomBinary);
+    });
+  });
+
+  describe("generateNumberBetween", () => {
+    it ("should throw an Error if parameter 'min' or 'max' is missing", () => {
+      const error = "Parameter 'min' or 'max' is missing.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateNumberBetween()).toThrowError(error);
+      
+      // @ts-ignore
+      expect(() => RandomGenerator.generateNumberBetween(3)).toThrowError(error);
+    });
+
+    it("should throw an Error if parameter 'min' or 'max' is not a number", () => {
+      const error = "Parameter 'min' and 'max' has to be a number.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateNumberBetween("3", "6")).toThrowError(error);
+      
+      // @ts-ignore
+      expect(() => RandomGenerator.generateNumberBetween({}, true)).toThrowError(error);
+    });
+
+    it("should throw an Error if parameter 'min' or 'max' are less or equal than 0", () => {
+      const error = "Parameter 'min' and 'max' has to be greater than 0.";
+
+      expect(() => RandomGenerator.generateNumberBetween(-4, 3)).toThrowError(error);
+      expect(() => RandomGenerator.generateNumberBetween(5, -9)).toThrowError(error);
+      expect(() => RandomGenerator.generateNumberBetween(-5, -9)).toThrowError(error);
+    });
+
+    it("should throw an Error if parameter 'min' is greater than 'max'", () => {
+      const error = "Parameter 'min' has to be smaller than 'max'.";
+
+      expect(() => RandomGenerator.generateNumberBetween(6, 3)).toThrowError(error);
+      expect(() => RandomGenerator.generateNumberBetween(6, 6)).toThrowError(error);
+    });
+
+    it("should return a random number between the specified parameters", () => {
+      const min = 4;
+      const max = 20;
+
+      const result = RandomGenerator.generateNumberBetween(min, max);
+
+      expect(result).toBeGreaterThanOrEqual(min);
+      expect(result).toBeLessThanOrEqual(max);
     });
   });
 });
