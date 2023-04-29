@@ -28,7 +28,7 @@ export class Text {
    * @param {boolean} [options.asString] - If true, the generated words will be returned as a single string.
    * @returns {(string|string[])} An array of random words, or a single string if 'asString' option is true.
    */
-  public words(options: TextOptions = {}): string | string[] {
+  public words(options: Omit<TextOptions, "sentences"> = {}): string | string[] {
     const wordsCount = options.words ?? 3;
     const words = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
 
@@ -48,7 +48,7 @@ export class Text {
    * @param {boolean} [options.asString] - If true, the generated sentence will be returned as a single string.
    * @returns {string|string[]} - The generated sentence as an array of strings, or a single string if 'asString' option is true.
    */
-  public sentence(options: TextOptions = {}): string | string[] {
+  public sentence(options: Omit<TextOptions, "sentences"> = {}): string | string[] {
     const wordsCount = options.words ?? 5;
 
     let sentence = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
@@ -69,5 +69,32 @@ export class Text {
     }
 
     return sentence;
+  }
+
+  public sentences(options: Omit<TextOptions, "words"> = {}): string | string[] {
+    const sentencesCount = options.sentences ?? 3;
+
+    if (typeof sentencesCount !== "number") {
+      throw new Error("Option 'sentences' must be a number.");
+    }
+
+    if (sentencesCount <= 0) {
+      throw new Error("Option 'sentences' must be greater than 0.");
+    }
+
+    const sentences: string[] = [];
+
+    let counter = 0;
+    while (counter < sentencesCount) {
+      const sentence = this.sentence({ asString: true }) as string;
+      sentences.push(sentence);
+      counter += 1;
+    }
+
+    if (options.asString) {
+      return sentences.join(" ");
+    }
+
+    return sentences;
   }
 }
