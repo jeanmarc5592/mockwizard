@@ -29,13 +29,36 @@ export class Text {
    * @returns {(string|string[])} An array of random words, or a single string if 'asString' option is true.
    */
   public words(options: TextOptions = {}): string | string[] {
-    const amount = options.amount ?? 3;
-    const words = RandomGenerator.generateMultipleValues(this.data, { amount }) as string[];
+    const wordsCount = options.words ?? 3;
+    const words = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
 
     if (options.asString) {
       return words.join(" ");
     }
 
     return words;
+  }
+
+  public sentence(options: TextOptions = {}): string | string[] {
+    const wordsCount = options.words ?? 5;
+
+    let sentence = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
+    sentence = sentence.map((word, index) => {
+      if (index === 0) {
+        return word.charAt(0).toUpperCase();
+      }
+
+      if (index === sentence.length - 1) {
+        return `${word}.`;
+      }
+
+      return word;
+    });
+
+    if (options.asString) {
+      return sentence.join(" ");
+    }
+
+    return sentence;
   }
 }
