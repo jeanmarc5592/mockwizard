@@ -1,4 +1,4 @@
 export interface TextOptions {
-  amount?: number;
+  words?: number;
   asString?: boolean;
 }
