@@ -91,6 +91,16 @@ describe("RandomGenerator", () => {
       expect(resultsOne).toHaveLength(amountOne);
       expect(resultsTwo).toHaveLength(amountTwo);
       expect(resultsThree).toHaveLength(amountThree);
+      
+      resultsOne.forEach(result => {
+        expect(mockList).toContain(result);
+      });
+      resultsTwo.forEach(result => {
+        expect(mockList).toContain(result);
+      });
+      resultsThree.forEach(result => {
+        expect(mockList).toContain(result);
+      });
     });
   });
 
