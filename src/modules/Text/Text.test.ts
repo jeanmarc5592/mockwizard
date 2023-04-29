@@ -61,6 +61,9 @@ describe("Text", () => {
       const result = textMock.words() as string[];
 
       expect(result).toBeInstanceOf(Array);
+      result.forEach(word => {
+        expect(typeof word).toBe("string");
+      });
     });
 
     it("should return the results as a single string if 'asString' option is specified", () => {
@@ -84,10 +87,13 @@ describe("Text", () => {
       expect(result).toHaveLength(10);
     });
 
-    it("should return the sentence as an array if 'asString' option is not specified", () => {
+    it("should return the sentence as an array of strings if 'asString' option is not specified", () => {
       const result = textMock.sentence() as string[];
 
       expect(result).toBeInstanceOf(Array);
+      result.forEach(words => {
+        expect(typeof words).toBe("string");
+      });
     });
 
     it("should return the sentence as a string if 'asString' option is specified", () => {
@@ -164,10 +170,13 @@ describe("Text", () => {
       });
     });
 
-    it("should return 3 random sentences as an array if 'asString' is not specified", () => {
+    it("should return 3 random sentences as an array of strings if 'asString' is not specified", () => {
       const result = textMock.sentences() as string[];
 
       expect(result).toBeInstanceOf(Array);
+      result.forEach(sentence => {
+        expect(typeof sentence).toBe("string");
+      });
     });
 
     it("should generate 3 random sentences as a single string if 'asString' is not specified", () => {
