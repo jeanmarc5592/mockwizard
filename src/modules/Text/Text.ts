@@ -75,13 +75,14 @@ export class Text {
    * Generates a specified number of random sentences based on the specified options.
    *
    * @public
-   * @param {Omit<TextOptions, "words">} [options={}] - The options to customize the generated sentences.
+   * @param {TextOptions} [options={}] - The options to customize the generated sentences.
    * @param {number} [options.sentences] - The number of sentences to include in the output. If not specied, it defaults to 3.
+   * @param {number} [options.words] - The number of words to include in each sentence. If not specified, it defaults between 3 and 15.
    * @param {boolean} [options.asString] - Whether to return the sentences as a string or an array of strings.
    * @returns {string|string[]} - The generated sentences, either as a string or an array of strings.
    * @throws {Error} - If the option 'sentences' is not a number or is less than or equal to 0.
    */
-  public sentences(options: Omit<TextOptions, "words"> = {}): string | string[] {
+  public sentences(options: TextOptions = {}): string | string[] {
     const sentencesCount = options.sentences ?? 3;
 
     if (typeof sentencesCount !== "number") {
@@ -96,7 +97,7 @@ export class Text {
 
     let counter = 0;
     while (counter < sentencesCount) {
-      const sentence = this.sentence({ asString: true }) as string;
+      const sentence = this.sentence({ asString: true, words: options.words }) as string;
       sentences.push(sentence);
       counter += 1;
     }

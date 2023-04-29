@@ -127,6 +127,24 @@ describe("Text", () => {
       expect(result).toHaveLength(7);
     });
 
+    it("should return sentences that contain 3 to 15 random words if 'words' option is not specified", () => {
+      const result = textMock.sentences() as string[];
+
+      result.forEach(sentence => {
+        expect(sentence.split(" ").length).toBeGreaterThanOrEqual(3);
+        expect(sentence.split(" ").length).toBeLessThanOrEqual(15);
+      });
+    });
+
+    it("should return sentences with as many words as specified in 'words' option", () => {
+      const wordsCount = 6;
+      const result = textMock.sentences({ words: wordsCount }) as string[];
+
+      result.forEach(sentence => {
+        expect(sentence.split(" ")).toHaveLength(wordsCount);
+      });
+    });
+
     it("should return 3 random sentences as an array if 'asString' is not specified", () => {
       const result = textMock.sentences() as string[];
 
