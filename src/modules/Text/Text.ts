@@ -44,12 +44,12 @@ export class Text {
    *
    * @public
    * @param {Omit<TextOptions, "sentences">} [options={}] - The options to customize the generated sentence.
-   * @param {number} [options.words] - The number of words to include in the sentence. If not specified, it defaults to 5.
+   * @param {number} [options.words] - The number of words to include in the sentence. If not specified, it defaults between 3 and 15.
    * @param {boolean} [options.asString] - If true, the generated sentence will be returned as a single string.
    * @returns {string|string[]} - The generated sentence as an array of strings, or a single string if 'asString' option is true.
    */
   public sentence(options: Omit<TextOptions, "sentences"> = {}): string | string[] {
-    const wordsCount = options.words ?? 5;
+    const wordsCount = options.words ?? RandomGenerator.generateNumberBetween(3, 15);
 
     let sentence = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
     sentence = sentence.map((word, index) => {
