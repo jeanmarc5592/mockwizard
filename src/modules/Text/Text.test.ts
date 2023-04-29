@@ -115,6 +115,26 @@ describe("Text", () => {
   });
 
   describe("sentences", () => {
+    it("should throw an Error if 'sentences' option is not a number", () => {
+      const error = "Option 'sentences' must be a number.";
+
+      // @ts-ignore
+      expect(() => textMock.sentences({ sentences: "5" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.sentences({ sentences: [] })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.sentences({ sentences: true })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'sentences' option is less than or equal to 0", () => {
+      const error = "Option 'sentences' must be greater than 0.";
+
+      expect(() => textMock.sentences({ sentences: 0 })).toThrowError(error);
+      expect(() => textMock.sentences({ sentences: -5 })).toThrowError(error);
+    });
+
     it("should return 3 random sentences if 'sentences' option is not specified", () => {
       const result = textMock.sentences() as string[];
 
@@ -137,11 +157,10 @@ describe("Text", () => {
     });
 
     it("should return sentences with as many words as specified in 'words' option", () => {
-      const wordsCount = 6;
-      const result = textMock.sentences({ words: wordsCount }) as string[];
+      const result = textMock.sentences({ words: 6 }) as string[];
 
       result.forEach(sentence => {
-        expect(sentence.split(" ")).toHaveLength(wordsCount);
+        expect(sentence.split(" ")).toHaveLength(6);
       });
     });
 
@@ -156,25 +175,100 @@ describe("Text", () => {
 
       expect(typeof result).toBe("string");
     });
+  });
 
-    it("should throw an Error if 'sentences' option is less or equal 0", () => {
-      const error = "Option 'sentences' must be greater than 0.";
+  describe("paragraphs", () => {
+    it("should throw an Error if 'paragraphs' option is not a number", () => {
+      const error = "Option 'paragraphs' must be a number.";
 
-      expect(() => textMock.sentences({ sentences: 0 })).toThrowError(error);
-      expect(() => textMock.sentences({ sentences: -5 })).toThrowError(error);
+      // @ts-ignore
+      expect(() => textMock.paragraphs({ paragraphs: "6" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.paragraphs({ paragraphs: [] })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.paragraphs({ paragraphs: true })).toThrowError(error);
     });
 
-    it("should throw an Error if 'sentences' option is not a number", () => {
-      const error = "Option 'sentences' must be a number.";
+    it("should throw an Error if 'paragraphs' option is less than or equal to 0", () => {
+      const error = "Option 'paragraphs' must be greater than 0.";
 
-      // @ts-ignore
-      expect(() => textMock.sentences({ sentences: "5" })).toThrowError(error);
+      expect(() => textMock.paragraphs({ paragraphs: -3 })).toThrowError(error);
+      expect(() => textMock.paragraphs({ paragraphs: 0 })).toThrowError(error);
+    });
 
-      // @ts-ignore
-      expect(() => textMock.sentences({ sentences: [] })).toThrowError(error);
+    it("should return 3 paragraphs if 'paragraphs' option is not specified", () => {
+      const result = textMock.paragraphs() as string[];
 
-      // @ts-ignore
-      expect(() => textMock.sentences({ sentences: true })).toThrowError(error);
+      expect(result).toHaveLength(3);
+    });
+
+    it("should return as many paragraphs as speciefied in the 'paragraphs' option", () => {
+      const result = textMock.paragraphs({ paragraphs: 10 }) as string[];
+
+      expect(result).toHaveLength(10);
+    });
+
+    it("should return 3 sentences for each paragraph if 'sentences' option is not specified", () => {
+      const result = textMock.paragraphs() as string[];
+
+      result.forEach(paragraph => {
+        expect(paragraph.split(". ")).toHaveLength(3);
+      });
+    });
+
+    it("should return for each paragraph as many sentences as specified in 'sentences' option", () => {
+      const result = textMock.paragraphs({ sentences: 7 }) as string[];
+
+      result.forEach(paragraph => {
+        expect(paragraph.split(". ")).toHaveLength(7);
+      });
+    });
+
+    it("should return sentences with 3 to 15 words if 'words' option is not specified", () => {
+      const result = textMock.paragraphs() as string[];
+
+      result.forEach(paragraph => {
+        paragraph.split(". ").forEach(sentence => {
+          expect(sentence.split(" ").length).toBeGreaterThanOrEqual(3);
+          expect(sentence.split(" ").length).toBeLessThanOrEqual(15);
+        });
+      });
+    });
+
+    it("should return sentences with as many words as specified in 'words' option", () => {
+      const result = textMock.paragraphs({ words: 9 }) as string[];
+
+      result.forEach(paragraph => {
+        paragraph.split(". ").forEach(sentence => {
+          expect(sentence.split(" ")).toHaveLength(9);
+        });
+      });
+    });
+
+    it("should paragraphs as an array of strings if 'asString' option is not specified", () => {
+      const result = textMock.paragraphs() as string[];
+
+      expect(result).toBeInstanceOf(Array);
+      result.forEach(paragraph => {
+        expect(typeof paragraph).toBe("string");
+      });
+    });
+
+    it("should return paragraphs as a single string if 'asString' option is specified", () => {
+      const result = textMock.paragraphs({ asString: true }) as string;
+
+      expect(typeof result).toBe("string");
+    });
+
+    it("should include double linebreaks if 'asString' option is specified", () => {
+      const result = textMock.paragraphs({ asString: true }) as string;
+
+      const lineBreaks = result.split("\n").filter(item => item === " ");
+
+      expect(result.includes("\n \n")).toBe(true);
+      expect(lineBreaks).toHaveLength(2); // 3 paragraphs -> 2 linebreaks in between (Default)
     });
   });
 });
