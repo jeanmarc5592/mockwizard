@@ -1,5 +1,5 @@
 import { TextData } from "./data";
-import { RandomGenerator } from "../Utils";
+import { RandomGenerator } from "../../utils";
 import { TextOptions } from "./types";
 
 export class Text {
