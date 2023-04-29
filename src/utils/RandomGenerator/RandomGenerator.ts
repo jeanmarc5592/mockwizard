@@ -23,7 +23,7 @@ export class RandomGenerator {
   }
 
   /**
-   * Generates an array of random values from a givenlist.
+   * Generates an array of random values from a given list.
    *
    * @static
    * @param {List} list - The list to generate random values from.
@@ -81,9 +81,9 @@ export class RandomGenerator {
    * @param {number} max - The maximum value to generate.
    * @returns {number} The generated random number.
    * @throws {Error} Throws an error if `min` or `max` is missing or not a number.
-   * @throws {Error} Throws an error if `min` or `max` are less or equal than 0.
-   * @throws {Error} Throws an error if `min` is greater or equal than `max`.
-   * @throws {Error} Throws an error if `max` is less or equal than `min`.
+   * @throws {Error} Throws an error if `min` or `max` is less than or equal to 0.
+   * @throws {Error} Throws an error if `min` is greater than or equal to `max`.
+   * @throws {Error} Throws an error if `max` is less than or equal to `min`.
    */
   static generateNumberBetween(min: number, max: number): number {
     if (!min || !max) {
