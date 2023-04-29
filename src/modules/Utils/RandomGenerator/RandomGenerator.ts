@@ -43,12 +43,12 @@ export class RandomGenerator {
       throw new Error("Parameter 'list' must be an Array.");
     }
 
-    if (options.amount && options.amount > list.length - 1) {
-      throw new Error("Option 'amount' can't be larger than paremeter 'list'.");
+    if (options.amount > list.length) {
+      throw new Error("Option 'amount' can't be larger than parameter 'list'.");
     }
 
-    if (options.amount && options.amount <= 0) {
-      throw new Error("Option 'amount' must be greater 0.");
+    if (options.amount <= 0) {
+      throw new Error("Option 'amount' must be greater than 0.");
     }
 
     const values: RandomValue[] = [];
