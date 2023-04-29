@@ -71,10 +71,11 @@ describe("Text", () => {
   });
 
   describe("sentence", () => {
-    it("should generate a sentence with 5 random words from a given list if 'words' option is not specified", () => {
+    it("should generate a sentence with 3 to 15 random words if 'words' option is not specified", () => {
       const result = textMock.sentence() as string[];
 
-      expect(result).toHaveLength(5);
+      expect(result.length).toBeGreaterThanOrEqual(3);
+      expect(result.length).toBeLessThanOrEqual(15);
     });
 
     it("should generate a sentence with as many words as in the 'words' option is specified from a given list", () => {
