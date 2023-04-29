@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { Text } from "./Text";
 
-
 describe("Text", () => {
   let textMock: Text;
 
@@ -24,7 +23,7 @@ describe("Text", () => {
       const results = textMock.words() as string[];
       const wordsList = Reflect.get(textMock, "data");
 
-      results.forEach(result => {
+      results.forEach((result) => {
         expect(wordsList).toContain(result);
       });
 
@@ -47,13 +46,13 @@ describe("Text", () => {
       expect(resultsTwo).toHaveLength(wordsCountTwo);
       expect(resultsThree).toHaveLength(wordsCountFour);
 
-      resultsOne.forEach(result => {
+      resultsOne.forEach((result) => {
         expect(wordsList).toContain(result);
       });
-      resultsTwo.forEach(result => {
+      resultsTwo.forEach((result) => {
         expect(wordsList).toContain(result);
       });
-      resultsThree.forEach(result => {
+      resultsThree.forEach((result) => {
         expect(wordsList).toContain(result);
       });
     });
@@ -98,10 +97,10 @@ describe("Text", () => {
 
     it("should make the first character of the first word uppercase", () => {
       const result = textMock.sentence() as string[];
-      
+
       const firstChar = result[0].charAt(0);
 
-      expect(firstChar).toMatch((/[A-Z]/));
+      expect(firstChar).toMatch(/[A-Z]/);
     });
 
     it("should add a dot after the last word", () => {
@@ -111,6 +110,52 @@ describe("Text", () => {
       const lastChar = lastWord.charAt(lastWord.length - 1);
 
       expect(lastChar).toBe(".");
+    });
+  });
+
+  describe("sentences", () => {
+    it("should return 3 random sentences if 'sentences' option is not specified", () => {
+      const result = textMock.sentences() as string[];
+
+      expect(result).toHaveLength(3);
+    });
+
+    it("should return as many sentences as in the 'sentences' option is specified", () => {
+      const result = textMock.sentences({ sentences: 7 }) as string[];
+
+      expect(result).toHaveLength(7);
+    });
+
+    it("should return 3 random sentences as an array if 'asString' is not specified", () => {
+      const result = textMock.sentences() as string[];
+
+      expect(result).toBeInstanceOf(Array);
+    });
+
+    it("should generate 3 random sentences as a single string if 'asString' is not specified", () => {
+      const result = textMock.sentences({ asString: true }) as string;
+
+      expect(typeof result).toBe("string");
+    });
+
+    it("should throw an Error if 'sentences' option is less or equal 0", () => {
+      const error = "Option 'sentences' must be greater than 0.";
+
+      expect(() => textMock.sentences({ sentences: 0 })).toThrowError(error);
+      expect(() => textMock.sentences({ sentences: -5 })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'sentences' option is not a number", () => {
+      const error = "Option 'sentences' must be a number.";
+
+      // @ts-ignore
+      expect(() => textMock.sentences({ sentences: "5" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.sentences({ sentences: [] })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.sentences({ sentences: true })).toThrowError(error);
     });
   });
 });
