@@ -45,7 +45,7 @@ export class Text {
     let sentence = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
     sentence = sentence.map((word, index) => {
       if (index === 0) {
-        return word.charAt(0).toUpperCase();
+        return word.charAt(0).toUpperCase() + word.slice(1);
       }
 
       if (index === sentence.length - 1) {
