@@ -72,4 +72,36 @@ export class RandomGenerator {
   static generateBinary(): number {
     return Math.floor(Math.random() * 2);
   }
+
+  /**
+   * Generates a random number between the specified minimum and maximum values (inclusive).
+   *
+   * @static
+   * @param {number} min - The minimum value to generate.
+   * @param {number} max - The maximum value to generate.
+   * @returns {number} The generated random number.
+   * @throws {Error} Throws an error if `min` or `max` is missing or not a number.
+   * @throws {Error} Throws an error if `min` or `max` are less or equal than 0.
+   * @throws {Error} Throws an error if `min` is greater or equal than `max`.
+   * @throws {Error} Throws an error if `max` is less or equal than `min`.
+   */
+  static generateNumberBetween(min: number, max: number): number {
+    if (!min || !max) {
+      throw new Error("Parameter 'min' or 'max' is missing.");
+    }
+
+    if (typeof min !== "number" || typeof max !== "number") {
+      throw new Error("Parameter 'min' and 'max' has to be a number.");
+    }
+
+    if (min <= 0 || max <= 0) {
+      throw new Error("Parameter 'min' and 'max' has to be greater than 0.");
+    }
+
+    if (min >= max) {
+      throw new Error("Parameter 'min' has to be smaller than 'max'.");
+    }
+
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 }
