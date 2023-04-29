@@ -39,6 +39,15 @@ export class Text {
     return words;
   }
 
+  /**
+   * Generates a random sentence based on the specified options.
+   *
+   * @public
+   * @param {TextOptions} [options={}] - The options to customize the generated sentence.
+   * @param {number} [options.words] - The number of words to include in the sentence. If not specified, it defaults to 5.
+   * @param {boolean} [options.asString] - If true, the generated sentence will be returned as a single string.
+   * @returns {string|string[]} - The generated sentence as an array of strings, or a single string if 'asString' option is true.
+   */
   public sentence(options: TextOptions = {}): string | string[] {
     const wordsCount = options.words ?? 5;
 
