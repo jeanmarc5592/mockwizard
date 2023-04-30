@@ -219,11 +219,12 @@ describe("Text", () => {
       expect(result).toHaveLength(10);
     });
 
-    it("should return 3 sentences for each paragraph if 'sentences' option is not specified", () => {
+    it("should return 3 - 8 sentences for each paragraph if 'sentences' option is not specified", () => {
       const result = textMock.paragraphs() as string[];
 
       result.forEach(paragraph => {
-        expect(paragraph.split(". ")).toHaveLength(3);
+        expect(paragraph.split(". ").length).toBeGreaterThanOrEqual(3);
+        expect(paragraph.split(". ").length).toBeLessThanOrEqual(8);
       });
     });
 

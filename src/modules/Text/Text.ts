@@ -24,7 +24,7 @@ export class Text {
    *
    * @public
    * @param {WordsOptions} [options={}] - An optional object containing additional options.
-   * @param {number} [options.amount] - The number of random words to generate. If not specified, it defaults to 3.
+   * @param {number} [options.words] - The number of random words to generate. If not specified, it defaults to 3.
    * @param {boolean} [options.asString] - If true, the generated words will be returned as a single string.
    * @returns {(string|string[])} An array of random words, or a single string if 'asString' option is true.
    */
@@ -115,13 +115,14 @@ export class Text {
    * @public
    * @param {ParagraphOptions} [options={}] - The options to customize the generated paragraphs.
    * @param {number} [options.paragraphs] - The number of paragraphs to include in the output. If not specied, it defaults to 3.
-   * @param {number} [options.sentences] - The number of sentences to include in the output. If not specied, it defaults to 3.
+   * @param {number} [options.sentences] - The number of sentences to include in the output. If not specified, it defaults between 3 and 8.
    * @param {number} [options.words] - The number of words to include in each sentence. If not specified, it defaults between 3 and 15.
    * @param {boolean} [options.asString] - Whether to return the paragraph as a string or an array of strings.
    * @returns {string|string[]} - The generated paragraphs, either as a string or an array of strings.
    * @throws {Error} - If the option 'paragraphs' is not a number or is less than or equal to 0.
    */
   public paragraphs(options: ParagraphOptions = {}): string | string[] {
+    const sentencesCount = options.sentences ?? RandomGenerator.generateNumberBetween(3, 8);
     const paragraphsCount = options.paragraphs ?? 3;
 
     if (typeof paragraphsCount !== "number") {
@@ -136,7 +137,7 @@ export class Text {
 
     let counter = 0;
     while (counter < paragraphsCount) {
-      const paragraph = this.sentences({ asString: true, words: options.words, sentences: options.sentences }) as string;
+      const paragraph = this.sentences({ asString: true, words: options.words, sentences: sentencesCount }) as string;
       paragraphs.push(paragraph);
       counter += 1;
     }
