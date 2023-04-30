@@ -19,6 +19,26 @@ describe("Text", () => {
   });
 
   describe("words", () => {
+    it("should throw an Error if 'words' option is not a number", () => {
+      const error = "Option 'words' must be a number.";
+
+      // @ts-ignore
+      expect(() => textMock.words({ words: "5" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.words({ words: [] })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => textMock.words({ words: true })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'words' option is less than or equal to 0", () => {
+      const error = "Option 'words' must be greater than 0.";
+
+      expect(() => textMock.words({ words: 0 })).toThrowError(error);
+      expect(() => textMock.words({ words: -5 })).toThrowError(error);
+    });
+
     it("should generate 3 random words from the given list if 'words' option is not specified", () => {
       const results = textMock.words() as string[];
       const wordsList = Reflect.get(textMock, "data");

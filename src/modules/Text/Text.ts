@@ -30,6 +30,15 @@ export class Text {
    */
   public words(options: WordsOptions = {}): string | string[] {
     const wordsCount = options.words ?? 3;
+
+    if (typeof wordsCount !== "number") {
+      throw new Error("Option 'words' must be a number.");
+    }
+
+    if (wordsCount <= 0) {
+      throw new Error("Option 'words' must be greater than 0.");
+    }
+
     const words = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
 
     if (options.asString) {
