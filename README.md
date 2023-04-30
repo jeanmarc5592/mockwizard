@@ -228,59 +228,59 @@ mw.text.sentences({ words: 6 })
 // Generate multiple random paragraphs (by default 3)
 mw.text.paragraphs() 
 /* 
-	[ 
-		"Enim mauris cillum maecenas voluptate porta sagittis bibendum. Sapien sit viverra praesentium vestibulum dolor.", 
-		"Mauris mollitia quisque bibendum. Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
-		"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui." 
-	]
+    [ 
+        "Enim mauris cillum maecenas voluptate porta sagittis bibendum. Sapien sit viverra praesentium vestibulum dolor.", 
+	"Mauris mollitia quisque bibendum. Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
+	"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui." 
+    ]
 */ 
 
 
 // Generate multiple random paragraphs as a single string
 mw.text.paragraphs({ asString: true })
 /* 
-	"
-		Enim mauris cillum maecenas voluptate porta sagittis bibendum. Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.
+    "
+	Enim mauris cillum maecenas voluptate porta sagittis bibendum. Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.
  
-		Deserunt turpis aliquet aliquip lobortis eleifend do fringilla turpis. Maximus praesentium ullamco non sapien porta. Est augue cupiditate dignissimos nulla.
+	Deserunt turpis aliquet aliquip lobortis eleifend do fringilla turpis. Maximus praesentium ullamco non sapien porta. Est augue cupiditate dignissimos nulla.
 	
-		Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui.
-	"
+	Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui.
+    "
 */
 
 
 // Generate any number of random paragraphs
 mw.text.paragraphs({ paragraphs: 5 })
 /* 
-	[ 
-		"Enim mauris cillum maecenas voluptate porta sagittis bibendum. Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.", 
-		"Mauris mollitia quisque bibendum. Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
-		"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui.",
-		"Fugiat non lobortis morbi quam dolor. Lobortis posuere commodo diam corrupti quis. Fringilla tempor gravida iaculit dignissim nibh maecenas scelerisque.",
-		"Doloremque aute quos in qui metus aute minim nec cupidatat tortor architecto iaculit error eaque. Nulla tristique ut. Velit tempus velit quam." 
-	]
+    [ 
+	"Enim mauris cillum maecenas voluptate porta sagittis bibendum. Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.", 
+	"Mauris mollitia quisque bibendum. Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
+	"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui.",
+	"Fugiat non lobortis morbi quam dolor. Lobortis posuere commodo diam corrupti quis. Fringilla tempor gravida iaculit dignissim nibh maecenas scelerisque.",
+	"Doloremque aute quos in qui metus aute minim nec cupidatat tortor architecto iaculit error eaque. Nulla tristique ut. Velit tempus velit quam." 
+    ]
 */ 
 
 
 // Generate multiple paragraphs with a specific number of sentences for each paragraph (by default 3 - 8)
 mw.text.paragraphs({ sentences: 2 })
 /* 
-	[ 
-		"Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.", 
-		"Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
-		"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi." 
-	]
+    [ 
+	"Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.", 
+	"Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
+	"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi." 
+    ]
 */ 
 
 
 // Generate multiple paragraphs with a specific number of words for each sentence (by default 3 - 15)
 mw.text.paragraphs({ words: 4 })
 /* 
-	[ 
-		"Enim mauris cillum bibendum. Et sagittis mollitia aliqua. Sapien sit viverra vestibulum.", 
-		"Mauris mollitia quisque bibendum. Officia lorem nostrud enim. Ipsa varius curabitur qui.", 
-		"Maecenas purus curabitur occaecati. Sunt pretium id excepturi. Integer provident bibendum qui." 
-	]
+    [ 
+	"Enim mauris cillum bibendum. Et sagittis mollitia aliqua. Sapien sit viverra vestibulum.", 
+	"Mauris mollitia quisque bibendum. Officia lorem nostrud enim. Ipsa varius curabitur qui.", 
+	"Maecenas purus curabitur occaecati. Sunt pretium id excepturi. Integer provident bibendum qui." 
+    ]
 */ 
 
 
