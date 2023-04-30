@@ -78,86 +78,212 @@ Here's a list of currently supported locales:
 
 ### First name
 ```js
-import { MockWizard } from "mockwizard";
-
-const mw = new MockWizard();
-
 // Generate a random first name (gender will be picked randomly)
-mw.person.firstName(); // "Laura"
+mw.person.firstName(); 
+// "Laura"
+
 
 // Generate a random male first name
-mw.person.firstName({ gender: "male" }); // "John"
+mw.person.firstName({ gender: "male" }); 
+// "John"
+
 
 // Generate a random female first name
-mw.person.firstName({ gender: "female" }); // "Sarah"
+mw.person.firstName({ gender: "female" }); 
+// "Sarah"
 ```
 
 ### Last name
 ```js
-import { MockWizard } from "mockwizard";
-
-const mw = new MockWizard();
-
 // Generate a random last name
-mw.person.lastName(); // "Spencer"
+mw.person.lastName(); 
+// "Spencer"
 ```
 
 ### Full name
 ```js
-import { MockWizard } from "mockwizard";
-
-const mw = new MockWizard();
-
 // Generate a random full name (gender will be picked randomly)
-mw.person.fullName(); // "Melyssa Wilkinson"
+mw.person.fullName(); 
+// "Melyssa Wilkinson"
+
 
 // Generate a random male full name
-mw.person.fullName({ gender: "male" }); // "John Rice"
+mw.person.fullName({ gender: "male" }); 
+// "John Rice"
+
 
 // Generate a random female full name
-mw.person.fullName({ gender: "female" }); // "Sarah Carter"
+mw.person.fullName({ gender: "female" }); 
+// "Sarah Carter"
+
 
 // Generate a random full name with suffix
-mw.person.fullName({ includeSuffix: true }); // "Anton Jackson Sr."
+mw.person.fullName({ includeSuffix: true }); 
+// "Anton Jackson Sr."
+
 
 // Generate a random full name with salutation
-mw.person.fullName({ includeSalutation: true }); // "Dr. Melyssa Wilkinson"
+mw.person.fullName({ includeSalutation: true }); 
+// "Dr. Melyssa Wilkinson"
 ```
 
 ### Suffix
 ```js
-import { MockWizard } from "mockwizard";
-
-const mw = new MockWizard();
-
 // Generate a random suffix
-mw.person.suffix(); // "Jr."
+mw.person.suffix(); 
+// "Jr."
 ```
 
 ### Salutation
 ```js
-import { MockWizard } from "mockwizard";
-
-const mw = new MockWizard();
-
 // Generate a random salutation (no gender specific)
-mw.person.salutation(); // "Prof."
+mw.person.salutation(); 
+// "Prof."
+
 
 // Generate a random male salutation
-mw.person.salutation({ gender: "male" }); // "Mr."
+mw.person.salutation({ gender: "male" }); 
+// "Mr."
+
 
 // Generate a random female salutation
-mw.person.salutation({ gender: "female" }); // "Ms."
+mw.person.salutation({ gender: "female" }); 
+// "Ms."
 ```
 
 ## UUID
 ```js
-import { MockWizard } from "mockwizard";
-
-const mw = new MockWizard();
-
 // Generate a random uuid
-mw.uuid.generate() // "db4bd5d9-4cc1-44ef-bdaf-809ebac8003c"
+mw.uuid.generate() 
+// "db4bd5d9-4cc1-44ef-bdaf-809ebac8003c"
+```
+
+## Text
+
+### Word
+```js
+// Generate a random word
+mw.text.word() 
+// "dolor"
+```
+
+### Words
+```js
+// Generate multiple random words (by default 3)
+mw.text.words() 
+// [ "dolor", "officia", "nulla" ]
+
+
+// Generate random words as a single string
+mw.text.words({ asString: true }) 
+// "dolor officia nulla"
+
+
+// Generate a specific number of random words
+mw.text.words({ words: 6 }) 
+// [ "dolor", "officia", "nulla", "aliquip", "ipsa", "molestias" ]
+```
+
+### Sentence
+```js
+// Generate a random sentence (by default 3 - 15 words)
+mw.text.sentence() 
+// [ "Dolor", "ipsa", "nulla." ]
+
+
+// Generate a random sentence as a single string
+mw.text.sentence({ asString: true }) 
+// "Rhoncus reprehenderit interdum acilisis nisi atque laboris dignissimos."
+
+
+// Generate a random sentence with a specific number of words
+mw.text.sentence({ words: 5 }) 
+// [ "Officia", "nulla", "aliquip", "ipsa", "molestias." ]
+```
+
+### Sentences
+```js
+// Generate multiple random sentences (by default 3)
+mw.text.sentences() 
+// [ "Tristique vestibulum accusantium urna architecto.", "Deleniti congue rhoncus.", "Voluptatum veritatis tempor adipiscing laboris qui." ]
+
+
+// Generate a mulitple random sentences as a single string
+mw.text.sentences({ asString: true }) 
+// "Tristique vestibulum accusantium urna architecto. Deleniti congue rhoncus. Voluptatum veritatis tempor adipiscing laboris qui."
+
+
+// Generate any number of random sentences
+mw.text.sentences({ sentences: 2 }) 
+// [ "Tristique vestibulum accusantium urna architecto.", "Deleniti congue rhoncus." ]
+
+
+// Generate multiple random sentences with a specific number of words for each sentence (by default 3 - 15)
+mw.text.sentences({ words: 6 }) 
+// [ "Similique ipsa do omnis eros nulla.", "Nibh in culpa aut aliquet cupiditate.", "Lacus scelerisque quisque dictum corrupti officia." ]
+```
+
+### Paragraphs
+```js
+// Generate multiple random paragraphs (by default 3)
+mw.text.paragraphs() 
+/* 
+	[ 
+		"Enim mauris cillum maecenas voluptate porta sagittis bibendum. Sapien sit viverra praesentium vestibulum dolor.", 
+		"Mauris mollitia quisque bibendum. Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
+		"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui." 
+	]
+*/ 
+
+
+// Generate multiple random paragraphs as a single string
+mw.text.paragraphs({ asString: true })
+/* 
+	"
+		Enim mauris cillum maecenas voluptate porta sagittis bibendum. Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.
+ 
+		Deserunt turpis aliquet aliquip lobortis eleifend do fringilla turpis. Maximus praesentium ullamco non sapien porta. Est augue cupiditate dignissimos nulla.
+	
+		Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui.
+	"
+*/
+
+
+// Generate any number of random paragraphs
+mw.text.paragraphs({ paragraphs: 5 })
+/* 
+	[ 
+		"Enim mauris cillum maecenas voluptate porta sagittis bibendum. Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.", 
+		"Mauris mollitia quisque bibendum. Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
+		"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi. Integer felis magna provident bibendum qui.",
+		"Fugiat non lobortis morbi quam dolor. Lobortis posuere commodo diam corrupti quis. Fringilla tempor gravida iaculit dignissim nibh maecenas scelerisque.",
+		"Doloremque aute quos in qui metus aute minim nec cupidatat tortor architecto iaculit error eaque. Nulla tristique ut. Velit tempus velit quam." 
+	]
+*/ 
+
+
+// Generate multiple paragraphs with a specific number of sentences for each paragraph (by default 3 - 8)
+mw.text.paragraphs({ sentences: 2 })
+/* 
+	[ 
+		"Et sagittis mollitia aliqua. Sapien sit viverra praesentium vestibulum dolor.", 
+		"Officia lorem nostrud. Ipsa varius aenean vitae et dui veritatis porttitor curabitur qui.", 
+		"Maecenas purus sint rhoncus adipiscing nec curabitur qui id occaecati. Sunt pretium id mollit doloremque excepturi." 
+	]
+*/ 
+
+
+// Generate multiple paragraphs with a specific number of words for each sentence (by default 3 - 15)
+mw.text.paragraphs({ words: 4 })
+/* 
+	[ 
+		"Enim mauris cillum bibendum. Et sagittis mollitia aliqua. Sapien sit viverra vestibulum.", 
+		"Mauris mollitia quisque bibendum. Officia lorem nostrud enim. Ipsa varius curabitur qui.", 
+		"Maecenas purus curabitur occaecati. Sunt pretium id excepturi. Integer provident bibendum qui." 
+	]
+*/ 
+
+
 ```
 
 ## License
