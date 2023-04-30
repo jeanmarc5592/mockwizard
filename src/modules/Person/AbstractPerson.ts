@@ -1,4 +1,4 @@
-import { RandomGenerator } from "../Utils";
+import { RandomGenerator } from "../../utils";
 import { PersonOptions } from "./types";
 
 export abstract class AbstractPerson {
