@@ -11,6 +11,7 @@ describe("Internet", () => {
     it("should return a random string with 10 characters if 'length' option is not specified", () => {
       const result = internetMock.password();
 
+      expect(typeof result).toBe("string");
       expect(result.length).toBe(10);
     });
 
@@ -51,6 +52,7 @@ describe("Internet", () => {
       const length = 16;
       const result = internetMock.password({ length });
 
+      expect(typeof result).toBe("string");
       expect(result.length).toBe(length);
     });
   });
