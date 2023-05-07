@@ -3,8 +3,6 @@ import { RandomGenerator } from "../../utils";
 import { WordsOptions, SentenceOptions, SentencesOptions, ParagraphOptions } from "./types";
 
 export class Text {
-  private readonly data: string[];
-
   constructor() {
     this.data = TextData.words;
   }
@@ -157,4 +155,12 @@ export class Text {
 
     return paragraphs;
   }
+
+  /**
+   * An array of random blindtext words.
+   * @private
+   * @readonly
+   * @type {string[]}
+   */
+  private readonly data: string[];
 }
