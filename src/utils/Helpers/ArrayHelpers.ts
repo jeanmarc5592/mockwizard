@@ -1,6 +1,7 @@
 export class ArrayHelpers {
   /**
    * Shuffles an array in place using the Fisher-Yates Shuffle Algorithm.
+   *
    * @static
    * @param {any[]} array - The array to shuffle.
    * @returns {any[]} - A new shuffled array.
