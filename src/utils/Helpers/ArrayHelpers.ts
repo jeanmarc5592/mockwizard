@@ -4,10 +4,11 @@ export class ArrayHelpers {
    * @static
    * @param {any[]} array - The array to shuffle.
    * @returns {any[]} - A new shuffled array.
+   * @throws {Error} If the `array` parameter is missing or not an Array.
    */
   static shuffle(array: any[]): any[] {
     if (!(array instanceof Array)) {
-      throw new Error("Parameter 'array' has to be an Array");
+      throw new Error("Parameter 'array' has to be an Array.");
     }
 
     const rawArray = [...array];
