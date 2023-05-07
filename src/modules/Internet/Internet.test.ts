@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { Internet } from "./Internet";
 
 describe("Internet", () => {
@@ -8,6 +9,18 @@ describe("Internet", () => {
   });
 
   describe("password", () => {
+    let lowercaseLetters: string[];
+    let uppercaseLetters: string[];
+    let symbols: string[];
+    let numbers: string[];
+
+    beforeEach(() => {
+      lowercaseLetters = Reflect.get(internetMock, "lowercaseLetters");
+      uppercaseLetters = Reflect.get(internetMock, "uppercaseLetters");
+      symbols = Reflect.get(internetMock, "symbols");
+      numbers = Reflect.get(internetMock, "numbers");
+    });
+
     it("should return a random string with 10 characters if 'length' option is not specified", () => {
       const result = internetMock.password();
 
@@ -54,6 +67,57 @@ describe("Internet", () => {
 
       expect(typeof result).toBe("string");
       expect(result.length).toBe(length);
+    });
+
+    it("should return a random string with uppercase letters, lowercase letters, symbols and numbers by default", () => {
+      const result = internetMock.password();
+      const allCharacters = [...lowercaseLetters, ...uppercaseLetters, ...symbols, ...numbers];
+
+      result.split("").forEach(char => {
+        expect(allCharacters).toContain(char);
+      });
+    });
+
+
+    it("should return a random string with uppercase letters, lowercase letters, symbols and numbers if all options are specified", () => {
+      const result = internetMock.password({ includeUppercase: true, includeLowercase: true, includeNumbers: true, includeSymbols: true });
+      const allCharacters = [...lowercaseLetters, ...uppercaseLetters, ...symbols, ...numbers];
+
+      result.split("").forEach(char => {
+        expect(allCharacters).toContain(char);
+      });
+    });
+
+    it("should return a random string with only uppercase letters if 'includeUppercase' is specified", () => {
+      const result = internetMock.password({ includeUppercase: true });
+
+      result.split("").forEach(char => {
+        expect(uppercaseLetters).toContain(char);
+      });
+    });
+
+    it("should return a random string with only lowercase letters if 'includeLowercase' is specified", () => {
+      const result = internetMock.password({ includeLowercase: true });
+
+      result.split("").forEach(char => {
+        expect(lowercaseLetters).toContain(char);
+      });
+    });
+
+    it("should return a random string with only numbers if 'includeNumbers' is specified", () => {
+      const result = internetMock.password({ includeNumbers: true });
+
+      result.split("").forEach(char => {
+        expect(numbers).toContain(char);
+      });
+    });
+
+    it("should return a random string with only symbols if 'includeSymbols' is specified", () => {
+      const result = internetMock.password({ includeSymbols: true });
+
+      result.split("").forEach(char => {
+        expect(symbols).toContain(char);
+      });
     });
   });
 });
