@@ -120,4 +120,24 @@ describe("Internet", () => {
       });
     });
   });
+
+  describe("macAddress", () => {
+    it("should return a random string with 6 bytes that are separated by a colon", () => {
+      const macAddress = internetMock.macAddress();
+
+      expect(typeof macAddress).toBe("string");
+      expect(macAddress.split(":")).toHaveLength(6);
+    });
+
+    it("should return a random string where each byte contains 2 hexadecimal numbers", () => {
+      const macAddress = internetMock.macAddress();
+      const regex = /^[0-9A-Fa-f]+$/;
+
+      macAddress.split(":").forEach(byte => {
+        expect(byte.length).toBe(2);
+        expect(regex.test(byte.charAt(0))).toBe(true);
+        expect(regex.test(byte.charAt(1))).toBe(true);
+      });
+    });
+  });
 });
