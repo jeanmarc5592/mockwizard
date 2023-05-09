@@ -81,12 +81,12 @@ export class RandomGenerator {
    * @param {number} max - The maximum value to generate.
    * @returns {number} The generated random number.
    * @throws {Error} Throws an error if `min` or `max` is missing or not a number.
-   * @throws {Error} Throws an error if `min` or `max` is less than or equal to 0.
+   * @throws {Error} Throws an error if `min` or `max` is less than 0.
    * @throws {Error} Throws an error if `min` is greater than or equal to `max`.
    * @throws {Error} Throws an error if `max` is less than or equal to `min`.
    */
   static generateNumberBetween(min: number, max: number): number {
-    if (!min || !max) {
+    if (min === undefined || max === undefined) {
       throw new Error("Parameter 'min' or 'max' is missing.");
     }
 
