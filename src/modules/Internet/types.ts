@@ -5,3 +5,7 @@ export interface PasswordOptions {
   includeSymbols?: boolean;
   includeNumbers?: boolean;
 }
+
+export interface Ipv4Options {
+  isLocal?: boolean;
+}

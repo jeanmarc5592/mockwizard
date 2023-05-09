@@ -1,5 +1,5 @@
 import { GenericData, RandomGenerator, ArrayHelpers } from "../../utils";
-import { PasswordOptions } from "./types";
+import { Ipv4Options, PasswordOptions } from "./types";
 
 export class Internet {
   constructor() {
@@ -74,14 +74,42 @@ export class Internet {
    */
   public macAddress(): string {
     // Example: "56:A8:E4:8F:43:88"
-    const bytes: string[] = [];
+    const result: string[] = [];
 
     for (let i = 1; i <= 6; i += 1) {
       const hex = RandomGenerator.generateHex(2);
-      bytes.push(hex);
+      result.push(hex);
     }
 
-    return bytes.join(":");
+    return result.join(":");
+  }
+
+  /**
+   * Generates a random IPv4 address.
+   *
+   * @public
+   * @param {Object} options - An optional object that can contain the following properties:
+   * @param {boolean} options.isLocal - A boolean indicating whether the IP address should be local (starts with 192.168.xxx.xxx or 10.xxx.xxx.xxx).
+   * @returns {string} - A string representing the IPv4 address.
+   */
+  public ipv4(options: Ipv4Options = {}): string {
+    const result: number[] = [];
+
+    for (let i = 1; i <= 4; i += 1) {
+      const number = RandomGenerator.generateNumberBetween(0, 255);
+      result.push(number);
+    }
+
+    if (options.isLocal) {
+      // Local ipv4 addresses are either 192.186.xxx.xxx or 10.xxx.xxx.xxx
+      const firstNumber = RandomGenerator.generateBinary() === 0 ? 192 : 10;
+      const secondNumber = firstNumber === 192 ? 168 : result[1];
+
+      result[0] = firstNumber;
+      result[1] = secondNumber;
+    }
+
+    return result.join(".");
   }
 
   /**
