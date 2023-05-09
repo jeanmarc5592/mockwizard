@@ -191,6 +191,7 @@ describe("RandomGenerator", () => {
       const hex = RandomGenerator.generateHex(2);
       const regex = /^[0-9A-Fa-f]+$/;
 
+      expect(typeof hex).toBe("string");
       expect(regex.test(hex)).toBe(true);
     });
 
