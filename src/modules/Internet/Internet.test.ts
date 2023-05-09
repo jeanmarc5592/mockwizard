@@ -162,4 +162,30 @@ describe("Internet", () => {
       expect(ipv4.startsWith("192.168.") || ipv4.startsWith("10.")).toBe(true);
     });
   });
+
+  describe("ipv6", () => {
+    it("should return a valid random ipv6 address", () => {
+      const ipv6 = internetMock.ipv6();
+      const regex = /^[0-9A-Fa-f]+$/;
+
+      expect(typeof ipv6).toBe("string");
+      expect(ipv6.split(":")).toHaveLength(8);
+
+      ipv6.split(":").forEach(number => {
+        expect(number.length).toBe(4);
+        expect(regex.test(number.charAt(0))).toBe(true);
+        expect(regex.test(number.charAt(1))).toBe(true);
+        expect(regex.test(number.charAt(2))).toBe(true);
+        expect(regex.test(number.charAt(3))).toBe(true);
+      });
+    });
+
+    it("should return a random local ipv6 address if 'isLocal' option is specified", () => {
+      const ipv6 = internetMock.ipv6({ isLocal: true });
+
+      expect(typeof ipv6).toBe("string");
+      expect(ipv6.split(":")).toHaveLength(8);
+      expect(ipv6.startsWith("FE80:")).toBe(true);
+    });
+  });
 });
