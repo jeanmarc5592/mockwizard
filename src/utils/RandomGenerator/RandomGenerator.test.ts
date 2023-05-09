@@ -134,7 +134,7 @@ describe("RandomGenerator", () => {
       expect(() => RandomGenerator.generateNumberBetween({}, true)).toThrowError(error);
     });
 
-    it("should throw an Error if parameter 'min' or 'max' are less or equal than 0", () => {
+    it("should throw an Error if parameter 'min' or 'max' are less than 0", () => {
       const error = "Parameter 'min' and 'max' has to be greater than 0.";
 
       expect(() => RandomGenerator.generateNumberBetween(-4, 3)).toThrowError(error);
@@ -157,6 +157,51 @@ describe("RandomGenerator", () => {
 
       expect(result).toBeGreaterThanOrEqual(min);
       expect(result).toBeLessThanOrEqual(max);
+    });
+  });
+
+  describe("generateHex", () => {
+    it("should throw Error if 'length' parameter is missing", () => {
+      const error = "Parameter 'length' is missing.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateHex()).toThrowError(error);
+    });
+
+    it("should throw Error if 'length' parameter is not a number", () => {
+      const error = "Parameter 'length' has to be a number.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateHex("3")).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateHex(true)).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateHex({ length: 4 })).toThrowError(error);
+    });
+
+    it("should throw Error if 'length' parameter is less than 0", () => {
+      const error = "Parameter 'length' has to be greater than 0.";
+
+      expect(() => RandomGenerator.generateHex(-4)).toThrowError(error);
+    });
+
+    it("should return a random hex string", () => {
+      const hex = RandomGenerator.generateHex(2);
+      const regex = /^[0-9A-Fa-f]+$/;
+
+      expect(regex.test(hex)).toBe(true);
+    });
+
+    it("should return a random hex string with the specified length", () => {
+      const hexOne = RandomGenerator.generateHex(1);
+      const hexTwo = RandomGenerator.generateHex(12);
+      const hexThree = RandomGenerator.generateHex(450);
+
+      expect(hexOne.length).toBe(1);
+      expect(hexTwo.length).toBe(12);
+      expect(hexThree.length).toBe(450);
     });
   });
 });
