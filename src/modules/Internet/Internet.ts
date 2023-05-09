@@ -1,5 +1,5 @@
 import { GenericData, RandomGenerator, ArrayHelpers } from "../../utils";
-import { Ipv4Options, PasswordOptions } from "./types";
+import { IpOptions, PasswordOptions } from "./types";
 
 export class Internet {
   constructor() {
@@ -88,11 +88,12 @@ export class Internet {
    * Generates a random IPv4 address.
    *
    * @public
-   * @param {Object} options - An optional object that can contain the following properties:
+   * @param {IpOptions} options - An optional object that can contains additional options.
    * @param {boolean} options.isLocal - A boolean indicating whether the IP address should be local (starts with 192.168.xxx.xxx or 10.xxx.xxx.xxx).
    * @returns {string} - A string representing the IPv4 address.
    */
-  public ipv4(options: Ipv4Options = {}): string {
+  public ipv4(options: IpOptions = {}): string {
+    // Example "168.221.255.212"
     const result: number[] = [];
 
     for (let i = 1; i <= 4; i += 1) {
@@ -110,6 +111,31 @@ export class Internet {
     }
 
     return result.join(".");
+  }
+
+  /**
+   * Generates a random IPv6 address.
+   *
+   * @public
+   * @param {IpOptions} options - An optional object that can contains additional options.
+   * @param {boolean} options.isLocal - A boolean indicating whether the IP address should be local (starts with FE80).
+   * @returns {string} - A string representing the IPv6 address.
+   */
+  public ipv6(options: IpOptions = {}): string {
+    // Example "FE80:0E35:0693:5696:7675:9225:A0CA:1572"
+    const result: string[] = [];
+
+    for (let i = 1; i <= 8; i += 1) {
+      const number = RandomGenerator.generateHex(4);
+      result.push(number);
+    }
+
+    if (options.isLocal) {
+      // Local ipv6 addresses start with FE80
+      result[0] = "FE80";
+    }
+
+    return result.join(":");
   }
 
   /**

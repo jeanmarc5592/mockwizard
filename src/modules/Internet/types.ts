@@ -6,6 +6,6 @@ export interface PasswordOptions {
   includeNumbers?: boolean;
 }
 
-export interface Ipv4Options {
+export interface IpOptions {
   isLocal?: boolean;
 }
