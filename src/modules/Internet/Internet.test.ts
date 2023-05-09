@@ -140,4 +140,26 @@ describe("Internet", () => {
       });
     });
   });
+
+  describe("ipv4", () => {
+    it("should return a valid random ipv4 address", () => {
+      const ipv4 = internetMock.ipv4();
+
+      expect(typeof ipv4).toBe("string");
+      expect(ipv4.split(".")).toHaveLength(4);
+
+      ipv4.split(".").forEach(octet => {
+        expect(parseInt(octet)).toBeGreaterThanOrEqual(0);
+        expect(parseInt(octet)).toBeLessThanOrEqual(255);
+      });
+    });
+
+    it("should return a random local ipv4 address if 'isLocal' option is specified", () => {
+      const ipv4 = internetMock.ipv4({ isLocal: true });
+
+      expect(typeof ipv4).toBe("string");
+      expect(ipv4.split(".")).toHaveLength(4);
+      expect(ipv4.startsWith("192.168.") || ipv4.startsWith("10.")).toBe(true);
+    });
+  });
 });
