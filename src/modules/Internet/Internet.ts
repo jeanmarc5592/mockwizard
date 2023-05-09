@@ -67,6 +67,24 @@ export class Internet {
   }
 
   /**
+   * Generates a random MAC address string.
+   *
+   * @public
+   * @returns {string} The generated MAC address string.
+   */
+  public macAddress(): string {
+    // Example: "56:A8:E4:8F:43:88"
+    const bytes: string[] = [];
+
+    for (let i = 1; i <= 6; i += 1) {
+      const hex = RandomGenerator.generateHex(2);
+      bytes.push(hex);
+    }
+
+    return bytes.join(":");
+  }
+
+  /**
    * An array of lowercase alphabetical letters.
    *
    * @private
