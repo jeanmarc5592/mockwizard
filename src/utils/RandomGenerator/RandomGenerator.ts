@@ -94,7 +94,7 @@ export class RandomGenerator {
       throw new Error("Parameter 'min' and 'max' has to be a number.");
     }
 
-    if (min <= 0 || max <= 0) {
+    if (min < 0 || max < 0) {
       throw new Error("Parameter 'min' and 'max' has to be greater than 0.");
     }
 
@@ -103,5 +103,38 @@ export class RandomGenerator {
     }
 
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  /**
+   * Generates a random hexadecimal string of the given length.
+   *
+   * @static
+   * @param {number} length - The length of the hexadecimal string to be generated.
+   * @returns {string} - A random hexadecimal string.
+   * @throws {Error} - If the length parameter is missing, not a number, or less than or equal to 0.
+   */
+  static generateHex(length: number): string {
+    if (!length) {
+      throw new Error("Parameter 'length' is missing.");
+    }
+
+    if (typeof length !== "number") {
+      throw new Error("Parameter 'length' has to be a number.");
+    }
+
+    if (length < 0) {
+      throw new Error("Parameter 'length' has to be greater than 0.");
+    }
+
+    let result = "";
+    const hexChars = "123456789ABCDEFG";
+
+    let counter = 1;
+    while (counter <= length) {
+      result += hexChars[Math.floor(Math.random() * hexChars.length)];
+      counter += 1;
+    }
+
+    return result;
   }
 }
