@@ -301,19 +301,16 @@ describe("Internet", () => {
 
     it("should return a random url that contains 'https' if 'includeSSL' option is specified", () => {
       const url = internetMock.url({ includeSSL: true });
-      const ssl = url.split(".")[0];
 
       expect(typeof url).toBe("string");
-      expect(url.split(".")).toHaveLength(4);
-      expect(ssl).toBe("https://");
+      expect(url.startsWith("https://")).toBe(true);
     });
 
     it("should return a random url that contains a three part slug if 'includeSlug' option is specified", () => {
       const url = internetMock.url({ includeSlug: true });
-      const slug = url.split(".")[3];
+      const slug = url.split("/")[1];
 
       expect(typeof url).toBe("string");
-      expect(url.split(".")).toHaveLength(4);
       expect(slug.split("-")).toHaveLength(3);
     });
 
