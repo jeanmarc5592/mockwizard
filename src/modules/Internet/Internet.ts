@@ -1,5 +1,5 @@
 import { GenericData, RandomGenerator, ArrayHelpers } from "../../utils";
-import { IpOptions, PasswordOptions, SlugOptions } from "./types";
+import { DomainOptions, IpOptions, PasswordOptions, SlugOptions } from "./types";
 
 export class Internet {
   constructor() {
@@ -161,6 +161,25 @@ export class Internet {
     const result = RandomGenerator.generateMultipleValues(this.words, { amount: slugLength }) as string[];
 
     return result.join("-");
+  }
+
+  /**
+   * Generates a random domain.
+   *
+   * @public
+   * @param {DomainOptions} options - An optional object that can contains additional options.
+   * @param {string} options.tld - The Top Level Domain that should be included. If not specified, it defaults to "com".
+   * @returns {string} - A string representing the domain.
+   */
+  public domain(options: DomainOptions = {}): string {
+    const tld = options.tld || "com";
+    const domainName = RandomGenerator.generateValue(this.words) as string;
+
+    if (typeof tld !== "string") {
+      throw new Error("Option 'tld' has to be a string.");
+    }
+
+    return `${domainName}.${tld}`;
   }
 
   /**

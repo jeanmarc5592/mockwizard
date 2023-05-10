@@ -13,3 +13,7 @@ export interface IpOptions {
 export interface SlugOptions {
   length?: number;
 }
+
+export interface DomainOptions {
+  tld?: string;
+}
