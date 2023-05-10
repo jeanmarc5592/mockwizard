@@ -188,4 +188,53 @@ describe("Internet", () => {
       expect(ipv6.startsWith("fe80:")).toBe(true);
     });
   });
+
+  describe("slug", () => {
+    it("should return a random string with three slug-parts when 'length' option is not specified", () => {
+      const slug = internetMock.slug();
+
+      expect(typeof slug).toBe("string");
+      expect(slug.split("-")).toHaveLength(3);
+    });
+
+    it("should return a random string with words from a given list", () => {
+      const slug = internetMock.slug();
+      const wordsList = Reflect.get(internetMock, "words");
+
+      expect(typeof slug).toBe("string");
+      slug.split("-").forEach(word => {
+        expect(wordsList).toContain(word);
+      })
+    });
+
+    it("should return a random string with as many slugs as in the 'length' option is specified", () => {
+      const slug = internetMock.slug({ length: 5 });
+
+      expect(typeof slug).toBe("string");
+      expect(slug.split("-")).toHaveLength(5);
+    });
+
+    it("should throw an Error if 'length' option is not a number", () => {
+      const error = "Option 'length' has to be a number.";
+
+      // @ts-ignore
+      expect(() => internetMock.slug({ length: "3" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => internetMock.slug({ length: [ "3" ] })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => internetMock.slug({ length: { length: 4 } })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'length' option is less than 1 or greater than 10", () => {
+      const error = "Option 'length' has to be greater than or equal to 1 and less than or equal to 10.";
+      
+      expect(() => internetMock.slug({ length: -4 })).toThrowError(error);
+      expect(() => internetMock.slug({ length: 16 })).toThrowError(error);
+
+      expect(() => internetMock.slug({ length: 1 })).not.toThrowError(error);
+      expect(() => internetMock.slug({ length: 10 })).not.toThrowError(error);
+    });
+  });
 });
