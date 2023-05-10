@@ -17,3 +17,9 @@ export interface SlugOptions {
 export interface DomainOptions {
   tld?: string;
 }
+
+export interface UrlOptions {
+  tld?: string;
+  includeSSL?: boolean;
+  includeSlug?: boolean;
+}

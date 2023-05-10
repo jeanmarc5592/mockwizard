@@ -1,5 +1,5 @@
 import { GenericData, RandomGenerator, ArrayHelpers } from "../../utils";
-import { DomainOptions, IpOptions, PasswordOptions, SlugOptions } from "./types";
+import { DomainOptions, IpOptions, PasswordOptions, SlugOptions, UrlOptions } from "./types";
 
 export class Internet {
   constructor() {
@@ -180,6 +180,34 @@ export class Internet {
     }
 
     return `${domainName}.${tld}`;
+  }
+
+  /**
+   * Generates a random url
+   *
+   * @public
+   * @param {UrlOptions} options - An optional object that can contains additional options.
+   * @param {string} options.tld - The Top Level Domain that should be included. If not specified, it defaults to "com".
+   * @param {boolean} options.includeSSL - If true the domain includes "https://" at the beginning.
+   * @param {boolean} options.includeSlug - If true the domain includes a three part slug at the end.
+   * @returns {string} - A string representing the url.
+   */
+  public url(options: UrlOptions = {}): string {
+    const subDomain = "www";
+    const domainName = this.domain({ tld: options.tld });
+
+    let url = `${subDomain}.${domainName}`;
+
+    if (options.includeSSL) {
+      url = `https://${url}`;
+    }
+
+    if (options.includeSlug) {
+      const slug = this.slug();
+      url = `${url}/${slug}`;
+    }
+
+    return url;
   }
 
   /**
