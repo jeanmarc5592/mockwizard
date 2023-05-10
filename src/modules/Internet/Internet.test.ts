@@ -237,4 +237,45 @@ describe("Internet", () => {
       expect(() => internetMock.slug({ length: 10 })).not.toThrowError(error);
     });
   });
+
+  describe("domain", () => {
+    it("should return a random string representing a '.com' domain when 'tld' option is not specified", () => {
+      const domain = internetMock.domain();
+      const tld = domain.split(".")[1];
+
+      expect(typeof domain).toBe("string");
+      expect(tld).toBe("com");
+    });
+
+    it("should return a random string that includes one name from a given list", () => {
+      const domain = internetMock.domain();
+      const domainName = domain.split(".")[0];
+      const words = Reflect.get(internetMock, "words");
+
+      expect(typeof domain).toBe("string");
+      expect(domain.split(".")).toHaveLength(2);
+      expect(words).toContain(domainName);
+    });
+
+    it("should return a random string with whatever in 'tld' option is specified", () => {
+      const domain = internetMock.domain({ tld: "io" });
+      const tld = domain.split(".")[1];
+      
+      expect(typeof domain).toBe("string");
+      expect(tld).toBe("io");
+    });
+
+    it("should throw an Error if 'tld' option is not a string", () => {
+      const error = "Option 'tld' has to be a string.";
+
+      // @ts-ignore
+      expect(() => internetMock.domain({ tld: true })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => internetMock.domain({ tld: { tld: "net" } })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => internetMock.domain({ tld: 44 })).toThrowError(error);
+    });
+  });
 });
