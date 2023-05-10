@@ -75,14 +75,14 @@ export class Internet {
    */
   public macAddress(): string {
     // Example: "56:a8:e4:8f:43:88"
-    const result: string[] = [];
+    const macAddress: string[] = [];
 
     for (let i = 1; i <= 6; i += 1) {
       const hex = RandomGenerator.generateHex(2);
-      result.push(hex);
+      macAddress.push(hex);
     }
 
-    return result.join(":");
+    return macAddress.join(":");
   }
 
   /**
@@ -95,23 +95,23 @@ export class Internet {
    */
   public ipv4(options: IpOptions = {}): string {
     // Example "168.221.255.212"
-    const result: number[] = [];
+    const ipv4: number[] = [];
 
     for (let i = 1; i <= 4; i += 1) {
       const number = RandomGenerator.generateNumberBetween(0, 255);
-      result.push(number);
+      ipv4.push(number);
     }
 
     if (options.isLocal) {
       // Local ipv4 addresses are either 192.186.xxx.xxx or 10.xxx.xxx.xxx
       const firstNumber = RandomGenerator.generateBinary() === 0 ? 192 : 10;
-      const secondNumber = firstNumber === 192 ? 168 : result[1];
+      const secondNumber = firstNumber === 192 ? 168 : ipv4[1];
 
-      result[0] = firstNumber;
-      result[1] = secondNumber;
+      ipv4[0] = firstNumber;
+      ipv4[1] = secondNumber;
     }
 
-    return result.join(".");
+    return ipv4.join(".");
   }
 
   /**
@@ -124,19 +124,19 @@ export class Internet {
    */
   public ipv6(options: IpOptions = {}): string {
     // Example "fe80:0e35:0693:5696:7675:9225:a0ca:1572"
-    const result: string[] = [];
+    const ipv6: string[] = [];
 
     for (let i = 1; i <= 8; i += 1) {
       const number = RandomGenerator.generateHex(4);
-      result.push(number);
+      ipv6.push(number);
     }
 
     if (options.isLocal) {
       // Local ipv6 addresses start with fe80
-      result[0] = "fe80";
+      ipv6[0] = "fe80";
     }
 
-    return result.join(":");
+    return ipv6.join(":");
   }
 
   /**
@@ -158,9 +158,9 @@ export class Internet {
       throw new Error("Option 'length' has to be greater than or equal to 1 and less than or equal to 10.");
     }
 
-    const result = RandomGenerator.generateMultipleValues(this.words, { amount: slugLength }) as string[];
+    const slug = RandomGenerator.generateMultipleValues(this.words, { amount: slugLength }) as string[];
 
-    return result.join("-");
+    return slug.join("-");
   }
 
   /**
