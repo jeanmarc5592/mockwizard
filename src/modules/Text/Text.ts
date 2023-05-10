@@ -1,10 +1,9 @@
-import { TextData } from "./data";
-import { RandomGenerator } from "../../utils";
+import { RandomGenerator, GenericData } from "../../utils";
 import { WordsOptions, SentenceOptions, SentencesOptions, ParagraphOptions } from "./types";
 
 export class Text {
   constructor() {
-    this.data = TextData.words;
+    this.data = GenericData.words;
   }
 
   /**
