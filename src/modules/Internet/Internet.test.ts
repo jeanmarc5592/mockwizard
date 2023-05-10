@@ -278,4 +278,52 @@ describe("Internet", () => {
       expect(() => internetMock.domain({ tld: 44 })).toThrowError(error);
     });
   });
+
+  describe("url", () => {
+    it("should return a random url that contains 'www' and a '.com' if no options are specified", () => {
+      const url = internetMock.url();
+      const subDomain = url.split(".")[0];
+      const tld = url.split(".")[2];
+
+      expect(typeof url).toBe("string");
+      expect(url.split(".")).toHaveLength(3);
+      expect(subDomain).toBe("www");
+      expect(tld).toBe("com");
+    });
+
+    it("should return a random url that contains a word as the domain name from a given list", () => {
+      const url = internetMock.url();
+      const domainName = url.split(".")[1];
+      const wordsList = Reflect.get(internetMock, "words");
+
+      expect(wordsList).toContain(domainName);
+    });
+
+    it("should return a random url that contains 'https' if 'includeSSL' option is specified", () => {
+      const url = internetMock.url({ includeSSL: true });
+      const ssl = url.split(".")[0];
+
+      expect(typeof url).toBe("string");
+      expect(url.split(".")).toHaveLength(4);
+      expect(ssl).toBe("https://");
+    });
+
+    it("should return a random url that contains a three part slug if 'includeSlug' option is specified", () => {
+      const url = internetMock.url({ includeSlug: true });
+      const slug = url.split(".")[3];
+
+      expect(typeof url).toBe("string");
+      expect(url.split(".")).toHaveLength(4);
+      expect(slug.split("-")).toHaveLength(3);
+    });
+
+    it("should return a random url that contains a custom tld whatever in 'tld' option is specified", () => {
+      const url = internetMock.url({ tld: "net" });
+      const tld = url.split(".")[2];
+
+      expect(typeof url).toBe("string");
+      expect(url.split(".")).toHaveLength(3);
+      expect(tld).toBe("net");
+    });
+  }); 
 });
