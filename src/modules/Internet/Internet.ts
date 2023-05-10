@@ -1,5 +1,5 @@
 import { GenericData, RandomGenerator, ArrayHelpers } from "../../utils";
-import { IpOptions, PasswordOptions } from "./types";
+import { IpOptions, PasswordOptions, SlugOptions } from "./types";
 
 export class Internet {
   constructor() {
@@ -7,6 +7,7 @@ export class Internet {
     this.uppercaseLetters = GenericData.upperCaseLetters;
     this.symbols = GenericData.symbols;
     this.numbers = GenericData.numbers;
+    this.words = GenericData.words;
   }
 
   /**
@@ -73,7 +74,7 @@ export class Internet {
    * @returns {string} The generated MAC address string.
    */
   public macAddress(): string {
-    // Example: "56:A8:E4:8F:43:88"
+    // Example: "56:a8:e4:8f:43:88"
     const result: string[] = [];
 
     for (let i = 1; i <= 6; i += 1) {
@@ -122,7 +123,7 @@ export class Internet {
    * @returns {string} - A string representing the IPv6 address.
    */
   public ipv6(options: IpOptions = {}): string {
-    // Example "FE80:0E35:0693:5696:7675:9225:A0CA:1572"
+    // Example "fe80:0e35:0693:5696:7675:9225:a0ca:1572"
     const result: string[] = [];
 
     for (let i = 1; i <= 8; i += 1) {
@@ -136,6 +137,30 @@ export class Internet {
     }
 
     return result.join(":");
+  }
+
+  /**
+   * Generates a random slug.
+   *
+   * @public
+   * @param {SlugOptions} options - An optional object that can contains additional options.
+   * @param {number} options.length - The number of slug parts in the slug. If not specified, it defaults to 3.
+   * @returns {string} - A string representing the slug.
+   */
+  public slug(options: SlugOptions = {}): string {
+    const slugLength = options.length ?? 3;
+
+    if (typeof slugLength !== "number") {
+      throw new Error("Option 'length' has to be a number.");
+    }
+
+    if (slugLength < 1 || slugLength > 10) {
+      throw new Error("Option 'length' has to be greater than or equal to 1 and less than or equal to 10.");
+    }
+
+    const result = RandomGenerator.generateMultipleValues(this.words, { amount: slugLength }) as string[];
+
+    return result.join("-");
   }
 
   /**
@@ -173,4 +198,12 @@ export class Internet {
    * @type {string[]}
    */
   private readonly numbers: string[];
+
+  /**
+   * An array of random blindtext words.
+   * @private
+   * @readonly
+   * @type {string[]}
+   */
+  private readonly words: string[];
 }

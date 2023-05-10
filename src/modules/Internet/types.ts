@@ -9,3 +9,7 @@ export interface PasswordOptions {
 export interface IpOptions {
   isLocal?: boolean;
 }
+
+export interface SlugOptions {
+  length?: number;
+}
