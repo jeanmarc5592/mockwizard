@@ -114,7 +114,7 @@ export class RandomGenerator {
    * @throws {Error} - If the length parameter is missing, not a number, or less than or equal to 0.
    */
   static generateHex(length: number): string {
-    if (!length) {
+    if (length === undefined) {
       throw new Error("Parameter 'length' is missing.");
     }
 
