@@ -127,7 +127,7 @@ export class RandomGenerator {
     }
 
     let result = "";
-    const hexChars = "0123456789ABCDEF";
+    const hexChars = "0123456789abcdef";
 
     let counter = 1;
     while (counter <= length) {

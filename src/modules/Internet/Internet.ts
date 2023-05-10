@@ -118,7 +118,7 @@ export class Internet {
    *
    * @public
    * @param {IpOptions} options - An optional object that can contains additional options.
-   * @param {boolean} options.isLocal - A boolean indicating whether the IP address should be local (starts with FE80).
+   * @param {boolean} options.isLocal - A boolean indicating whether the IP address should be local (starts with fe80).
    * @returns {string} - A string representing the IPv6 address.
    */
   public ipv6(options: IpOptions = {}): string {
@@ -131,8 +131,8 @@ export class Internet {
     }
 
     if (options.isLocal) {
-      // Local ipv6 addresses start with FE80
-      result[0] = "FE80";
+      // Local ipv6 addresses start with fe80
+      result[0] = "fe80";
     }
 
     return result.join(":");

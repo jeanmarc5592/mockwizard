@@ -166,7 +166,7 @@ describe("Internet", () => {
   describe("ipv6", () => {
     it("should return a valid random ipv6 address", () => {
       const ipv6 = internetMock.ipv6();
-      const regex = /^[0-9A-Fa-f]+$/;
+      const regex = /^[0-9a-f]+$/;
 
       expect(typeof ipv6).toBe("string");
       expect(ipv6.split(":")).toHaveLength(8);
@@ -185,7 +185,7 @@ describe("Internet", () => {
 
       expect(typeof ipv6).toBe("string");
       expect(ipv6.split(":")).toHaveLength(8);
-      expect(ipv6.startsWith("FE80:")).toBe(true);
+      expect(ipv6.startsWith("fe80:")).toBe(true);
     });
   });
 });
