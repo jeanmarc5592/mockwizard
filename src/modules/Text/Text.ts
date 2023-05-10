@@ -157,6 +157,7 @@ export class Text {
 
   /**
    * An array of random blindtext words.
+   *
    * @private
    * @readonly
    * @type {string[]}
