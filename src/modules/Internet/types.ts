@@ -29,3 +29,8 @@ export interface UserNameOptions {
   lastName?: string;
   isAnonymous?: boolean;
 }
+
+export interface EmailOptions {
+  userName?: UserNameOptions;
+  provider?: string;
+}

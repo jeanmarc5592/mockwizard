@@ -1,7 +1,7 @@
 import { GenericData, RandomGenerator, ArrayHelpers } from "../../utils";
 import { AbstractPerson } from "../Person";
 import { InternetData } from "./data";
-import { DomainOptions, IpOptions, PasswordOptions, SlugOptions, UrlOptions, UserNameOptions } from "./types";
+import { DomainOptions, EmailOptions, IpOptions, PasswordOptions, SlugOptions, UrlOptions, UserNameOptions } from "./types";
 
 export class Internet {
   constructor(person: AbstractPerson) {
@@ -18,12 +18,12 @@ export class Internet {
    * Generates a random password using a combination of lowercase letters, uppercase letters, symbols, and numbers.
    *
    * @public
-   * @param {PasswordOptions} [options={}] - An optional object that contains additional options.
-   * @param {number} [options.length] - The length of the password (between 6 and 120 characters). If not specified, it defaults to 10.
-   * @param {boolean} [options.includeLowercase] - If true, the password will include lowercase letters.
-   * @param {boolean} [options.includeUppercase] - If true, the password will include uppercase letters.
-   * @param {boolean} [options.includeSymbols] - If true, the password will include symbols.
-   * @param {boolean} [options.includeNumbers] - If true, the password will include numbers.
+   * @param {PasswordOptions} options - An optional object that contains additional options.
+   * @param {number} options.length - The length of the password (between 6 and 120 characters). If not specified, it defaults to 10.
+   * @param {boolean} options.includeLowercase - If true, the password will include lowercase letters.
+   * @param {boolean} options.includeUppercase - If true, the password will include uppercase letters.
+   * @param {boolean} options.includeSymbols - If true, the password will include symbols.
+   * @param {boolean} options.includeNumbers - If true, the password will include numbers.
    * @throws {Error} If the length option is not a number or is less than 6 or greater than 120.
    * @returns {string} The generated password.
    */
@@ -95,7 +95,7 @@ export class Internet {
    * @public
    * @param {IpOptions} options - An optional object that can contains additional options.
    * @param {boolean} options.isLocal - A boolean indicating whether the IP address should be local (starts with 192.168.xxx.xxx or 10.xxx.xxx.xxx).
-   * @returns {string} - A string representing the IPv4 address.
+   * @returns {string} A string representing the IPv4 address.
    */
   public ipv4(options: IpOptions = {}): string {
     // Example "168.221.255.212"
@@ -124,7 +124,7 @@ export class Internet {
    * @public
    * @param {IpOptions} options - An optional object that can contains additional options.
    * @param {boolean} options.isLocal - A boolean indicating whether the IP address should be local (starts with fe80).
-   * @returns {string} - A string representing the IPv6 address.
+   * @returns {string} A string representing the IPv6 address.
    */
   public ipv6(options: IpOptions = {}): string {
     // Example "fe80:0e35:0693:5696:7675:9225:a0ca:1572"
@@ -149,7 +149,7 @@ export class Internet {
    * @public
    * @param {SlugOptions} options - An optional object that can contains additional options.
    * @param {number} options.length - The number of slug parts in the slug. If not specified, it defaults to 3.
-   * @returns {string} - A string representing the slug.
+   * @returns {string} A string representing the slug.
    */
   public slug(options: SlugOptions = {}): string {
     const slugLength = options.length ?? 3;
@@ -173,7 +173,7 @@ export class Internet {
    * @public
    * @param {DomainOptions} options - An optional object that can contains additional options.
    * @param {string} options.tld - The Top Level Domain that should be included. If not specified, it defaults to "com".
-   * @returns {string} - A string representing the domain.
+   * @returns {string} A string representing the domain.
    */
   public domain(options: DomainOptions = {}): string {
     const tld = options.tld || "com";
@@ -194,7 +194,7 @@ export class Internet {
    * @param {string} options.tld - The Top Level Domain that should be included. If not specified, it defaults to "com".
    * @param {boolean} options.includeSSL - If true the domain includes "https://" at the beginning.
    * @param {boolean} options.includeSlug - If true the domain includes a three part slug at the end.
-   * @returns {string} - A string representing the url.
+   * @returns {string} A string representing the url.
    */
   public url(options: UrlOptions = {}): string {
     const subDomain = "www";
@@ -222,7 +222,7 @@ export class Internet {
    * @param {string} options.firstName - The first name that should be included. If not specified, it will be picked randomly.
    * @param {string} options.lastName - The last name that should be included. If not specified, it will be picked randomly.
    * @param {boolean} options.isAnonymous - If true the user name will be anonymous.
-   * @returns {string} - A string representing the user name.
+   * @returns {string} A string representing the user name.
    * @throws {Error} If the options 'fistName' and 'lastName' are not a string.
    */
   public userName(options: UserNameOptions = {}): string {
@@ -241,6 +241,27 @@ export class Internet {
     }
 
     return userName;
+  }
+
+  /**
+   * Generates a random email address
+   *
+   * @public
+   * @param {EmailOptions} options - An optional object that can contains additional options.
+   * @param {UserNameOptions} options.userName - Customizations of the username.
+   * @param {string} options.provider - The email provider that should be included. If not specified, it defaults to "example.com".
+   * @returns {string} A string representing the email address.
+   * @throws {Error} If the option 'provider' is not a string.
+   */
+  public email(options: EmailOptions = {}): string {
+    const userName = this.userName(options.userName);
+    const provider = options.provider || "example.com";
+
+    if (typeof provider !== "string") {
+      throw new Error("Option 'provider' has to be a string.");
+    }
+
+    return `${userName}@${provider}`;
   }
 
   /**
