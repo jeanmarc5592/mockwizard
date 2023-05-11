@@ -1,11 +1,34 @@
 import "reflect-metadata";
 import { Internet } from "./Internet";
+import { AbstractPerson } from "../Person";
+
+class MockPerson extends AbstractPerson {
+  protected maleFirstNames: string[];
+  protected femaleFirstNames: string[];
+  protected lastNames: string[];
+  protected suffixes: string[];
+  protected maleSalutations: string[];
+  protected femaleSalutations: string[];
+  protected commonSalutations: string[];
+
+  constructor() {
+    super();
+    this.maleFirstNames = ["John", "Andrew", "Mike"];
+    this.femaleFirstNames = ["Sarah", "Angela", "Susan"];
+    this.lastNames = ["Barkley", "Hill", "Jackson"];
+    this.suffixes = [];
+    this.maleSalutations = [];
+    this.femaleSalutations = [];
+    this.commonSalutations = [];
+  }
+  
+}
 
 describe("Internet", () => {
   let internetMock: Internet;
 
   beforeEach(() => {
-    internetMock = new Internet();
+    internetMock = new Internet(new MockPerson());
   });
 
   describe("password", () => {
@@ -323,4 +346,74 @@ describe("Internet", () => {
       expect(tld).toBe("net");
     });
   }); 
+
+  describe("userName", () => {
+    let personMock: AbstractPerson;
+
+    beforeEach(() => {
+      personMock = new MockPerson();
+    });
+
+    it("should return a random string that contains a default person's first name, last name and a number", () => {
+      const userName = internetMock.userName();
+      const firstName = userName.split("_")[0];
+      const lastName = userName.split("_")[1];
+
+      const maleFirstNames: string[] = Reflect.get(personMock, "maleFirstNames");
+      const femaleFirstNames: string[] = Reflect.get(personMock, "femaleFirstNames");
+      const allFirstNames: string[] = maleFirstNames.concat(femaleFirstNames);
+      const lastNames: string[] = Reflect.get(personMock, "lastNames");
+
+      expect(typeof userName).toBe("string");
+      expect(allFirstNames).toContain(firstName);
+      expect(lastNames).toContain(lastName);
+      
+      const numericRegex = /\d/;
+      expect(numericRegex.test(userName)).toBe(true);
+    });
+
+    it("should return a random string that contains the first name that's specified in 'firstName' option", () => {
+      const userName = internetMock.userName({ firstName: "Jonny" });
+      const firstName = userName.split("_")[0];
+      
+      expect(typeof userName).toBe("string");
+      expect(firstName).toBe("Jonny");
+    });
+
+    it("should return a random string that contains the last name that's specified in 'lastName' option", () => {
+      const userName = internetMock.userName({ lastName: "Miller" });
+      const lastName = userName.split("_")[1];
+
+      expect(typeof userName).toBe("string");
+      expect(lastName).toBe("Miller");
+    });
+
+    it("should return a random string that contains the first name & last name that's specified in 'firstName' & 'lastName' option", () => {
+      const userName = internetMock.userName({ firstName: "Foo", lastName: "Bar" });
+      const firstName = userName.split("_")[0];
+      const lastName = userName.split("_")[1];
+
+      expect(typeof userName).toBe("string");
+      expect(firstName).toBe("Foo");
+      expect(lastName).toBe("Bar");
+    });
+
+    it("should return a random string that contains an anonymous username if 'isAnonymous' option is specified", () => {
+      const userName = internetMock.userName({ isAnonymous: true });
+      const anonymousNames = Reflect.get(internetMock, "anonymousNames");
+
+      expect(typeof userName).toBe("string");
+      expect(anonymousNames).toContain(userName);
+    });
+
+    it("should throw an Error if option 'firstName' or 'lastName' is not a string", () => {
+      const error = "Parameter 'firstName' and 'lastName' has to be a string.";
+
+      // @ts-ignore
+      expect(() => internetMock.userName({ firstName: true })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => internetMock.userName({ lastName: 33423 })).toThrowError(error);
+    });
+  });
 });
