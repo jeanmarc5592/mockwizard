@@ -1,13 +1,17 @@
 import { GenericData, RandomGenerator, ArrayHelpers } from "../../utils";
-import { DomainOptions, IpOptions, PasswordOptions, SlugOptions, UrlOptions } from "./types";
+import { AbstractPerson } from "../Person";
+import { InternetData } from "./data";
+import { DomainOptions, IpOptions, PasswordOptions, SlugOptions, UrlOptions, UserNameOptions } from "./types";
 
 export class Internet {
-  constructor() {
+  constructor(person: AbstractPerson) {
     this.lowercaseLetters = GenericData.lowerCaseLetters;
     this.uppercaseLetters = GenericData.upperCaseLetters;
     this.symbols = GenericData.symbols;
     this.numbers = GenericData.numbers;
     this.words = GenericData.words;
+    this.anonymousNames = InternetData.anonymousNames;
+    this.person = person;
   }
 
   /**
@@ -211,6 +215,35 @@ export class Internet {
   }
 
   /**
+   * Generates a random username
+   *
+   * @public
+   * @param {UserNameOptions} options - An optional object that can contains additional options.
+   * @param {string} options.firstName - The first name that should be included. If not specified, it will be picked randomly.
+   * @param {string} options.lastName - The last name that should be included. If not specified, it will be picked randomly.
+   * @param {boolean} options.isAnonymous - If true the user name will be anonymous.
+   * @returns {string} - A string representing the user name.
+   * @throws {Error} If the options 'fistName' and 'lastName' are not a string.
+   */
+  public userName(options: UserNameOptions = {}): string {
+    const firstName = options.firstName || this.person.firstName();
+    const lastName = options.lastName || this.person.lastName();
+    const number = RandomGenerator.generateMultipleValues(this.numbers, { amount: 2 }) as string[];
+
+    if (typeof firstName !== "string" || typeof lastName !== "string") {
+      throw new Error("Parameter 'firstName' and 'lastName' has to be a string.");
+    }
+
+    let userName = `${firstName}_${lastName}_${number.join("")}`;
+
+    if (options.isAnonymous) {
+      userName = RandomGenerator.generateValue(this.anonymousNames) as string;
+    }
+
+    return userName;
+  }
+
+  /**
    * An array of lowercase alphabetical letters.
    *
    * @private
@@ -253,4 +286,20 @@ export class Internet {
    * @type {string[]}
    */
   private readonly words: string[];
+
+  /**
+   * An array of random anonymous names.
+   * @private
+   * @readonly
+   * @type {string[]}
+   */
+  private readonly anonymousNames: string[];
+
+  /**
+   * The Person module.
+   * @private
+   * @readonly
+   * @type {AbstractPerson}
+   */
+  private readonly person: AbstractPerson;
 }

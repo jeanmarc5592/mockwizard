@@ -23,3 +23,9 @@ export interface UrlOptions {
   includeSSL?: boolean;
   includeSlug?: boolean;
 }
+
+export interface UserNameOptions {
+  firstName?: string;
+  lastName?: string;
+  isAnonymous?: boolean;
+}

@@ -56,6 +56,6 @@ export class MockWizard implements MockWizardInterface {
     this.person = PersonFactory.create(locale);
     this.uuid = new UUID();
     this.text = new Text();
-    this.internet = new Internet();
+    this.internet = new Internet(this.person);
   }
 }
