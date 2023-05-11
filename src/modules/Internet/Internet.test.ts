@@ -406,6 +406,14 @@ describe("Internet", () => {
       expect(anonymousNames).toContain(userName);
     });
 
+    it("should always contain an anonymous username if 'isAnonymous' option is specified and other name options", () => {
+      const userName = internetMock.userName({ isAnonymous: true, firstName: "Jonny", lastName: "Miller" });
+      const anonymousNames = Reflect.get(internetMock, "anonymousNames");
+
+      expect(typeof userName).toBe("string");
+      expect(anonymousNames).toContain(userName);
+    });
+
     it("should throw an Error if option 'firstName' or 'lastName' is not a string", () => {
       const error = "Parameter 'firstName' and 'lastName' has to be a string.";
 
@@ -414,6 +422,55 @@ describe("Internet", () => {
 
       // @ts-ignore
       expect(() => internetMock.userName({ lastName: 33423 })).toThrowError(error);
+    });
+  });
+
+  describe("email", () => {
+    it("should return a random string representing an email with the provider 'example.com'", () => {
+      const email = internetMock.email();
+      const provider = email.split("@")[1];
+
+      expect(typeof email).toBe("string");
+      expect(email.includes("@")).toBe(true);
+      expect(provider).toBe("example.com");
+    });
+
+    it("should a random string that includes the provider that is specified in the 'provider' option", () => {
+      const email = internetMock.email({ provider: "gmail.com" });
+      const provider = email.split("@")[1];
+
+      expect(typeof email).toBe("string");
+      expect(provider).toBe("gmail.com");
+    });
+
+    it("should call 'userName' method with the specified 'userName' options", () => {
+      const userNamePayloadOne = { firstName: "Jonny" };
+      const userNamePayloadTwo = { lastName: "Samson" };
+      const userNamePayloadThree = { isAnonymous: true };
+
+      const userNameSpy = jest.spyOn(internetMock, "userName");
+
+      internetMock.email({ userName: userNamePayloadOne });
+      expect(userNameSpy).toHaveBeenCalledWith(userNamePayloadOne);
+
+      internetMock.email({ userName: userNamePayloadTwo });
+      expect(userNameSpy).toHaveBeenCalledWith(userNamePayloadTwo);
+
+      internetMock.email({ userName: userNamePayloadThree });
+      expect(userNameSpy).toHaveBeenCalledWith(userNamePayloadThree);
+    });
+
+    it("should throw an Error if 'provider' option is not a string", () => {
+      const error = "Option 'provider' has to be a string.";
+
+      // @ts-ignore
+      expect(() => internetMock.email({ provider: 34234 })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => internetMock.email({ provider: { provider: "yahoo.com" } })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => internetMock.email({ provider: ["gmail.com"] })).toThrowError(error);
     });
   });
 });
