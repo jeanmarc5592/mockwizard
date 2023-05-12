@@ -435,7 +435,7 @@ describe("Internet", () => {
       expect(provider).toBe("example.com");
     });
 
-    it("should a random string that includes the provider that is specified in the 'provider' option", () => {
+    it("should return a random string that includes the provider that is specified in the 'provider' option", () => {
       const email = internetMock.email({ provider: "gmail.com" });
       const provider = email.split("@")[1];
 
@@ -458,6 +458,19 @@ describe("Internet", () => {
 
       internetMock.email({ userName: userNamePayloadThree });
       expect(userNameSpy).toHaveBeenCalledWith(userNamePayloadThree);
+    });
+
+    it("should should an username with lowercase letters if 'isAnonymous' option is not specified", () => {
+      const email = internetMock.email();
+      const anonymousEmail = internetMock.email({ userName: { isAnonymous: true } });
+      
+      const userName = email.split("@")[0];
+      const anonymousUserName = anonymousEmail.split("@")[0];
+      
+      const regex = /^[a-z0-9_]+$/;
+      
+      expect(regex.test(userName)).toBe(true);
+      expect(regex.test(anonymousUserName)).not.toBe(true);
     });
 
     it("should throw an Error if 'provider' option is not a string", () => {

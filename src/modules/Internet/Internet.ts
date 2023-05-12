@@ -254,8 +254,12 @@ export class Internet {
    * @throws {Error} If the option 'provider' is not a string.
    */
   public email(options: EmailOptions = {}): string {
-    const userName = this.userName(options.userName);
+    let userName = this.userName(options.userName);
     const provider = options.provider || "example.com";
+
+    if (!options.userName?.isAnonymous) {
+      userName = userName.toLowerCase();
+    }
 
     if (typeof provider !== "string") {
       throw new Error("Option 'provider' has to be a string.");
