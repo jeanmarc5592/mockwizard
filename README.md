@@ -286,6 +286,195 @@ mw.text.paragraphs({ words: 4 })
 
 ```
 
+## Internet
+
+
+### Password
+```js
+// Generate a random password (includes lowercase and uppercase letters, symbols and numbers by default)
+mw.internet.password() 
+// "Z6Vrc<!3e^"
+
+
+
+// Only include lowercase letters
+mw.internet.password({ includeLowercase: true }); 
+// "jpozlphted"
+
+
+
+// Only include uppercase letters
+mw.internet.password({ includeUppercase: true }); 
+// "HMCAOVTORO"
+
+
+
+// Only include symbols
+mw.internet.password({ includeSymbols: true });
+// "!?>&/,<@&;"
+
+
+
+// Only include numbers
+mw.internet.password({ includeNumbers: true });
+// "2408014800
+
+
+
+// Specify a certain length between 6 and 120 (10 by default)
+mw.internet.password({ length: 16 });
+// "5HpNxF$VYd&W-^Il"
+
+
+
+// Combine options
+mw.internet.password({ includeUppercase: true, length: 32, includeLowercase: true, includeNumbers: true });
+// "TAJxCaZzIgUftNy73vw2vZFyps4z9DKb"
+```
+
+
+### MAC address
+```js
+// Generate a random MAC address
+mw.internet.macAddress();
+// "ad:31:2e:04:5c:da"
+```
+
+
+### IPv4
+```js
+// Generate a random IPv4 address
+mw.internet.ipv4();
+// "115.74.191.114"
+
+
+
+// Generate a local IPv4 address
+mw.internet.ipv4({ isLocal: true });
+// "192.168.223.133"
+```
+
+
+### IPv6
+```js
+// Generate a random IPv6 address
+mw.internet.ipv6();
+// "5839:e415:e800:7ce3:990d:5880:56ae:4282"
+
+
+
+// Generate a local IPv6 address
+mw.internet.ipv6({ isLocal: true });
+// "fe80:df7c:e94a:16b9:95bb:287a:dcf3:c12b"
+```
+
+
+### Slug
+```js
+// Generate a random slug
+mw.internet.slug();
+// "purus-augue-lorem"
+
+
+
+// Specify the length between 1 and 10 (3 by default)
+mw.internet.slug({ length: 5 });
+// "ornare-iaculit-morbi-pariatur-massa"
+```
+
+
+### Domain
+```js
+// Generate a random domain
+mw.internet.domain();
+// "dictum.com"
+
+
+
+// Specify the Top Level Domain (by default "com")
+mw.internet.domain({ tld: "net" });
+// "scelerisque.net"
+```
+
+
+### URL
+```js
+// Generate a random URL
+mw.internet.url();
+// "www.tristique.com"
+
+
+
+// Specify the Top Level Domain (by default "com")
+mw.internet.url({ tld: "io" });
+// "www.mollitia.io"
+
+
+
+// Include SSL
+mw.internet.url({ includeSSL: true });
+// "https://www.tempor.com"
+
+
+
+// Include a random slug
+mw.internet.url({ includeSlug: true });
+// "www.lobortis.com/voluptatum-sollicitudin-rhoncus"
+
+
+
+// Combine options
+mw.internet.url({ includeSlug: true, includeSSL: true, tld: "biz" });
+// "https://www.velit.biz/mollitia-gravida-aperiam"
+```
+
+
+### Username
+```js
+// Generate a random username
+mw.internet.userName();
+// "Stefan_Will_39"
+
+
+
+// Specify a first name that should be included
+mw.internet.userName({ firstName: "John" });
+// "John_Schuster_12"
+
+
+
+// Specify a last name that should be included
+mw.internet.userName({ lastName: "Miller" });
+// "Ottilie_Miller_97"
+
+
+
+// Generate an anonymous username
+mw.internet.userName({ isAnonymous: true });
+// "ByteBattler51"
+```
+
+
+### Email address
+```js
+// Generate a random email address
+mw.internet.email();
+// "myra_funk_18@example.com"
+
+
+
+// Specify the provider (by default "example.com")
+mw.internet.email({ provider: "gmail.com" });
+// "kendrick_toy_29@gmail.com"
+
+
+
+// Specify the username (same options as for "userName" function)
+mw.internet.email({ userName: { firstName: "Sarah", lastName: "Johnson" } });
+// "sarah_johnson_55@example.com"
+```
+
+
 ## License
 
 [MIT](https://github.com/jeanmarc5592/mockwizard/blob/main/LICENSE)

@@ -81,12 +81,12 @@ export class RandomGenerator {
    * @param {number} max - The maximum value to generate.
    * @returns {number} The generated random number.
    * @throws {Error} Throws an error if `min` or `max` is missing or not a number.
-   * @throws {Error} Throws an error if `min` or `max` is less than or equal to 0.
+   * @throws {Error} Throws an error if `min` or `max` is less than 0.
    * @throws {Error} Throws an error if `min` is greater than or equal to `max`.
    * @throws {Error} Throws an error if `max` is less than or equal to `min`.
    */
   static generateNumberBetween(min: number, max: number): number {
-    if (!min || !max) {
+    if (min === undefined || max === undefined) {
       throw new Error("Parameter 'min' or 'max' is missing.");
     }
 
@@ -94,7 +94,7 @@ export class RandomGenerator {
       throw new Error("Parameter 'min' and 'max' has to be a number.");
     }
 
-    if (min <= 0 || max <= 0) {
+    if (min < 0 || max < 0) {
       throw new Error("Parameter 'min' and 'max' has to be greater than 0.");
     }
 
@@ -103,5 +103,38 @@ export class RandomGenerator {
     }
 
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  /**
+   * Generates a random hexadecimal string of the given length.
+   *
+   * @static
+   * @param {number} length - The length of the hexadecimal string to be generated.
+   * @returns {string} - A random hexadecimal string.
+   * @throws {Error} - If the length parameter is missing, not a number, or less than or equal to 0.
+   */
+  static generateHex(length: number): string {
+    if (length === undefined) {
+      throw new Error("Parameter 'length' is missing.");
+    }
+
+    if (typeof length !== "number") {
+      throw new Error("Parameter 'length' has to be a number.");
+    }
+
+    if (length < 0) {
+      throw new Error("Parameter 'length' has to be greater than 0.");
+    }
+
+    let result = "";
+    const hexChars = "0123456789abcdef";
+
+    let counter = 1;
+    while (counter <= length) {
+      result += hexChars[Math.floor(Math.random() * hexChars.length)];
+      counter += 1;
+    }
+
+    return result;
   }
 }
