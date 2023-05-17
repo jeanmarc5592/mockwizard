@@ -5,3 +5,8 @@ export interface DigitOptions {
 export interface IntegerOptions {
   digitsCount?: number;
 }
+
+export interface FloatOptions {
+  decimalsCount?: number;
+  integersCount?: number;
+}
