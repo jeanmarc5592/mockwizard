@@ -179,4 +179,24 @@ describe("Data", () => {
       expect(letter).toMatch(/[a-z]/);
     });
   });
+
+  describe("arrayElement", () => {
+    let mockArray: any[];
+
+    beforeEach(() => {
+      mockArray = ["Foo", "Bar", 3, "Hello", 8.3, "WORLD", { key: "value" }];
+    });
+
+    it("should return one random element from a given array", () => {
+      const element = dataMock.arrayElement(mockArray);
+
+      expect(mockArray).toContain(element);
+    });
+
+    it("should return undefined if the given array is empty", () => {
+      const element = dataMock.arrayElement([]);
+
+      expect(element).toBeUndefined();
+    });
+  });
 });
