@@ -1,7 +1,12 @@
-import { RandomGenerator } from "../../utils";
-import { DigitOptions, FloatOptions, IntegerOptions, NumberBetweenOptions } from "./types";
+import { ArrayHelpers, GenericData, RandomGenerator } from "../../utils";
+import { DigitOptions, FloatOptions, IntegerOptions, LetterOptions, NumberBetweenOptions } from "./types";
 
 export class Data {
+  constructor() {
+    this.lowerCaseLetters = GenericData.lowerCaseLetters;
+    this.upperCaseLetters = GenericData.upperCaseLetters;
+  }
+
   /**
    * Generates a random digit between 0 and 9.
    *
@@ -103,4 +108,47 @@ export class Data {
 
     return number;
   }
+
+  /**
+   * Generates a random letter.
+   *
+   * @public
+   * @param {LetterOptions} [options] - Optional configuration for generating the random letter.
+   * @param {boolean} [options.onlyLowercase] - If true, it returns a letter that is only lowercase.
+   * @param {boolean} [options.onlyUppercase] - If true, it returns a letter that is only uppercase.
+   * @returns {string} - The generated random letter.
+   */
+  public letter(options: LetterOptions = {}): string {
+    let letter = "";
+
+    if (options.onlyLowercase) {
+      letter = RandomGenerator.generateValue(this.lowerCaseLetters) as string;
+    } else if (options.onlyUppercase) {
+      letter = RandomGenerator.generateValue(this.upperCaseLetters) as string;
+    } else {
+      const allLetters = this.upperCaseLetters.concat(this.lowerCaseLetters);
+      const shuffledLetters = ArrayHelpers.shuffle(allLetters);
+      letter = RandomGenerator.generateValue(shuffledLetters) as string;
+    }
+
+    return letter;
+  }
+
+  /**
+   * An array of only lowercase letters.
+   *
+   * @private
+   * @readonly
+   * @type {string[]}
+   */
+  private lowerCaseLetters: string[];
+
+  /**
+   * An array of only uppercase letters.
+   *
+   * @private
+   * @readonly
+   * @type {string[]}
+   */
+  private upperCaseLetters: string[];
 }

@@ -14,3 +14,8 @@ export interface FloatOptions {
 export interface NumberBetweenOptions {
   type?: "int" | "float";
 }
+
+export interface LetterOptions {
+  onlyUppercase?: boolean;
+  onlyLowercase?: boolean;
+}
