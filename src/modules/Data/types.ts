@@ -10,3 +10,7 @@ export interface FloatOptions {
   decimalsCount?: number;
   integersCount?: number;
 }
+
+export interface NumberBetweenOptions {
+  type?: "int" | "float";
+}

@@ -69,7 +69,7 @@ describe("Data", () => {
   });
 
   describe("float", () => {
-    it("should create random floating number with 1-10 decimals and 1-10 integers", () => {
+    it("should create random floating number with 1-5 decimals and 1-10 integers", () => {
       const float = dataMock.float();
       
       const integers = float.toString().split(".")[0].length;
@@ -84,18 +84,18 @@ describe("Data", () => {
       expect(integers).toBeLessThanOrEqual(10);
 
       expect(decimals).toBeGreaterThanOrEqual(1);
-      expect(decimals).toBeLessThanOrEqual(10);
+      expect(decimals).toBeLessThanOrEqual(5);
 
       expect(firstInteger).not.toBe("0");
     });
 
     it("should create a random floating number with as many decimals as specified in 'decimalsCount' option", () => {
-      const float = dataMock.float({ decimalsCount: 8 });
+      const float = dataMock.float({ decimalsCount: 4 });
       const decimals = float.toString().split(".")[1].length;
 
       expect(typeof float).toBe("number");
       expect(Number.isInteger(float)).not.toBe(true);
-      expect(decimals).toBe(8);
+      expect(decimals).toBe(4);
     });
 
     it("should create a random floating number with as many integers as specified in 'integersCount' option", () => {
@@ -107,8 +107,8 @@ describe("Data", () => {
       expect(integers).toBe(3);
     });
 
-    it("should throw an Error if 'decimalsCount' option is less than 1 or greater than 10", () => {
-      const error = "Option 'decimalsCount' has to be greater than 0 and less than or equal to 10.";
+    it("should throw an Error if 'decimalsCount' option is less than 1 or greater than ", () => {
+      const error = "Option 'decimalsCount' has to be greater than 0 and less than or equal to 5.";
 
       expect(() => dataMock.float({ decimalsCount: -4 })).toThrowError(error);
       expect(() => dataMock.float({ decimalsCount: 234 })).toThrowError(error);
@@ -125,6 +125,35 @@ describe("Data", () => {
 
       // @ts-ignore
       expect(() => dataMock.float({ decimalsCount: true })).toThrowError(error);
+    });
+  });
+
+  describe("numberBetween", () => {
+    it("should generate a random integer between the given min and max values", () => {
+      const number = dataMock.numberBetween(4, 100);
+
+      expect(typeof number).toBe("number");
+      expect(Number.isInteger(number)).toBe(true);
+      expect(number).toBeGreaterThanOrEqual(4);
+      expect(number).toBeLessThanOrEqual(100);
+    });
+
+    it("should generate a random integer if 'type' option is set to 'int'", () => {
+      const number = dataMock.numberBetween(1, 50, { type: "int" });
+
+      expect(typeof number).toBe("number");
+      expect(Number.isInteger(number)).toBe(true);
+      expect(number).toBeGreaterThanOrEqual(1);
+      expect(number).toBeLessThanOrEqual(50);
+    });
+
+    it("should generate a random float if 'type' option is set to 'float'", () => {
+      const number = dataMock.numberBetween(1, 50, { type: "float" });
+
+      expect(typeof number).toBe("number");
+      expect(Number.isInteger(number)).not.toBe(true);
+      expect(number).toBeGreaterThanOrEqual(1);
+      expect(number).toBeLessThanOrEqual(50);
     });
   });
 });

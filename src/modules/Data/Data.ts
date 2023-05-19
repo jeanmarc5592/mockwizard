@@ -1,5 +1,5 @@
 import { RandomGenerator } from "../../utils";
-import { DigitOptions, FloatOptions, IntegerOptions } from "./types";
+import { DigitOptions, FloatOptions, IntegerOptions, NumberBetweenOptions } from "./types";
 
 export class Data {
   /**
@@ -54,20 +54,20 @@ export class Data {
    *
    * @public
    * @param {FloatOptions} [options] - Optional configuration for generating the random float.
-   * @param {number} [options.integersCount] - The amount of integers the float should contain (Only 1 - 10). If not speciefied, it varies between 1 and 10.
-   * @param {number} [options.decimalsCount] - The amount of decimals the float should contain (Only 1 - 10). If not speciefied, it varies between 1 and 10.
+   * @param {number} [options.integersCount] - The amount of integers the float should contain (Only 1 - 10). If not specified, it varies between 1 and 10.
+   * @param {number} [options.decimalsCount] - The amount of decimals the float should contain (Only 1 - 5). If not specified, it varies between 1 and 5.
    * @throws {Error} If the decimalsCount option is not a number or is less than 1 or greater than 10.
    * @returns {number} - The generated random float.
    */
   public float(options: FloatOptions = {}): number {
-    const decimalsCount = options.decimalsCount || RandomGenerator.generateNumberBetween(1, 10);
+    const decimalsCount = options.decimalsCount ?? RandomGenerator.generateNumberBetween(1, 5);
 
     if (typeof decimalsCount !== "number") {
       throw new Error("Option 'decimalsCount' has to be a number.");
     }
 
-    if (decimalsCount < 1 || decimalsCount > 10) {
-      throw new Error("Option 'decimalsCount' has to be greater than 0 and less than or equal to 10.");
+    if (decimalsCount < 1 || decimalsCount > 5) {
+      throw new Error("Option 'decimalsCount' has to be greater than 0 and less than or equal to 5.");
     }
 
     const integerPart = this.integer({ digitsCount: options.integersCount });
@@ -76,12 +76,21 @@ export class Data {
     let counter = 0;
 
     while (counter < decimalsCount) {
-      decimalPartAsString += this.digit();
+      const digit = this.digit({ notNull: true }).toString();
+      decimalPartAsString += digit;
       counter += 1;
     }
 
     const floatAsString = `${integerPart}.${decimalPartAsString}`;
 
     return parseFloat(floatAsString);
+  }
+
+  public numberBetween(min: number, max: number, options: NumberBetweenOptions = {}): number {
+    const type = options.type ?? "int";
+
+    const number = type === "int" ? RandomGenerator.generateNumberBetween(min, max) : RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 2 });
+
+    return number;
   }
 }
