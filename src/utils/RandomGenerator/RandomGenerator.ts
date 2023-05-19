@@ -1,4 +1,4 @@
-import { RandomValue, List, MultipleValuesOptions } from "./types";
+import { RandomValue, List, MultipleValuesOptions, FloatBetweenOptions } from "./types";
 
 export class RandomGenerator {
   /**
@@ -74,7 +74,7 @@ export class RandomGenerator {
   }
 
   /**
-   * Generates a random number between the specified minimum and maximum values (inclusive).
+   * Generates a random number as an integer between the specified minimum and maximum values (inclusive).
    *
    * @static
    * @param {number} min - The minimum value to generate.
@@ -103,6 +103,59 @@ export class RandomGenerator {
     }
 
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  /**
+   * Generates a random float between the specified minimum and maximum values (maximum value excluded).
+   *
+   * @static
+   * @param {number} min - The minimum value to generate.
+   * @param {number} max - The maximum value to generate.
+   * @param {FloatBetweenOptions} [options={}] - An optional object containing additional options.
+   * @param {number} [options.decimalsCount] - The amount of decimals the float should contain (Only 1 - 5). If not specified, it defaults to 2.
+   * @returns {number} The generated random float.
+   * @throws {Error} Throws an error if `min` or `max` is not a number.
+   * @throws {Error} Throws an error if `min` or `max` is less than 0.
+   * @throws {Error} Throws an error if `min` is greater than or equal to `max`.
+   * @throws {Error} Throws an error if `max` is less than or equal to `min`.
+   * @throws {Error} Throws an error if `decimalsCount` is not a number.
+   * @throws {Error} Throws an error if `decimalsCount` is less than 1 and greater than 5.
+   */
+  static generateFloatBetween(min: number, max: number, options: FloatBetweenOptions = {}): number {
+    if (min === undefined || max === undefined) {
+      throw new Error("Parameter 'min' or 'max' is missing.");
+    }
+
+    if (typeof min !== "number" || typeof max !== "number") {
+      throw new Error("Parameter 'min' and 'max' has to be a number.");
+    }
+
+    if (min < 0 || max < 0) {
+      throw new Error("Parameter 'min' and 'max' has to be greater than 0.");
+    }
+
+    if (min >= max) {
+      throw new Error("Parameter 'min' has to be smaller than 'max'.");
+    }
+
+    const decimals = options.decimalsCount ?? 2;
+
+    if (typeof decimals !== "number") {
+      throw new Error("Option 'decimalsCount' has to be a number.");
+    }
+
+    if (decimals < 1 || decimals > 5) {
+      throw new Error("Option 'decimalsCount' has to be greater than or equal to 1 and less than or equal to 5.");
+    }
+
+    let randomFloat = 0;
+
+    // if the random float is something like 8, try again to ensure that always a float gets created here
+    while (Number.isInteger(randomFloat)) {
+      randomFloat = Math.random() * (max - min) + min;
+    }
+
+    return parseFloat(randomFloat.toFixed(decimals));
   }
 
   /**

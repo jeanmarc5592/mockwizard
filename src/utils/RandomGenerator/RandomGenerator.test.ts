@@ -149,14 +149,103 @@ describe("RandomGenerator", () => {
       expect(() => RandomGenerator.generateNumberBetween(6, 6)).toThrowError(error);
     });
 
-    it("should return a random number between the specified parameters", () => {
+    it("should return a random number as integer between the specified parameters", () => {
       const min = 4;
       const max = 20;
 
       const result = RandomGenerator.generateNumberBetween(min, max);
 
+      expect(typeof result).toBe("number");
+      expect(Number.isInteger(result)).toBe(true);
       expect(result).toBeGreaterThanOrEqual(min);
       expect(result).toBeLessThanOrEqual(max);
+    });
+  });
+
+  describe("generateFloatBetween", () => {
+    it ("should throw an Error if parameter 'min' or 'max' is missing", () => {
+      const error = "Parameter 'min' or 'max' is missing.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateFloatBetween()).toThrowError(error);
+      
+      // @ts-ignore
+      expect(() => RandomGenerator.generateFloatBetween(3)).toThrowError(error);
+    });
+
+    it("should throw an Error if parameter 'min' or 'max' is not a number", () => {
+      const error = "Parameter 'min' and 'max' has to be a number.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateFloatBetween("3", "6")).toThrowError(error);
+      
+      // @ts-ignore
+      expect(() => RandomGenerator.generateFloatBetween({}, true)).toThrowError(error);
+    });
+
+    it("should throw an Error if parameter 'min' or 'max' are less than 0", () => {
+      const error = "Parameter 'min' and 'max' has to be greater than 0.";
+
+      expect(() => RandomGenerator.generateFloatBetween(-4, 3)).toThrowError(error);
+      expect(() => RandomGenerator.generateFloatBetween(5, -9)).toThrowError(error);
+      expect(() => RandomGenerator.generateFloatBetween(-5, -9)).toThrowError(error);
+    });
+
+    it("should throw an Error if parameter 'min' is greater than 'max'", () => {
+      const error = "Parameter 'min' has to be smaller than 'max'.";
+
+      expect(() => RandomGenerator.generateFloatBetween(6, 3)).toThrowError(error);
+      expect(() => RandomGenerator.generateFloatBetween(6, 6)).toThrowError(error);
+    });
+
+    it("should throw an Error if option 'decimalsCount' is not a number", () => {
+      const error = "Option 'decimalsCount' has to be a number.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateFloatBetween(1, 10, { decimalsCount: "3" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateFloatBetween(1, 10, { decimalsCount: [3] })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateFloatBetween(1, 10, { decimalsCount: { count: 34 } })).toThrowError(error);
+    });
+
+    it("should throw an Error if option 'decimalsCount' is less than 1 or greater than 5", () => {
+      const error = "Option 'decimalsCount' has to be greater than or equal to 1 and less than or equal to 5.";
+
+      expect(() => RandomGenerator.generateFloatBetween(3, 6, { decimalsCount: -3 })).toThrowError(error);
+      expect(() => RandomGenerator.generateFloatBetween(3, 6, { decimalsCount: 10 })).toThrowError(error);
+    });
+
+    it("should return a random float between the specified parameters", () => {
+      const min = 4;
+      const max = 20;
+
+      const result = RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 2 });
+
+      expect(typeof result).toBe("number");
+      expect(Number.isInteger(result)).not.toBe(true);
+      expect(result).toBeGreaterThanOrEqual(min);
+      expect(result).toBeLessThanOrEqual(max);
+    });
+
+    it("should generate a random float with 2 decimals if the 'decimalsCount' option is not specified", () => {
+      const result = RandomGenerator.generateFloatBetween(1, 100);
+      const decimals = result.toString().split(".")[1].length;
+      
+      // If last decimal is 0 it will be omitted (one decimal digit less)
+      expect(decimals === 2 || decimals === 1).toBe(true);
+    });
+
+    it("should generate a random float with as many decimals as specified in the 'decimalsCount' option", () => {
+      const length = 5;
+
+      const result = RandomGenerator.generateFloatBetween(1, 100, { decimalsCount: length });
+      const decimals = result.toString().split(".")[1].length;
+
+      // If last decimal is 0 it will be omitted (one decimal digit less)
+      expect(decimals === length || decimals === length - 1).toBe(true);
     });
   });
 
