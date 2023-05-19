@@ -19,3 +19,7 @@ export interface LetterOptions {
   onlyUppercase?: boolean;
   onlyLowercase?: boolean;
 }
+
+export interface ArrayElementsOptions {
+  elementsCount?: number;
+}

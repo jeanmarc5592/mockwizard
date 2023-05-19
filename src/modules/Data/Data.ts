@@ -135,6 +135,17 @@ export class Data {
   }
 
   /**
+   * Generates a random element from a given array.
+   *
+   * @public
+   * @param {any[]} - The array to choose the element from.
+   * @returns {any} - The generated random element.
+   */
+  public arrayElement(array: any[]): any {
+    return RandomGenerator.generateValue(array);
+  }
+
+  /**
    * An array of only lowercase letters.
    *
    * @private

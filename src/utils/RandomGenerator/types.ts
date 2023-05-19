@@ -1,5 +1,5 @@
-export type List = string[] | number[];
-export type RandomValue = string | number;
+export type List = any[];
+export type RandomValue = any;
 export interface MultipleValuesOptions {
   amount: number;
 }
