@@ -56,7 +56,7 @@ export class Data {
    * @param {FloatOptions} [options] - Optional configuration for generating the random float.
    * @param {number} [options.integersCount] - The amount of integers the float should contain (Only 1 - 10). If not specified, it varies between 1 and 10.
    * @param {number} [options.decimalsCount] - The amount of decimals the float should contain (Only 1 - 5). If not specified, it varies between 1 and 5.
-   * @throws {Error} If the decimalsCount option is not a number or is less than 1 or greater than 10.
+   * @throws {Error} - If the decimalsCount option is not a number or is less than 1 or greater than 10.
    * @returns {number} - The generated random float.
    */
   public float(options: FloatOptions = {}): number {
@@ -86,6 +86,16 @@ export class Data {
     return parseFloat(floatAsString);
   }
 
+  /**
+   * Generates a random number between the min and the max value.
+   *
+   * @public
+   * @param {number} min - The minimum value to generate.
+   * @param {number} max - The maximum value to generate.
+   * @param {NumberBetweenOptions} [options] - Optional configuration for generating the random float.
+   * @param {"int" | "float"} [options.type] - The type of the generated number. If not specified, it defaults to "int" (Integer).
+   * @returns {number} - The generated random number between the min and max value.
+   */
   public numberBetween(min: number, max: number, options: NumberBetweenOptions = {}): number {
     const type = options.type ?? "int";
 
