@@ -156,4 +156,27 @@ describe("Data", () => {
       expect(number).toBeLessThanOrEqual(50);
     });
   });
+
+  describe("letter", () => {
+    it("should return an uppercase or lowercase letter as a string", () => {
+      const letter = dataMock.letter();
+
+      expect(typeof letter).toBe("string");
+      expect(letter).toMatch(/[A-Za-z]/);
+    });
+
+    it("should return an uppercase letter if 'onlyUppercase' option is specified", () => {
+      const letter = dataMock.letter({ onlyUppercase: true });
+
+      expect(typeof letter).toBe("string");
+      expect(letter).toMatch(/[A-Z]/);
+    });
+
+    it("should return a lowercase letter if 'onlyLowercase' option is specified", () => {
+      const letter = dataMock.letter({ onlyLowercase: true });
+
+      expect(typeof letter).toBe("string");
+      expect(letter).toMatch(/[a-z]/);
+    });
+  });
 });
