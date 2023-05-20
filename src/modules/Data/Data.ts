@@ -1,5 +1,5 @@
 import { ArrayHelpers, GenericData, RandomGenerator } from "../../utils";
-import { DigitOptions, FloatOptions, IntegerOptions, LetterOptions, NumberBetweenOptions } from "./types";
+import { ArrayElementsOptions, DigitOptions, FloatOptions, IntegerOptions, LetterOptions, NumberBetweenOptions } from "./types";
 
 export class Data {
   constructor() {
@@ -138,11 +138,55 @@ export class Data {
    * Generates a random element from a given array.
    *
    * @public
-   * @param {any[]} - The array to choose the element from.
+   * @param {any[]} array - The array to choose the element from.
    * @returns {any} - The generated random element.
    */
   public arrayElement(array: any[]): any {
     return RandomGenerator.generateValue(array);
+  }
+
+  /**
+   * Generates unique elements from a given array.
+   *
+   * @public
+   * @param {any[]} array - The array to choose the elements from.
+   * @param {ArrayElementsOptions} [options] - Optional configuration for generating the random elements.
+   * @param {number} [options.elementsCount] - The amount of unique elements it should generate.
+   * (If it's higher than the actual possible amount of unique values, it'll generate the highest possible amount of unique values.)
+   * @throws {Error} - If 'elementsCount' option is not a number or less than 1.
+   * @returns {any} - The generated random elements.
+   */
+  public arrayElements(array: any[], options: ArrayElementsOptions = {}): any[] {
+    let elementsCount = options.elementsCount ?? 1;
+    const arrayWithUniqueElements = ArrayHelpers.removeNonUniqueValues(array);
+
+    if (typeof elementsCount !== "number") {
+      throw new Error("Option 'elementsCount' has to be a number.");
+    }
+
+    if (elementsCount < 1) {
+      throw new Error("Option 'elementsCount' has to be greater than 1.");
+    }
+
+    // For the case if 'elementsCount' is greater than the actual amount of unique values in the array
+    // --> 'elementsCount' should be equal to the highest possible amount of unique values
+    if (elementsCount > arrayWithUniqueElements.length) {
+      elementsCount = arrayWithUniqueElements.length;
+    }
+
+    const elements: any[] = [];
+
+    for (let i = 0; i < elementsCount; i += 1) {
+      const randomElement = RandomGenerator.generateValue(arrayWithUniqueElements);
+
+      // Remove the generated element from the result array to prevent having duplicate elements in the result array
+      const elementIndex = arrayWithUniqueElements.indexOf(randomElement);
+      ArrayHelpers.removeValueByIndex(arrayWithUniqueElements, elementIndex);
+
+      elements.push(randomElement);
+    }
+
+    return elements;
   }
 
   /**
