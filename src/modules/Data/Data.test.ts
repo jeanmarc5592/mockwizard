@@ -199,4 +199,71 @@ describe("Data", () => {
       expect(element).toBeUndefined();
     });
   });
+
+  describe("arrayElements", () => {
+    let mockArray: any[];
+
+    beforeEach(() => {
+      mockArray = ["Foo", "Bar", 3, "Hello", 8.3, "WORLD", { key: "value" }];
+    });
+
+    it("should return one random element from a given array", () => {
+      const elements = dataMock.arrayElements(mockArray);
+
+      expect(elements).toBeInstanceOf(Array);
+      expect(elements.length).toBe(1);
+      expect(mockArray).toContain(elements[0]);
+    });
+
+    it("should return as many random items as specified in 'elementsCount' option", () => {
+      const elements = dataMock.arrayElements(mockArray, { elementsCount: 4 });
+
+      expect(elements).toBeInstanceOf(Array);
+      expect(elements.length).toBe(4);
+
+      elements.forEach((element) => {
+        expect(mockArray).toContain(element);
+      });
+    });
+
+    it("should return only radom unique elements from a given array", () => {
+      const elements = dataMock.arrayElements(mockArray, { elementsCount: 3 });
+      const uniqueElements = new Set(elements);
+      
+      expect(uniqueElements.size).toBe(elements.length);
+    });
+
+    it("should throw an Error if 'elementsCount' option is less than 1", () => {
+      const error = "Option 'elementsCount' has to be greater than 1.";
+
+      expect(() => dataMock.arrayElements(mockArray, { elementsCount: -4 })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'elementsCount' option is not a number", () => {
+      const error = "Option 'elementsCount' has to be a number.";
+
+      // @ts-ignore
+      expect(() => dataMock.arrayElements(mockArray, { elementsCount: "5" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => dataMock.arrayElements(mockArray, { elementsCount: { elementsCount: 4 } })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => dataMock.arrayElements(mockArray, { elementsCount: [3] })).toThrowError(error);
+    });
+
+    it("should return all unique values if 'elementsCount' option is greater than the amount of unique values", () => {
+      // 5 unique elements, length 7
+      const array = [1, 2, 3, 4, 4, 4, 5];
+      const elements = dataMock.arrayElements(array, { elementsCount: array.length });
+
+      expect(elements.length).toBe(5);
+    });
+
+    it("should return 0 elements if the given array is empty", () => {
+      const elements = dataMock.arrayElements([]);
+
+      expect(elements.length).toBe(0);
+    });
+  });
 });
