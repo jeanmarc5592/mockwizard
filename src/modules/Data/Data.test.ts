@@ -226,7 +226,7 @@ describe("Data", () => {
       });
     });
 
-    it("should return only radom unique elements from a given array", () => {
+    it("should return only random unique elements from a given array", () => {
       const elements = dataMock.arrayElements(mockArray, { elementsCount: 3 });
       const uniqueElements = new Set(elements);
       
