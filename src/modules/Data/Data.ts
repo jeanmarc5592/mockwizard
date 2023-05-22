@@ -102,9 +102,13 @@ export class Data {
    * @returns {number} - The generated random number between the min and max value.
    */
   public numberBetween(min: number, max: number, options: NumberBetweenOptions = {}): number {
-    const type = options.type ?? "int";
+    let number = min;
 
-    const number = type === "int" ? RandomGenerator.generateNumberBetween(min, max) : RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 2 });
+    if (options.asFloat) {
+      number = RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 2 });
+    } else {
+      number = RandomGenerator.generateNumberBetween(min, max);
+    }
 
     return number;
   }

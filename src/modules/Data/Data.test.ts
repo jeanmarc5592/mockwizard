@@ -138,17 +138,8 @@ describe("Data", () => {
       expect(number).toBeLessThanOrEqual(100);
     });
 
-    it("should generate a random integer if 'type' option is set to 'int'", () => {
-      const number = dataMock.numberBetween(1, 50, { type: "int" });
-
-      expect(typeof number).toBe("number");
-      expect(Number.isInteger(number)).toBe(true);
-      expect(number).toBeGreaterThanOrEqual(1);
-      expect(number).toBeLessThanOrEqual(50);
-    });
-
-    it("should generate a random float if 'type' option is set to 'float'", () => {
-      const number = dataMock.numberBetween(1, 50, { type: "float" });
+    it("should generate a random float if 'asFloat' option is specified", () => {
+      const number = dataMock.numberBetween(1, 50, { asFloat: true });
 
       expect(typeof number).toBe("number");
       expect(Number.isInteger(number)).not.toBe(true);

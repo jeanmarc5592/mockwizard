@@ -12,7 +12,7 @@ export interface FloatOptions {
 }
 
 export interface NumberBetweenOptions {
-  type?: "int" | "float";
+  asFloat?: true;
 }
 
 export interface LetterOptions {
