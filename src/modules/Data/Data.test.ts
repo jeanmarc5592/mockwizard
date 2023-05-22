@@ -289,4 +289,70 @@ describe("Data", () => {
       expect(elementTwo).toBeUndefined();
     });
   });
+
+  describe("objectElements", () => {
+    let mockObject: {};
+
+    beforeEach(() => {
+      mockObject = { foo: "bar", key: "value", num: 323, hello: true };
+    });
+
+    it("should return one random value from a given object", () => {
+      const elements = dataMock.objectElements(mockObject);
+
+      expect(elements).toBeInstanceOf(Array);
+      expect(elements.length).toBe(1);
+      expect(Object.values(mockObject)).toContain(elements[0]);
+    });
+
+    it("should return one random key from a given object if 'returnKey' option is specified", () => {
+      const elements = dataMock.objectElements(mockObject, { returnKey: true });
+
+      expect(elements).toBeInstanceOf(Array);
+      expect(elements.length).toBe(1);
+      expect(Object.keys(mockObject)).toContain(elements[0]);
+    });
+
+    it("should return as many random elements as specified in 'elementsCount' option", () => {
+      const values = dataMock.objectElements(mockObject, { elementsCount: 3 });
+      const keys = dataMock.objectElements(mockObject, { returnKey: true, elementsCount: 3 });
+
+      expect(values).toBeInstanceOf(Array);
+      expect(values.length).toBe(3);
+      values.forEach((value) => {
+        expect(Object.values(mockObject)).toContain(value);
+      });
+
+      expect(keys).toBeInstanceOf(Array);
+      expect(keys.length).toBe(3);
+      keys.forEach((key) => {
+        expect(Object.keys(mockObject)).toContain(key);
+      });
+    });
+
+    it("should throw an Error if 'elementsCount' option is less than 1", () => {
+      const error = "Option 'elementsCount' has to be greater than 1.";
+
+      expect(() => dataMock.objectElements(mockObject, { elementsCount: -4 })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'elementsCount' option is not a number", () => {
+      const error = "Option 'elementsCount' has to be a number.";
+
+      // @ts-ignore
+      expect(() => dataMock.objectElements(mockObject, { elementsCount: "5" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => dataMock.objectElements(mockObject, { elementsCount: { elementsCount: 4 } })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => dataMock.objectElements(mockObject, { elementsCount: [3] })).toThrowError(error);
+    });
+
+    it("should return 0 elements if the given object is empty", () => {
+      const elements = dataMock.objectElements({});
+
+      expect(elements.length).toBe(0);
+    });
+  });
 });
