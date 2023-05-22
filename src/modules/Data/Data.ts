@@ -3,8 +3,8 @@ import { ArrayElementsOptions, DigitOptions, FloatOptions, IntegerOptions, Lette
 
 export class Data {
   constructor() {
-    this.lowerCaseLetters = GenericData.lowerCaseLetters;
-    this.upperCaseLetters = GenericData.upperCaseLetters;
+    this.lowercaseLetters = GenericData.lowerCaseLetters;
+    this.uppercaseLetters = GenericData.upperCaseLetters;
   }
 
   /**
@@ -126,11 +126,11 @@ export class Data {
     let letter = "";
 
     if (options.onlyLowercase) {
-      letter = RandomGenerator.generateValueFromArray(this.lowerCaseLetters) as string;
+      letter = RandomGenerator.generateValueFromArray(this.lowercaseLetters) as string;
     } else if (options.onlyUppercase) {
-      letter = RandomGenerator.generateValueFromArray(this.upperCaseLetters) as string;
+      letter = RandomGenerator.generateValueFromArray(this.uppercaseLetters) as string;
     } else {
-      const allLetters = this.upperCaseLetters.concat(this.lowerCaseLetters);
+      const allLetters = this.uppercaseLetters.concat(this.lowercaseLetters);
       const shuffledLetters = ArrayHelpers.shuffle(allLetters);
       letter = RandomGenerator.generateValueFromArray(shuffledLetters) as string;
     }
@@ -252,7 +252,7 @@ export class Data {
    * @readonly
    * @type {string[]}
    */
-  private lowerCaseLetters: string[];
+  private lowercaseLetters: string[];
 
   /**
    * An array of only uppercase letters.
@@ -261,5 +261,5 @@ export class Data {
    * @readonly
    * @type {string[]}
    */
-  private upperCaseLetters: string[];
+  private uppercaseLetters: string[];
 }
