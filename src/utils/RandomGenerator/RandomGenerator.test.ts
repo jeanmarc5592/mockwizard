@@ -18,7 +18,7 @@ describe("RandomGenerator", () => {
       expect(() => RandomGenerator.generateValueFromArray(false)).toThrowError(error);
     });
 
-    it("should throw an Error if 'list' is not of type 'List'", () => {
+    it("should throw an Error if 'list' is not of type 'Array'", () => {
       const error = "Parameter 'list' must be an Array.";
 
       // @ts-ignore
@@ -101,6 +101,40 @@ describe("RandomGenerator", () => {
       resultsThree.forEach(result => {
         expect(mockList).toContain(result);
       });
+    });
+  });
+
+  describe("generateElementFromObject", () => {
+    it("should throw an Error if 'object' is falsy", () => {
+      const error = "Parameter 'object' is missing.";
+
+      // @ts-ignore
+      expect(() => RandomGenerator.generateElementFromObject(null)).toThrowError(error);
+      // @ts-ignore
+      expect(() => RandomGenerator.generateElementFromObject(undefined)).toThrowError(error);
+      // @ts-ignore
+      expect(() => RandomGenerator.generateElementFromObject("")).toThrowError(error);
+      // @ts-ignore
+      expect(() => RandomGenerator.generateElementFromObject(false)).toThrowError(error);
+    });
+
+    it("should return an object with one random key value pair", () => {
+      const mockObject = { foo: "bar", hello: "world" };
+      const result = RandomGenerator.generateElementFromObject(mockObject);
+
+      expect(mockObject).toBeInstanceOf(Object);
+      expect(Object.entries(result)).toHaveLength(1);
+      expect(Object.keys(mockObject)).toContain(Object.keys(result)[0]);
+      expect(Object.values(mockObject)).toContain(Object.values(result)[0]);
+    });
+
+    it("should return an empty object if parameter 'object' is empty", () => {
+      const mockObject = {};
+      const result = RandomGenerator.generateElementFromObject(mockObject);
+
+      expect(mockObject).toBeInstanceOf(Object);
+      expect(Object.entries(result)).toHaveLength(0);
+      expect(result).toEqual(mockObject);
     });
   });
 

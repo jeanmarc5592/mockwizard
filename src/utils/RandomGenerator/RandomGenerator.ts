@@ -1,12 +1,12 @@
-import { RandomValue, List, MultipleValuesOptions, FloatBetweenOptions } from "./types";
+import { RandomValue, List, MultipleValuesOptions, FloatBetweenOptions, RandomObject } from "./types";
 
 export class RandomGenerator {
   /**
    * Generates a random value from a given list.
    *
    * @static
-   * @param {List} list - The list of strings to choose from.
-   * @returns {RandomValue} A randomly selected string from the given list.
+   * @param {List} list - The list of values to choose from.
+   * @returns {RandomValue} A randomly selected value from the given list.
    * @throws {Error} If the `list` parameter is missing or not an Array.
    */
   static generateValueFromArray(list: List): RandomValue {
@@ -61,6 +61,29 @@ export class RandomGenerator {
     }
 
     return values;
+  }
+
+  /**
+   * Generates a random key value pair from a given object.
+   *
+   * @static
+   * @param {RandomObject} object - The object to choose from.
+   * @returns {RandomObject} A randomly selected key value pair from the given object.
+   * @throws {Error} If the `object` parameter is falsy.
+   */
+  static generateElementFromObject(object: RandomObject): RandomObject {
+    if (!object) {
+      throw new Error("Parameter 'object' is missing.");
+    }
+
+    if (Object.keys(object).length === 0) {
+      return {};
+    }
+
+    const resultKey = this.generateValueFromArray(Object.keys(object)) as string;
+    const resultValue = object[resultKey];
+
+    return { [resultKey]: resultValue };
   }
 
   /**
