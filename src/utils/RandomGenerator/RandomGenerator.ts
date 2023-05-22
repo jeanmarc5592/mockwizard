@@ -9,7 +9,7 @@ export class RandomGenerator {
    * @returns {RandomValue} A randomly selected string from the given list.
    * @throws {Error} If the `list` parameter is missing or not an Array.
    */
-  static generateValue(list: List): RandomValue {
+  static generateValueFromArray(list: List): RandomValue {
     if (!list) {
       throw new Error("Parameter 'list' is missing.");
     }
@@ -34,7 +34,7 @@ export class RandomGenerator {
    * @throws {Error} If the 'amount' option is greater than the length of the 'list' parameter.
    * @throws {Error} If the 'amount' option is less than or equal to 0.
    */
-  static generateMultipleValues(list: List, options: MultipleValuesOptions): RandomValue[] {
+  static generateMultipleValuesFromArray(list: List, options: MultipleValuesOptions): RandomValue[] {
     if (!list) {
       throw new Error("Parameter 'list' is missing.");
     }
@@ -55,7 +55,7 @@ export class RandomGenerator {
 
     let counter = 1;
     while (counter <= options.amount) {
-      const randomValue = this.generateValue(list);
+      const randomValue = this.generateValueFromArray(list);
       values.push(randomValue);
       counter += 1;
     }

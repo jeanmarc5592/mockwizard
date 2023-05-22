@@ -66,7 +66,7 @@ export class Internet {
 
     const shuffledData = ArrayHelpers.shuffle(passwordData);
 
-    const password = RandomGenerator.generateMultipleValues(shuffledData, { amount: length }) as string[];
+    const password = RandomGenerator.generateMultipleValuesFromArray(shuffledData, { amount: length }) as string[];
 
     return password.join("");
   }
@@ -162,7 +162,7 @@ export class Internet {
       throw new Error("Option 'length' has to be greater than or equal to 1 and less than or equal to 10.");
     }
 
-    const slug = RandomGenerator.generateMultipleValues(this.words, { amount: slugLength }) as string[];
+    const slug = RandomGenerator.generateMultipleValuesFromArray(this.words, { amount: slugLength }) as string[];
 
     return slug.join("-");
   }
@@ -177,7 +177,7 @@ export class Internet {
    */
   public domain(options: DomainOptions = {}): string {
     const tld = options.tld || "com";
-    const domainName = RandomGenerator.generateValue(this.words) as string;
+    const domainName = RandomGenerator.generateValueFromArray(this.words) as string;
 
     if (typeof tld !== "string") {
       throw new Error("Option 'tld' has to be a string.");
@@ -228,7 +228,7 @@ export class Internet {
   public userName(options: UserNameOptions = {}): string {
     const firstName = options.firstName || this.person.firstName();
     const lastName = options.lastName || this.person.lastName();
-    const number = RandomGenerator.generateMultipleValues(this.numbers, { amount: 2 }) as string[];
+    const number = RandomGenerator.generateMultipleValuesFromArray(this.numbers, { amount: 2 }) as string[];
 
     if (typeof firstName !== "string" || typeof lastName !== "string") {
       throw new Error("Parameter 'firstName' and 'lastName' has to be a string.");
@@ -237,7 +237,7 @@ export class Internet {
     let userName = `${firstName}_${lastName}_${number.join("")}`;
 
     if (options.isAnonymous) {
-      userName = RandomGenerator.generateValue(this.anonymousNames) as string;
+      userName = RandomGenerator.generateValueFromArray(this.anonymousNames) as string;
     }
 
     return userName;

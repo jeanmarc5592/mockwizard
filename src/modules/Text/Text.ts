@@ -13,7 +13,7 @@ export class Text {
    * @returns {string} A random word from the data provided.
    */
   public word(): string {
-    return RandomGenerator.generateValue(this.data) as string;
+    return RandomGenerator.generateValueFromArray(this.data) as string;
   }
 
   /**
@@ -36,7 +36,7 @@ export class Text {
       throw new Error("Option 'words' must be greater than 0.");
     }
 
-    const words = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
+    const words = RandomGenerator.generateMultipleValuesFromArray(this.data, { amount: wordsCount }) as string[];
 
     if (options.asString) {
       return words.join(" ");
@@ -57,7 +57,7 @@ export class Text {
   public sentence(options: SentenceOptions = {}): string | string[] {
     const wordsCount = options.words ?? RandomGenerator.generateNumberBetween(3, 15);
 
-    let sentence = RandomGenerator.generateMultipleValues(this.data, { amount: wordsCount }) as string[];
+    let sentence = RandomGenerator.generateMultipleValuesFromArray(this.data, { amount: wordsCount }) as string[];
     sentence = sentence.map((word, index) => {
       if (index === 0) {
         return word.charAt(0).toUpperCase() + word.slice(1);

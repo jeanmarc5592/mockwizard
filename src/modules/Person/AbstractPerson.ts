@@ -21,7 +21,7 @@ export abstract class AbstractPerson {
       list = RandomGenerator.generateBinary() === 0 ? this.maleFirstNames : this.femaleFirstNames;
     }
 
-    return RandomGenerator.generateValue(list) as string;
+    return RandomGenerator.generateValueFromArray(list) as string;
   }
 
   /**
@@ -31,7 +31,7 @@ export abstract class AbstractPerson {
    * @returns {string} The randomly generated last name.
    */
   public lastName(): string {
-    return RandomGenerator.generateValue(this.lastNames) as string;
+    return RandomGenerator.generateValueFromArray(this.lastNames) as string;
   }
 
   /**
@@ -68,7 +68,7 @@ export abstract class AbstractPerson {
    * @returns {string} The randomly generated suffix.
    */
   public suffix(): string {
-    return RandomGenerator.generateValue(this.suffixes) as string;
+    return RandomGenerator.generateValueFromArray(this.suffixes) as string;
   }
 
   /**
@@ -89,7 +89,7 @@ export abstract class AbstractPerson {
       list = this.commonSalutations;
     }
 
-    return RandomGenerator.generateValue(list) as string;
+    return RandomGenerator.generateValueFromArray(list) as string;
   }
 
   /**
