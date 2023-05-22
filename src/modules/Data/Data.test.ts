@@ -181,13 +181,8 @@ describe("Data", () => {
   });
 
   describe("arrayElement", () => {
-    let mockArray: any[];
-
-    beforeEach(() => {
-      mockArray = ["Foo", "Bar", 3, "Hello", 8.3, "WORLD", { key: "value" }];
-    });
-
     it("should return one random element from a given array", () => {
+      const mockArray = ["Foo", "Bar"];
       const element = dataMock.arrayElement(mockArray);
 
       expect(mockArray).toContain(element);
@@ -264,6 +259,34 @@ describe("Data", () => {
       const elements = dataMock.arrayElements([]);
 
       expect(elements.length).toBe(0);
+    });
+  });
+
+  describe("objectElement", () => {
+    it("should return a random value from a given object", () => {
+      const mockObject = { foo: "bar", hello: "world" };
+      const element = dataMock.objectElement(mockObject);
+
+      expect(typeof element).toBe("string");
+      expect(Object.values(mockObject)).toContain(element);
+    });
+
+    it("should return a random key if the 'returnKey' option is 'specified'", () => {
+      const mockObject = { foo: "bar", hello: "world" };
+      const element = dataMock.objectElement(mockObject, { returnKey: true });
+
+      expect(typeof element).toBe("string");
+      expect(Object.keys(mockObject)).toContain(element);
+    });
+
+    it("should return undefined if the given object is empty", () => {
+      const mockObject = {};
+      
+      const elementOne = dataMock.objectElement(mockObject);
+      const elementTwo = dataMock.objectElement(mockObject, { returnKey: true });
+
+      expect(elementOne).toBeUndefined();
+      expect(elementTwo).toBeUndefined();
     });
   });
 });
