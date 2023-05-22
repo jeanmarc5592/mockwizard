@@ -8,11 +8,14 @@ import { Text } from "./modules/Text";
 
 import { Internet } from "./modules/Internet";
 
+import { Data } from "./modules/Data";
+
 interface MockWizardInterface {
   person: AbstractPerson;
   uuid: UUID;
   text: Text;
   internet: Internet;
+  data: Data;
 }
 
 export class MockWizard implements MockWizardInterface {
@@ -52,10 +55,20 @@ export class MockWizard implements MockWizardInterface {
    */
   public readonly internet: Internet;
 
+  /**
+   * The property that holds the Data module
+   *
+   * @public
+   * @readonly
+   * @type {Data}
+   */
+  public readonly data: Data;
+
   constructor(locale: Locale = "en-US") {
     this.person = PersonFactory.create(locale);
     this.uuid = new UUID();
     this.text = new Text();
     this.internet = new Internet(this.person);
+    this.data = new Data();
   }
 }

@@ -1,15 +1,15 @@
-import { RandomValue, List, MultipleValuesOptions } from "./types";
+import { RandomValue, List, MultipleValuesOptions, FloatBetweenOptions, RandomObject } from "./types";
 
 export class RandomGenerator {
   /**
    * Generates a random value from a given list.
    *
    * @static
-   * @param {List} list - The list of strings to choose from.
-   * @returns {RandomValue} A randomly selected string from the given list.
+   * @param {List} list - The list of values to choose from.
+   * @returns {RandomValue} A randomly selected value from the given list.
    * @throws {Error} If the `list` parameter is missing or not an Array.
    */
-  static generateValue(list: List): RandomValue {
+  static generateValueFromArray(list: List): RandomValue {
     if (!list) {
       throw new Error("Parameter 'list' is missing.");
     }
@@ -34,7 +34,7 @@ export class RandomGenerator {
    * @throws {Error} If the 'amount' option is greater than the length of the 'list' parameter.
    * @throws {Error} If the 'amount' option is less than or equal to 0.
    */
-  static generateMultipleValues(list: List, options: MultipleValuesOptions): RandomValue[] {
+  static generateMultipleValuesFromArray(list: List, options: MultipleValuesOptions): RandomValue[] {
     if (!list) {
       throw new Error("Parameter 'list' is missing.");
     }
@@ -55,12 +55,35 @@ export class RandomGenerator {
 
     let counter = 1;
     while (counter <= options.amount) {
-      const randomValue = this.generateValue(list);
+      const randomValue = this.generateValueFromArray(list);
       values.push(randomValue);
       counter += 1;
     }
 
     return values;
+  }
+
+  /**
+   * Generates a random key value pair from a given object.
+   *
+   * @static
+   * @param {RandomObject} object - The object to choose from.
+   * @returns {RandomObject} A randomly selected key value pair from the given object.
+   * @throws {Error} If the `object` parameter is falsy.
+   */
+  static generateElementFromObject(object: RandomObject): RandomObject {
+    if (!object) {
+      throw new Error("Parameter 'object' is missing.");
+    }
+
+    if (Object.keys(object).length === 0) {
+      return {};
+    }
+
+    const resultKey = this.generateValueFromArray(Object.keys(object)) as string;
+    const resultValue = object[resultKey];
+
+    return { [resultKey]: resultValue };
   }
 
   /**
@@ -74,7 +97,7 @@ export class RandomGenerator {
   }
 
   /**
-   * Generates a random number between the specified minimum and maximum values (inclusive).
+   * Generates a random number as an integer between the specified minimum and maximum values (inclusive).
    *
    * @static
    * @param {number} min - The minimum value to generate.
@@ -103,6 +126,59 @@ export class RandomGenerator {
     }
 
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  /**
+   * Generates a random float between the specified minimum and maximum values (maximum value excluded).
+   *
+   * @static
+   * @param {number} min - The minimum value to generate.
+   * @param {number} max - The maximum value to generate.
+   * @param {FloatBetweenOptions} [options={}] - An optional object containing additional options.
+   * @param {number} [options.decimalsCount] - The amount of decimals the float should contain (Only 1 - 5). If not specified, it defaults to 2.
+   * @returns {number} The generated random float.
+   * @throws {Error} Throws an error if `min` or `max` is not a number.
+   * @throws {Error} Throws an error if `min` or `max` is less than 0.
+   * @throws {Error} Throws an error if `min` is greater than or equal to `max`.
+   * @throws {Error} Throws an error if `max` is less than or equal to `min`.
+   * @throws {Error} Throws an error if `decimalsCount` is not a number.
+   * @throws {Error} Throws an error if `decimalsCount` is less than 1 and greater than 5.
+   */
+  static generateFloatBetween(min: number, max: number, options: FloatBetweenOptions = {}): number {
+    if (min === undefined || max === undefined) {
+      throw new Error("Parameter 'min' or 'max' is missing.");
+    }
+
+    if (typeof min !== "number" || typeof max !== "number") {
+      throw new Error("Parameter 'min' and 'max' has to be a number.");
+    }
+
+    if (min < 0 || max < 0) {
+      throw new Error("Parameter 'min' and 'max' has to be greater than 0.");
+    }
+
+    if (min >= max) {
+      throw new Error("Parameter 'min' has to be smaller than 'max'.");
+    }
+
+    const decimals = options.decimalsCount ?? 2;
+
+    if (typeof decimals !== "number") {
+      throw new Error("Option 'decimalsCount' has to be a number.");
+    }
+
+    if (decimals < 1 || decimals > 5) {
+      throw new Error("Option 'decimalsCount' has to be greater than or equal to 1 and less than or equal to 5.");
+    }
+
+    let randomFloat = 0;
+
+    // if the random float is something like 8, try again to ensure that always a float gets created here
+    while (Number.isInteger(randomFloat)) {
+      randomFloat = Math.random() * (max - min) + min;
+    }
+
+    return parseFloat(randomFloat.toFixed(decimals));
   }
 
   /**
