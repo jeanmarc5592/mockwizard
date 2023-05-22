@@ -23,3 +23,7 @@ export interface LetterOptions {
 export interface ArrayElementsOptions {
   elementsCount?: number;
 }
+
+export interface ObjectElementOptions {
+  returnKey?: boolean;
+}

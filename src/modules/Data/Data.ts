@@ -1,5 +1,5 @@
 import { ArrayHelpers, GenericData, RandomGenerator } from "../../utils";
-import { ArrayElementsOptions, DigitOptions, FloatOptions, IntegerOptions, LetterOptions, NumberBetweenOptions } from "./types";
+import { ArrayElementsOptions, DigitOptions, FloatOptions, IntegerOptions, LetterOptions, NumberBetweenOptions, ObjectElementOptions } from "./types";
 
 export class Data {
   constructor() {
@@ -122,13 +122,13 @@ export class Data {
     let letter = "";
 
     if (options.onlyLowercase) {
-      letter = RandomGenerator.generateValue(this.lowerCaseLetters) as string;
+      letter = RandomGenerator.generateValueFromArray(this.lowerCaseLetters) as string;
     } else if (options.onlyUppercase) {
-      letter = RandomGenerator.generateValue(this.upperCaseLetters) as string;
+      letter = RandomGenerator.generateValueFromArray(this.upperCaseLetters) as string;
     } else {
       const allLetters = this.upperCaseLetters.concat(this.lowerCaseLetters);
       const shuffledLetters = ArrayHelpers.shuffle(allLetters);
-      letter = RandomGenerator.generateValue(shuffledLetters) as string;
+      letter = RandomGenerator.generateValueFromArray(shuffledLetters) as string;
     }
 
     return letter;
@@ -142,7 +142,7 @@ export class Data {
    * @returns {any} - The generated random element.
    */
   public arrayElement(array: any[]): any {
-    return RandomGenerator.generateValue(array);
+    return RandomGenerator.generateValueFromArray(array);
   }
 
   /**
@@ -177,7 +177,7 @@ export class Data {
     const elements: any[] = [];
 
     for (let i = 0; i < elementsCount; i += 1) {
-      const randomElement = RandomGenerator.generateValue(arrayWithUniqueElements);
+      const randomElement = RandomGenerator.generateValueFromArray(arrayWithUniqueElements);
 
       // Remove the generated element from the result array to prevent having duplicate elements in the result array
       const elementIndex = arrayWithUniqueElements.indexOf(randomElement);
@@ -187,6 +187,23 @@ export class Data {
     }
 
     return elements;
+  }
+
+  /**
+   * Generates a random value or key from a given object.
+   *
+   * @public
+   * @param {{}} object - The object to choose the element from.
+   * @param {ObjectElementOptions} [options] - Optional configuration for generating the random element.
+   * @param {number} [options.returnKey] - If true, it returns a random key. If not specified, it returns a random value.
+   * @returns {any} - The generated random element.
+   */
+  public objectElement(object: {}, options: ObjectElementOptions = {}): any {
+    const element = RandomGenerator.generateElementFromObject(object);
+    const elementKey = Object.keys(element)[0];
+    const elementValue = element[elementKey];
+
+    return options.returnKey ? elementKey : elementValue;
   }
 
   /**
