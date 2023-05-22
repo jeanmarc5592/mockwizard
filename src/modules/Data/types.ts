@@ -27,3 +27,8 @@ export interface ArrayElementsOptions {
 export interface ObjectElementOptions {
   returnKey?: boolean;
 }
+
+export interface ObjectElementsOptions {
+  returnKey?: boolean;
+  elementsCount?: number;
+}

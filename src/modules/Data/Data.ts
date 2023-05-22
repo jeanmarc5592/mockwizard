@@ -1,5 +1,5 @@
 import { ArrayHelpers, GenericData, RandomGenerator } from "../../utils";
-import { ArrayElementsOptions, DigitOptions, FloatOptions, IntegerOptions, LetterOptions, NumberBetweenOptions, ObjectElementOptions } from "./types";
+import { ArrayElementsOptions, DigitOptions, FloatOptions, IntegerOptions, LetterOptions, NumberBetweenOptions, ObjectElementOptions, ObjectElementsOptions } from "./types";
 
 export class Data {
   constructor() {
@@ -154,7 +154,7 @@ export class Data {
    * @param {number} [options.elementsCount] - The amount of unique elements it should generate.
    * (If it's higher than the actual possible amount of unique values, it'll generate the highest possible amount of unique values.)
    * @throws {Error} - If 'elementsCount' option is not a number or less than 1.
-   * @returns {any} - The generated random elements.
+   * @returns {any[]} - The generated random elements.
    */
   public arrayElements(array: any[], options: ArrayElementsOptions = {}): any[] {
     let elementsCount = options.elementsCount ?? 1;
@@ -204,6 +204,41 @@ export class Data {
     const elementValue = element[elementKey];
 
     return options.returnKey ? elementKey : elementValue;
+  }
+
+  /**
+   * Generates unique random values or keys from a given object.
+   *
+   * @public
+   * @param {{}} object - The object to choose the elements from.
+   * @param {ObjectElementsOptions} [options] - Optional configuration for generating the random elements.
+   * @param {number} [options.elementsCount] - The amount of unique elements it should generate.
+   * @param {number} [options.returnKey] - If true, it returns random keys. If not specified, it returns a random values.
+   * @throws {Error} - If 'elementsCount' option is not a number or less than 1.
+   * @returns {any[]} - The generated random elements.
+   */
+  public objectElements(object: {}, options: ObjectElementsOptions = {}): any[] {
+    const elementsCount = options.elementsCount ?? 1;
+
+    if (typeof elementsCount !== "number") {
+      throw new Error("Option 'elementsCount' has to be a number.");
+    }
+
+    if (elementsCount < 1) {
+      throw new Error("Option 'elementsCount' has to be greater than 1.");
+    }
+
+    let result = [];
+
+    if (options.returnKey) {
+      const objectKeys = Object.keys(object);
+      result = this.arrayElements(objectKeys, { elementsCount });
+    } else {
+      const objectValues = Object.values(object);
+      result = this.arrayElements(objectValues, { elementsCount });
+    }
+
+    return result;
   }
 
   /**
