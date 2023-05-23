@@ -1,6 +1,7 @@
+import { Locale } from "./types";
+
 import { AbstractPerson } from "./modules/Person";
 import { Factory as PersonFactory } from "./modules/Person/Factory";
-import { Locale } from "./modules/Person/types";
 
 import { UUID } from "./modules/UUID";
 
@@ -10,12 +11,16 @@ import { Internet } from "./modules/Internet";
 
 import { Data } from "./modules/Data";
 
+import { AbstractLocation } from "./modules/Location/AbstractLocation";
+import { Factory as LocationFactory } from "./modules/Location/Factory";
+
 interface MockWizardInterface {
   person: AbstractPerson;
   uuid: UUID;
   text: Text;
   internet: Internet;
   data: Data;
+  location: AbstractLocation;
 }
 
 export class MockWizard implements MockWizardInterface {
@@ -64,11 +69,21 @@ export class MockWizard implements MockWizardInterface {
    */
   public readonly data: Data;
 
+  /**
+   * The property that holds the Location module
+   *
+   * @public
+   * @readonly
+   * @type {Data}
+   */
+  public readonly location: AbstractLocation;
+
   constructor(locale: Locale = "en-US") {
     this.person = PersonFactory.create(locale);
     this.uuid = new UUID();
     this.text = new Text();
     this.internet = new Internet(this.person);
     this.data = new Data();
+    this.location = LocationFactory.create(locale);
   }
 }
