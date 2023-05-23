@@ -1,5 +1,5 @@
 import { RandomGenerator } from "../../utils";
-import { State, StateOptions } from "./types";
+import { City, State, StateOptions } from "./types";
 
 export abstract class AbstractLocation {
   /**
@@ -21,6 +21,18 @@ export abstract class AbstractLocation {
   }
 
   /**
+   * Generates a random city name.
+   *
+   * @public
+   * @returns {string} - The generated city name.
+   */
+  public city(): string {
+    const randomCity = RandomGenerator.generateValueFromArray(this.citiesList);
+
+    return randomCity.name;
+  }
+
+  /**
    * An array of states.
    * @protected
    * @abstract
@@ -28,4 +40,13 @@ export abstract class AbstractLocation {
    * @type {string[]}
    */
   protected abstract readonly statesList: State[];
+
+  /**
+   * An array of cities.
+   * @protected
+   * @abstract
+   * @readonly
+   * @type {string[]}
+   */
+  protected abstract readonly citiesList: City[];
 }
