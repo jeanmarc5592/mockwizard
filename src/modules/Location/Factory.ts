@@ -20,7 +20,7 @@ export class Factory {
       case "en-US":
         return new LocationEnUs();
       default:
-        throw new Error(`Person with locale '${locale}' is not implemented.`);
+        throw new Error(`Location with locale '${locale}' is not implemented.`);
     }
   }
 }
