@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { AbstractLocation } from "./AbstractLocation";
-import { City, State } from "./types";
+import { City, Continent, Country, State } from "./types";
 
 class LocationMock extends AbstractLocation {
   protected statesList: State[];
@@ -65,6 +65,54 @@ describe("AbstractLocation", () => {
 
       expect(typeof city).toBe("string");
       expect(cityNames).toContain(city);
+    });
+  });
+
+  describe("country", () => {
+    it("should generate a random country name", () => {
+      const country = locationMock.country();
+      const countriesList = Reflect.get(locationMock, "countriesList") as Country[];
+      const countryNames = countriesList.map(country => country.name);
+
+      expect(typeof country).toBe("string");
+      expect(countryNames).toContain(country);
+    });
+
+    it("should generate a random country name base on the 'continent' option", () => {
+      const continentOne = "Africa" as Continent;
+      const continentTwo = "Oceania" as Continent;
+      const continentThree = "Asia" as Continent;
+
+      const countryNameOne = locationMock.country({ continent: continentOne });
+      const countryNameTwo = locationMock.country({ continent: continentTwo });
+      const countryNameThree = locationMock.country({ continent: continentThree });
+
+      expect(typeof countryNameOne).toBe("string");
+      expect(typeof countryNameTwo).toBe("string");
+      expect(typeof countryNameThree).toBe("string");
+
+      const countriesList = Reflect.get(locationMock, "countriesList") as Country[];
+
+      const countryOne = countriesList.find(country => country.name === countryNameOne && country.continent === continentOne);
+      const countryTwo = countriesList.find(country => country.name === countryNameTwo && country.continent === continentTwo);
+      const countryThree = countriesList.find(country => country.name === countryNameThree && country.continent === continentThree);
+
+      expect(countryOne).not.toBeUndefined();
+      expect(countryTwo).not.toBeUndefined();
+      expect(countryThree).not.toBeUndefined();
+    });
+
+    it("should throw an Error if 'continent' option is not a string", () => {
+      const error = "Option 'continent' has to be a string.";
+
+      // @ts-ignore
+      expect(() => locationMock.country({ continent: 323 })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => locationMock.country({ continent: ["Asia"] })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => locationMock.country({ continent: true })).toThrowError(error);
     });
   });
 });
