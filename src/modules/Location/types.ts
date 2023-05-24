@@ -19,3 +19,8 @@ export type Country = {
   continent: Continent;
   countryCode: string;
 };
+
+export interface CoordinatesOptions {
+  min?: number;
+  max?: number;
+}
