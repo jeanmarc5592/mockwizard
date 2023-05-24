@@ -1,6 +1,6 @@
 import { RandomGenerator } from "../../utils";
 import { LocationData } from "./data";
-import { City, CoordinatesOptions, Country, State, StateOptions } from "./types";
+import { City, Coordinates, CoordinatesOptions, Country, State, StateOptions } from "./types";
 
 export abstract class AbstractLocation {
   constructor() {
@@ -119,6 +119,13 @@ export abstract class AbstractLocation {
     }
 
     return RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 4 });
+  }
+
+  public coordinates(): Coordinates {
+    return {
+      lat: this.latitude(),
+      lng: this.longitude(),
+    };
   }
 
   /**

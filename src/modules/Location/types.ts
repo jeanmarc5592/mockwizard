@@ -24,3 +24,8 @@ export interface CoordinatesOptions {
   min?: number;
   max?: number;
 }
+
+export type Coordinates = {
+  lat: number;
+  lng: number;
+};
