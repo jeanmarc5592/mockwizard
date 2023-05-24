@@ -92,6 +92,36 @@ export abstract class AbstractLocation {
   }
 
   /**
+   * Generates a random longitude.
+   *
+   * @public
+   * @param {CoordinatesOptions} [options={}] - Options for generating the longitude.
+   * @param {number} [options.min] - Specifies the lower border of the longitude. If not specified, it defaults to -180.
+   * @param {number} [options.max] - Specifies the upper border of the longitude. If not specified, it defaults to 180.
+   * @throws {Error} - If 'min' and 'max' are not a number.
+   * @throws {Error} - If 'min' is less than -180 or 'max' is greater than 180.
+   * @returns {number} - The generated longitude as float with 4 decimals.
+   */
+  public longitude(options: CoordinatesOptions = {}): number {
+    const min = options.min === undefined ? -180 : options.min;
+    const max = options.max === undefined ? 180 : options.max;
+
+    if (typeof min !== "number" || typeof max !== "number") {
+      throw new Error("Option 'min' and 'max' have to be a number.");
+    }
+
+    if (min < -180) {
+      throw new Error("Option 'min' has to be greater than or equal to -180.");
+    }
+
+    if (max > 180) {
+      throw new Error("Option 'max' has to be less than or equal to 180.");
+    }
+
+    return RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 4 });
+  }
+
+  /**
    * An array of states.
    * @protected
    * @abstract
