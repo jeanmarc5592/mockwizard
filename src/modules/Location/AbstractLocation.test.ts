@@ -115,4 +115,15 @@ describe("AbstractLocation", () => {
       expect(() => locationMock.country({ continent: true })).toThrowError(error);
     });
   });
+
+  describe("countryCode", () => {
+    it("should generate a random countryCode", () => {
+      const countryCode = locationMock.countryCode();
+      const countriesList = Reflect.get(locationMock, "countriesList") as Country[];
+      const countryCodes = countriesList.map((country) => country.countryCode);
+
+      expect(typeof countryCode).toBe("string");
+      expect(countryCodes).toContain(countryCode);
+    });
+  });
 });
