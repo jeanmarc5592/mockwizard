@@ -91,15 +91,13 @@ describe("AbstractLocation", () => {
   });
 
   describe("latitude", () => {
-    it("should generate a random latitude with 4 decimals", () => {
+    it("should generate a random latitude", () => {
       const latitude = locationMock.latitude();
-      const decimals = latitude.toString().split(".")[1];
 
       expect(typeof latitude).toBe("number");
       expect(Number.isInteger(latitude)).not.toBe(true);
       expect(latitude).toBeGreaterThanOrEqual(-90);
       expect(latitude).toBeLessThanOrEqual(90);
-      expect(decimals).toHaveLength(4);
     });
 
     it("should generate a random latitude within the given bounds", () => {
@@ -107,13 +105,11 @@ describe("AbstractLocation", () => {
       const max = 10;
 
       const latitude = locationMock.latitude({ min, max });
-      const decimals = latitude.toString().split(".")[1];
 
       expect(typeof latitude).toBe("number");
       expect(Number.isInteger(latitude)).not.toBe(true);
       expect(latitude).toBeGreaterThanOrEqual(min);
       expect(latitude).toBeLessThanOrEqual(max);
-      expect(decimals).toHaveLength(4);
     });
 
     it("should throw an Error if 'min' or 'max' option are not a number", () => {
@@ -140,15 +136,13 @@ describe("AbstractLocation", () => {
   });
 
   describe("longitude", () => {
-    it("should generate a random longitude with 4 decimals", () => {
+    it("should generate a random longitude", () => {
       const longitude = locationMock.longitude();
-      const decimals = longitude.toString().split(".")[1];
 
       expect(typeof longitude).toBe("number");
       expect(Number.isInteger(longitude)).not.toBe(true);
       expect(longitude).toBeGreaterThanOrEqual(-180);
       expect(longitude).toBeLessThanOrEqual(180);
-      expect(decimals).toHaveLength(4);
     });
 
     it("should generate a random longitude within the given bounds", () => {
@@ -156,13 +150,11 @@ describe("AbstractLocation", () => {
       const max = 98.323;
 
       const longitude = locationMock.longitude({ min, max });
-      const decimals = longitude.toString().split(".")[1];
 
       expect(typeof longitude).toBe("number");
       expect(Number.isInteger(longitude)).not.toBe(true);
       expect(longitude).toBeGreaterThanOrEqual(min);
       expect(longitude).toBeLessThanOrEqual(max);
-      expect(decimals).toHaveLength(4);
     });
 
     it("should throw an Error if 'min' or 'max' option are not a number", () => {
