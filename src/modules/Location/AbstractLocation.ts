@@ -1,6 +1,6 @@
 import { RandomGenerator } from "../../utils";
 import { LocationData } from "./data";
-import { City, Country, CountryOptions, State, StateOptions } from "./types";
+import { City, Country, State, StateOptions } from "./types";
 
 export abstract class AbstractLocation {
   constructor() {
@@ -41,25 +41,11 @@ export abstract class AbstractLocation {
    * Generates a random country name.
    *
    * @public
-   * @param {CountryOptions} [options={}] - Options for generating the country.
-   * @param {Continent} [options.continent] - If specified, it will only return a country name for that continent.
-   * Valid continents: "Africa", "Asia", "Europe", "North America", "Oceania", "South America"
    * @returns {string} - The generated country name.
    */
-  public country(options: CountryOptions = {}): string {
-    const continent = options.continent || "";
-
-    if (typeof continent !== "string") {
-      throw new Error("Option 'continent' has to be a string.");
-    }
-
-    if (continent) {
-      const countriesListByContinent = this.countriesList.filter((country) => country.continent === continent);
-      const randomCountry = RandomGenerator.generateValueFromArray(countriesListByContinent) as Country;
-      return randomCountry.name;
-    }
-
+  public country(): string {
     const randomCountry = RandomGenerator.generateValueFromArray(this.countriesList) as Country;
+
     return randomCountry.name;
   }
 

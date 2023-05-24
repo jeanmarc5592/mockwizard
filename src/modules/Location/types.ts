@@ -19,7 +19,3 @@ export type Country = {
   continent: Continent;
   countryCode: string;
 };
-
-export interface CountryOptions {
-  continent?: Continent;
-}
