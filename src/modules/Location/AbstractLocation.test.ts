@@ -112,7 +112,7 @@ describe("AbstractLocation", () => {
       expect(typeof latitude).toBe("number");
       expect(Number.isInteger(latitude)).not.toBe(true);
       expect(latitude).toBeGreaterThanOrEqual(min);
-      expect(latitude).toBeLessThanOrEqual(90);
+      expect(latitude).toBeLessThanOrEqual(max);
       expect(decimals).toHaveLength(4);
     });
 
@@ -136,6 +136,55 @@ describe("AbstractLocation", () => {
       const error = "Option 'max' has to be less than or equal to 90.";
 
       expect(() => locationMock.latitude({ max: 98 })).toThrowError(error);
+    });
+  });
+
+  describe("longitude", () => {
+    it("should generate a random longitude with 4 decimals", () => {
+      const longitude = locationMock.longitude();
+      const decimals = longitude.toString().split(".")[1];
+
+      expect(typeof longitude).toBe("number");
+      expect(Number.isInteger(longitude)).not.toBe(true);
+      expect(longitude).toBeGreaterThanOrEqual(-180);
+      expect(longitude).toBeLessThanOrEqual(180);
+      expect(decimals).toHaveLength(4);
+    });
+
+    it("should generate a random longitude within the given bounds", () => {
+      const min = -124;
+      const max = 98.323;
+
+      const longitude = locationMock.longitude({ min, max });
+      const decimals = longitude.toString().split(".")[1];
+
+      expect(typeof longitude).toBe("number");
+      expect(Number.isInteger(longitude)).not.toBe(true);
+      expect(longitude).toBeGreaterThanOrEqual(min);
+      expect(longitude).toBeLessThanOrEqual(max);
+      expect(decimals).toHaveLength(4);
+    });
+
+    it("should throw an Error if 'min' or 'max' option are not a number", () => {
+      const error = "Option 'min' and 'max' have to be a number.";
+
+      // @ts-ignore
+      expect(() => locationMock.longitude({ min: "-40" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => locationMock.longitude({ max: "10" })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'min' option is less than -180", () => {
+      const error = "Option 'min' has to be greater than or equal to -180.";
+
+      expect(() => locationMock.longitude({ min: -200 })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'max' option is greater than 180", () => {
+      const error = "Option 'max' has to be less than or equal to 180.";
+
+      expect(() => locationMock.longitude({ max: 185.23 })).toThrowError(error);
     });
   });
 });
