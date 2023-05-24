@@ -64,6 +64,18 @@ export abstract class AbstractLocation {
   }
 
   /**
+   * Generates a random countryCode.
+   *
+   * @public
+   * @returns {string} - The generated countryCode.
+   */
+  public countryCode(): string {
+    const randomCountry = RandomGenerator.generateValueFromArray(this.countriesList) as Country;
+
+    return randomCountry.countryCode;
+  }
+
+  /**
    * An array of states.
    * @protected
    * @abstract
