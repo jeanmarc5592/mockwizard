@@ -187,4 +187,18 @@ describe("AbstractLocation", () => {
       expect(() => locationMock.longitude({ max: 185.23 })).toThrowError(error);
     });
   });
+
+  describe("coordinates", () => {
+    it("should generate a random coordinates object", () => {
+      const coordinates = locationMock.coordinates();
+
+      expect(coordinates).toBeInstanceOf(Object);
+
+      expect(coordinates).toHaveProperty("lat");
+      expect(coordinates).toHaveProperty("lng");
+
+      expect(typeof coordinates.lat).toBe("number");
+      expect(typeof coordinates.lng).toBe("number");
+    });
+  });
 });
