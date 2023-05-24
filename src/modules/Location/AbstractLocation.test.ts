@@ -89,4 +89,53 @@ describe("AbstractLocation", () => {
       expect(countryCodes).toContain(countryCode);
     });
   });
+
+  describe("latitude", () => {
+    it("should generate a random latitude with 4 decimals", () => {
+      const latitude = locationMock.latitude();
+      const decimals = latitude.toString().split(".")[1];
+
+      expect(typeof latitude).toBe("number");
+      expect(Number.isInteger(latitude)).not.toBe(true);
+      expect(latitude).toBeGreaterThanOrEqual(-90);
+      expect(latitude).toBeLessThanOrEqual(90);
+      expect(decimals).toHaveLength(4);
+    });
+
+    it("should generate a random latitude within the given bounds", () => {
+      const min = 0;
+      const max = 10;
+
+      const latitude = locationMock.latitude({ min, max });
+      const decimals = latitude.toString().split(".")[1];
+
+      expect(typeof latitude).toBe("number");
+      expect(Number.isInteger(latitude)).not.toBe(true);
+      expect(latitude).toBeGreaterThanOrEqual(min);
+      expect(latitude).toBeLessThanOrEqual(90);
+      expect(decimals).toHaveLength(4);
+    });
+
+    it("should throw an Error if 'min' or 'max' option are not a number", () => {
+      const error = "Option 'min' and 'max' have to be a number.";
+
+      // @ts-ignore
+      expect(() => locationMock.latitude({ min: "-40" })).toThrowError(error);
+
+      // @ts-ignore
+      expect(() => locationMock.latitude({ max: "10" })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'min' option is less than -90", () => {
+      const error = "Option 'min' has to be greater than or equal to -90.";
+
+      expect(() => locationMock.latitude({ min: -120 })).toThrowError(error);
+    });
+
+    it("should throw an Error if 'max' option is greater than 90", () => {
+      const error = "Option 'max' has to be less than or equal to 90.";
+
+      expect(() => locationMock.latitude({ max: 98 })).toThrowError(error);
+    });
+  });
 });
