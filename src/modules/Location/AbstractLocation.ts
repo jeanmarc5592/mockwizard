@@ -43,6 +43,7 @@ export abstract class AbstractLocation {
    * @public
    * @param {CountryOptions} [options={}] - Options for generating the country.
    * @param {Continent} [options.continent] - If specified, it will only return a country name for that continent.
+   * Valid continents: "Africa", "Asia", "Europe", "North America", "Oceania", "South America"
    * @returns {string} - The generated country name.
    */
   public country(options: CountryOptions = {}): string {
