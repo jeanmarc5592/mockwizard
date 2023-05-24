@@ -117,10 +117,6 @@ export class RandomGenerator {
       throw new Error("Parameter 'min' and 'max' has to be a number.");
     }
 
-    if (min < 0 || max < 0) {
-      throw new Error("Parameter 'min' and 'max' has to be greater than 0.");
-    }
-
     if (min >= max) {
       throw new Error("Parameter 'min' has to be smaller than 'max'.");
     }
@@ -151,10 +147,6 @@ export class RandomGenerator {
 
     if (typeof min !== "number" || typeof max !== "number") {
       throw new Error("Parameter 'min' and 'max' has to be a number.");
-    }
-
-    if (min < 0 || max < 0) {
-      throw new Error("Parameter 'min' and 'max' has to be greater than 0.");
     }
 
     if (min >= max) {
