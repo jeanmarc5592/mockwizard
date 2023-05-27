@@ -121,6 +121,12 @@ export abstract class AbstractLocation {
     return RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 4 });
   }
 
+  /**
+   * Generates a random coordinates object that contains a random lat and long property.
+   *
+   * @public
+   * @returns {Coordinates} - The generated coordinates object.
+   */
   public coordinates(): Coordinates {
     return {
       lat: this.latitude(),
