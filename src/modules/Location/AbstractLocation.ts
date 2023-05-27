@@ -32,7 +32,7 @@ export abstract class AbstractLocation {
    * @returns {string} - The generated city name.
    */
   public city(): string {
-    const randomCity = RandomGenerator.generateValueFromArray(this.citiesList);
+    const randomCity = RandomGenerator.generateValueFromArray(this.citiesList) as City;
 
     return randomCity.name;
   }
@@ -88,7 +88,7 @@ export abstract class AbstractLocation {
       throw new Error("Option 'max' has to be less than or equal to 90.");
     }
 
-    return RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 4 });
+    return RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 4 }) as number;
   }
 
   /**
@@ -118,7 +118,7 @@ export abstract class AbstractLocation {
       throw new Error("Option 'max' has to be less than or equal to 180.");
     }
 
-    return RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 4 });
+    return RandomGenerator.generateFloatBetween(min, max, { decimalsCount: 4 }) as number;
   }
 
   /**
@@ -147,11 +147,21 @@ export abstract class AbstractLocation {
   }
 
   /**
+   * Generates a random street name.
+   *
+   * @public
+   * @returns {string} - The generated street name.
+   */
+  public streetName(): string {
+    return RandomGenerator.generateValueFromArray(this.streetNamesList) as string;
+  }
+
+  /**
    * An array of states.
    * @protected
    * @abstract
    * @readonly
-   * @type {string[]}
+   * @type {State[]}
    */
   protected abstract readonly statesList: State[];
 
@@ -160,16 +170,25 @@ export abstract class AbstractLocation {
    * @protected
    * @abstract
    * @readonly
-   * @type {string[]}
+   * @type {City[]}
    */
   protected abstract readonly citiesList: City[];
+
+  /**
+   * An array of street names.
+   * @protected
+   * @abstract
+   * @readonly
+   * @type {string[]}
+   */
+  protected abstract readonly streetNamesList: string[];
 
   /**
    * An array of countries.
    * @protected
    * @abstract
    * @readonly
-   * @type {string[]}
+   * @type {Country[]}
    */
   protected readonly countriesList: Country[];
 }

@@ -7,9 +7,12 @@ export class Location extends AbstractLocation {
 
   protected citiesList: City[];
 
+  protected streetNamesList: string[];
+
   constructor() {
     super();
     this.statesList = LocationData.states;
     this.citiesList = LocationData.cities;
+    this.streetNamesList = LocationData.streetNames;
   }
 }
