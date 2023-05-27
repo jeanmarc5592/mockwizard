@@ -135,6 +135,18 @@ export abstract class AbstractLocation {
   }
 
   /**
+   * Generates a random zip code.
+   *
+   * @public
+   * @returns {string} - The generated zip code.
+   */
+  public zipCode(): string {
+    const randomCity = RandomGenerator.generateValueFromArray(this.citiesList) as City;
+
+    return randomCity.zipCode;
+  }
+
+  /**
    * An array of states.
    * @protected
    * @abstract
