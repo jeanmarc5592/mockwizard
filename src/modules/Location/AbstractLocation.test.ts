@@ -7,8 +7,11 @@ class LocationMock extends AbstractLocation {
 
   protected citiesList: City[];
 
+  protected streetNamesList: string[];
+
   constructor() {
     super();
+
     this.statesList = [
       { name: "New York", abbreviation: "NY" },
       { name: "Tennessee", abbreviation: "TN" },
@@ -18,6 +21,7 @@ class LocationMock extends AbstractLocation {
       { name: "Virginia", abbreviation: "VA" },
       { name: "Washington", abbreviation: "WA" },
     ];
+
     this.citiesList = [
       { name: "El Paso", state: "Texas", zipCode: "79901" },
       { name: "Memphis", state: "Tennessee", zipCode: "37501" },
@@ -26,6 +30,18 @@ class LocationMock extends AbstractLocation {
       { name: "Washington, D.C.", state: "District of Columbia", zipCode: "20001" },
       { name: "Boston", state: "Massachusetts", zipCode: "02101" },
       { name: "Nashville", state: "Tennessee", zipCode: "37201" },
+    ];
+
+    this.streetNamesList = [
+      "Chestnut Street", 
+      "Riverside Drive", 
+      "Hillcrest Avenue", 
+      "Spring Street", 
+      "Highland Avenue", 
+      "Grove Road", 
+      "Church Street", 
+      "Mill Street", 
+      "Parkway Drive"
     ];
   }
 }
@@ -202,6 +218,16 @@ describe("AbstractLocation", () => {
 
       expect(typeof zipCode).toBe("string");
       expect(zipCodes).toContain(zipCode);
+    });
+  });
+
+  describe("streetName", () => {
+    it("should generate a random street name", () => {
+      const streetName = locationMock.streetName();
+      const streetNames = Reflect.get(locationMock, "streetNamesList") as string[];
+
+      expect(typeof streetName).toBe("string");
+      expect(streetNames).toContain(streetName);
     });
   });
 });
