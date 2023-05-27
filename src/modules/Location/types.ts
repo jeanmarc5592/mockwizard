@@ -10,6 +10,7 @@ export interface StateOptions {
 export type City = {
   name: string;
   state: string;
+  zipCode: string;
 };
 
 export type Continent = "Africa" | "Asia" | "Europe" | "North America" | "Oceania" | "South America";

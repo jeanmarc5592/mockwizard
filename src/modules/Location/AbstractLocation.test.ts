@@ -19,13 +19,13 @@ class LocationMock extends AbstractLocation {
       { name: "Washington", abbreviation: "WA" },
     ];
     this.citiesList = [
-      { name: "Overland Park", state: "Kansas" },
-      { name: "Providence", state: "Rhode Island" },
-      { name: "Garden Grove", state: "California" },
-      { name: "Chattanooga", state: "Tennessee" },
-      { name: "Oceanside", state: "California" },
-      { name: "Jackson", state: "Mississippi" },
-      { name: "Fort Lauderdale", state: "Florida" },
+      { name: "El Paso", state: "Texas", zipCode: "79901" },
+      { name: "Memphis", state: "Tennessee", zipCode: "37501" },
+      { name: "Seattle", state: "Washington", zipCode: "98101" },
+      { name: "Denver", state: "Colorado", zipCode: "80201" },
+      { name: "Washington, D.C.", state: "District of Columbia", zipCode: "20001" },
+      { name: "Boston", state: "Massachusetts", zipCode: "02101" },
+      { name: "Nashville", state: "Tennessee", zipCode: "37201" },
     ];
   }
 }
@@ -61,7 +61,7 @@ describe("AbstractLocation", () => {
     it("should generate a random city name", () => {
       const city = locationMock.city();
       const citiesList = Reflect.get(locationMock, "citiesList") as City[];
-      const cityNames = citiesList.map(city => city.name);
+      const cityNames = citiesList.map((city) => city.name);
 
       expect(typeof city).toBe("string");
       expect(cityNames).toContain(city);
@@ -72,7 +72,7 @@ describe("AbstractLocation", () => {
     it("should generate a random country name", () => {
       const country = locationMock.country();
       const countriesList = Reflect.get(locationMock, "countriesList") as Country[];
-      const countryNames = countriesList.map(country => country.name);
+      const countryNames = countriesList.map((country) => country.name);
 
       expect(typeof country).toBe("string");
       expect(countryNames).toContain(country);
