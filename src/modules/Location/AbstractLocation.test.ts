@@ -193,4 +193,15 @@ describe("AbstractLocation", () => {
       expect(typeof coordinates.lng).toBe("number");
     });
   });
+
+  describe("zipCode", () => {
+    it("should generate a random zip code", () => {
+      const zipCode = locationMock.zipCode();
+      const citiesList = Reflect.get(locationMock, "citiesList") as City[];
+      const zipCodes = citiesList.map((city) => city.zipCode);
+
+      expect(typeof zipCode).toBe("string");
+      expect(zipCodes).toContain(zipCode);
+    });
+  });
 });
