@@ -1,3 +1,4 @@
+import { Locale } from "../../../../types";
 import { AbstractLocation } from "../../AbstractLocation";
 import { City, State } from "../../types";
 import { LocationData } from "./data";
@@ -9,10 +10,13 @@ export class Location extends AbstractLocation {
 
   protected streetNamesList: string[];
 
+  protected LOCALE: Locale;
+
   constructor() {
     super();
     this.statesList = LocationData.states;
     this.citiesList = LocationData.cities;
     this.streetNamesList = LocationData.streetNames;
+    this.LOCALE = "en-US";
   }
 }

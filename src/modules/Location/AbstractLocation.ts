@@ -1,6 +1,8 @@
+import { Locale } from "../../types";
 import { RandomGenerator } from "../../utils";
 import { LocationData } from "./data";
 import { City, Coordinates, CoordinatesOptions, Country, State, StateOptions } from "./types";
+import { AddressFormatter } from "./utils/AddressFormatter/AddressFormatter";
 
 export abstract class AbstractLocation {
   constructor() {
@@ -157,7 +159,28 @@ export abstract class AbstractLocation {
   }
 
   /**
+   * Generates a full address that is formatted based on the given locale (i.e. "en-US").
+   *
+   * @public
+   * @returns {string} - The generated full address.
+   */
+  public fullAddress(): string {
+    const randomCity = RandomGenerator.generateValueFromArray(this.citiesList) as City;
+
+    const address = {
+      streetName: this.streetName(),
+      streetNumber: RandomGenerator.generateNumberBetween(1, 500),
+      zipCode: randomCity.zipCode,
+      city: randomCity.name,
+      state: randomCity.state,
+    };
+
+    return AddressFormatter.format(this.LOCALE, address);
+  }
+
+  /**
    * An array of states.
+   *
    * @protected
    * @abstract
    * @readonly
@@ -167,6 +190,7 @@ export abstract class AbstractLocation {
 
   /**
    * An array of cities.
+   *
    * @protected
    * @abstract
    * @readonly
@@ -176,6 +200,7 @@ export abstract class AbstractLocation {
 
   /**
    * An array of street names.
+   *
    * @protected
    * @abstract
    * @readonly
@@ -184,11 +209,21 @@ export abstract class AbstractLocation {
   protected abstract readonly streetNamesList: string[];
 
   /**
-   * An array of countries.
+   * A string representing the current locale.
+   *
    * @protected
    * @abstract
    * @readonly
    * @type {Country[]}
    */
-  protected readonly countriesList: Country[];
+  protected abstract LOCALE: Locale;
+
+  /**
+   * An array of countries.
+   *
+   * @private
+   * @readonly
+   * @type {Country[]}
+   */
+  private readonly countriesList: Country[];
 }
