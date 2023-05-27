@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { AbstractLocation } from "./AbstractLocation";
-import { City, Continent, Country, State } from "./types";
+import { City, Country, State } from "./types";
+import { Locale } from "../../types";
 
 class LocationMock extends AbstractLocation {
   protected statesList: State[];
@@ -8,6 +9,8 @@ class LocationMock extends AbstractLocation {
   protected citiesList: City[];
 
   protected streetNamesList: string[];
+
+  protected LOCALE: Locale;
 
   constructor() {
     super();
@@ -43,6 +46,8 @@ class LocationMock extends AbstractLocation {
       "Mill Street", 
       "Parkway Drive"
     ];
+
+    this.LOCALE = "en-US";
   }
 }
 
@@ -228,6 +233,14 @@ describe("AbstractLocation", () => {
 
       expect(typeof streetName).toBe("string");
       expect(streetNames).toContain(streetName);
+    });
+  });
+
+  describe("fullAddress", () => {
+    it("should generate a random full address", () => {
+      const fullAddress = locationMock.fullAddress();
+
+      expect(typeof fullAddress).toBe("string");
     });
   });
 });
