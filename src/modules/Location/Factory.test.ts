@@ -19,8 +19,10 @@ describe("Factory", () => {
 
     it("should return AbstractLocation when 'locale' is valid", () => {
       const localeOne = "en-US";
+      const localeTwo = "de-DE";
 
       expect(Factory.create(localeOne)).toBeInstanceOf(AbstractLocation);
+      expect(Factory.create(localeTwo)).toBeInstanceOf(AbstractLocation);
     });
   });
 });
