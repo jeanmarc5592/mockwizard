@@ -27,11 +27,16 @@ describe("AddressFormatter", () => {
 
     it("should return a formatted address based on the given locale", () => {
       const formatForUSSpy = jest.spyOn(AddressFormatter, 'formatForUS');
+      const formatForDESpy = jest.spyOn(AddressFormatter, "formatForDE");
       
       AddressFormatter.format("en-US", mockFullAddress);
+      AddressFormatter.format("de-DE", mockFullAddress);
 
       expect(formatForUSSpy).toHaveBeenCalledWith(mockFullAddress);
       expect(formatForUSSpy).toBeCalledTimes(1);
+
+      expect(formatForDESpy).toHaveBeenCalledWith(mockFullAddress);
+      expect(formatForDESpy).toBeCalledTimes(1);
 
       jest.restoreAllMocks();
     });
@@ -50,13 +55,6 @@ describe("AddressFormatter", () => {
   });
 
   describe("formatForUS", () => {
-    it("should throw an Error if 'address' parameter is missing", () => {
-      const error = "Parameter 'address' is missing.";
-
-      // @ts-ignore
-      expect(() => AddressFormatter.formatForUS(undefined)).toThrowError(error);
-    });
-
     it("should return a formatted address for the USA", () => {
       const formattedAddress = AddressFormatter.formatForUS(mockFullAddress);
       const splittedFormattedAddress = formattedAddress.replace(/,/g, "").split(" ");
@@ -70,6 +68,23 @@ describe("AddressFormatter", () => {
       expect(city).toBe(mockFullAddress.city);
       expect(state).toBe(mockFullAddress.state);
       expect(zipCode).toBe(mockFullAddress.zipCode);
+    });
+  });
+
+  describe("formatForDE", () => {
+    it("should return a formatted address for Germany", () => {
+      const formattedAddress = AddressFormatter.formatForDE(mockFullAddress);
+      const splittedFormattedAddress = formattedAddress.replace(/,/g, "").split(" ");
+
+      const [streetName, streetNumber, zipCode, city, state] = splittedFormattedAddress;
+
+      expect(typeof formattedAddress).toBe("string");
+
+      expect(streetName).toBe(mockFullAddress.streetName);
+      expect(streetNumber).toBe(mockFullAddress.streetNumber.toString());
+      expect(zipCode).toBe(mockFullAddress.zipCode);
+      expect(city).toBe(mockFullAddress.city);
+      expect(state).toBe(mockFullAddress.state);
     });
   });
 });

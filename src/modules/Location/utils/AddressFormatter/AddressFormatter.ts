@@ -9,6 +9,7 @@ export class AddressFormatter {
    * @param {Locale} locale - The locale to determine the address format.
    * @param {FullAddress} address - The full address object to be formatted.
    * @returns {string} - The formatted address as a string.
+   * @throws {Error} - If parameter 'locale' or 'address' are missing.
    */
   static format(locale: Locale, address: FullAddress): string {
     if (!locale) {
@@ -22,8 +23,10 @@ export class AddressFormatter {
     switch (locale) {
       case "en-US":
         return this.formatForUS(address);
+      case "de-DE":
+        return this.formatForDE(address);
       default:
-        console.log("Used the default address formatter...");
+        console.log("Using the default address formatter...");
         return this.formatForUS(address);
     }
   }
@@ -36,12 +39,21 @@ export class AddressFormatter {
    * @returns {string} - The formatted address as a string.
    */
   static formatForUS(address: FullAddress): string {
-    if (!address) {
-      throw new Error("Parameter 'address' is missing.");
-    }
-
     const { streetName, streetNumber, zipCode, city, state } = address;
 
     return `${streetNumber} ${streetName}, ${city}, ${state} ${zipCode}`;
+  }
+
+  /**
+   * Formats a full address in Germany.
+   *
+   * @static
+   * @param {FullAddress} address - The full address object to be formatted.
+   * @returns {string} - The formatted address as a string.
+   */
+  static formatForDE(address: FullAddress): string {
+    const { streetName, streetNumber, zipCode, city, state } = address;
+
+    return `${streetName} ${streetNumber}, ${zipCode} ${city}, ${state}`;
   }
 }
