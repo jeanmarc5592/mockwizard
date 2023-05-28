@@ -13,11 +13,8 @@ export type City = {
   zipCode: string;
 };
 
-export type Continent = "Africa" | "Asia" | "Europe" | "North America" | "Oceania" | "South America";
-
 export type Country = {
   name: string;
-  continent: Continent;
   countryCode: string;
 };
 
