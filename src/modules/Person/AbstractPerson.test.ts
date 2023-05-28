@@ -29,7 +29,7 @@ class PersonMock extends AbstractPerson {
 }
 
 describe("AbstractPerson", () => {
-  let personMock: PersonMock;
+  let personMock: AbstractPerson;
   
   beforeEach(() => {
     personMock = new PersonMock();

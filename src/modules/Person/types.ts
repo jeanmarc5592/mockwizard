@@ -3,5 +3,3 @@ export interface PersonOptions {
   includeSalutation?: boolean;
   includeSuffix?: boolean;
 }
-
-export type Locale = "en-US" | "de-DE";

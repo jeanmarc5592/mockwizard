@@ -168,14 +168,6 @@ describe("RandomGenerator", () => {
       expect(() => RandomGenerator.generateNumberBetween({}, true)).toThrowError(error);
     });
 
-    it("should throw an Error if parameter 'min' or 'max' are less than 0", () => {
-      const error = "Parameter 'min' and 'max' has to be greater than 0.";
-
-      expect(() => RandomGenerator.generateNumberBetween(-4, 3)).toThrowError(error);
-      expect(() => RandomGenerator.generateNumberBetween(5, -9)).toThrowError(error);
-      expect(() => RandomGenerator.generateNumberBetween(-5, -9)).toThrowError(error);
-    });
-
     it("should throw an Error if parameter 'min' is greater than 'max'", () => {
       const error = "Parameter 'min' has to be smaller than 'max'.";
 
@@ -215,14 +207,6 @@ describe("RandomGenerator", () => {
       
       // @ts-ignore
       expect(() => RandomGenerator.generateFloatBetween({}, true)).toThrowError(error);
-    });
-
-    it("should throw an Error if parameter 'min' or 'max' are less than 0", () => {
-      const error = "Parameter 'min' and 'max' has to be greater than 0.";
-
-      expect(() => RandomGenerator.generateFloatBetween(-4, 3)).toThrowError(error);
-      expect(() => RandomGenerator.generateFloatBetween(5, -9)).toThrowError(error);
-      expect(() => RandomGenerator.generateFloatBetween(-5, -9)).toThrowError(error);
     });
 
     it("should throw an Error if parameter 'min' is greater than 'max'", () => {

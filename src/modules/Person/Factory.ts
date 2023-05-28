@@ -1,7 +1,7 @@
 import { AbstractPerson } from "./AbstractPerson";
 import { Person as PersonEnUs } from "./locales/en-US/Person";
 import { Person as PersonDeDe } from "./locales/de-DE/Person";
-import { Locale } from "./types";
+import { Locale } from "../../types";
 
 export class Factory {
   /**
