@@ -214,7 +214,7 @@ export abstract class AbstractLocation {
    * @protected
    * @abstract
    * @readonly
-   * @type {Country[]}
+   * @type {Locale}
    */
   protected abstract LOCALE: Locale;
 
